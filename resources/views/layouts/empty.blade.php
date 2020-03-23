@@ -1,0 +1,5 @@
+@yield('page-style-files')
+@yield('initlink')
+@yield('titlebig') 
+@yield('content')   
+@yield('page-js-script')
