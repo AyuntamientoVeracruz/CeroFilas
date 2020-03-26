@@ -385,7 +385,7 @@ Sólo requiere un servidor web que pueda servir los contenidos.
 
 ## Licencia
 
-Este proyecto esta licenciado bajo la Licencia MIT - vea el archivo [LICENSE.md](./LICENSE.md) para más detalles.
+Este proyecto esta licenciado bajo la Licencia MIT - vea el archivo [LICENSE.md](./LICENSE) para más detalles.
 
 ## Autores
 
