@@ -206,6 +206,137 @@ Tabla llamada `dependencias`. Esta entidad almacena las dependencias. Una oficin
 ¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
 contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
 
+### Tabla de configuraciones
+
+Tabla llamada `configuraciones`. Esta entidad almacena las configuraciones como lo es la API key de google maps. Solo el administrador de la base de datos puede crear una dependencia.
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_configuracion`            | Obligatoria                    | Numerico¹         | Identificador autonumerico de la configuracion       |
+| `service_name`                | Obligatoria                    | Texto             | Nombre del servicio                                  |
+| `service_key`                 | Obligatoria                    | Texto             | Key del servicio                                     |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de reserva de citas
+
+Tabla llamada `holdingcitas`. Esta entidad almacena la reserva de la cita, cuando un ciudadano en el portal esta seleccionando una fecha esta fecha es retenida para que no pueda ser usada por al menos 5 minutos si es que no fue seleccionada al final. Hace uso de las entidades catálogo como [tramites](#tabla-de-tramites), [oficinas](#tabla-de-oficinas). Tabla de almacenamiento temporal.
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_holdingcita`              | Obligatoria                    | Numerico¹         | Identificador autonumerico de la reserva de cita     |
+| `tramite_id`                  | Opcional                       | Numerico¹         | Idenfificador de trámite de la tabla "tramites"      |
+| `oficina_id`                  | Obligatoria                    | Numerico¹         | Idenfificador de oficina de la tabla "oficinas"      |
+| `fechahora`                   | Obligatoria                    | Fechahora         | Fecha y hora de la cita                              |
+| `folio`                       | Obligatoria                    | Texto             | Folio único de la reserva de cita de 8 caracteres    |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de tramites por oficina
+
+Tabla llamada `tramitesxoficinas`. Esta entidad almacena la relación de tramites y oficina. Hace uso de las entidades catálogo como [tramites](#tabla-de-tramites), [oficinas](#tabla-de-oficinas).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_tramitesxoficinas`        | Obligatoria                    | Numerico¹         | Identificador autonumerico de la relacion tramite x oficina |
+| `tramite_id`                  | Obligatoria                    | Numerico¹         | Idenfificador de trámite de la tabla "tramites"      |
+| `oficina_id`                  | Obligatoria                    | Numerico¹         | Idenfificador de oficina de la tabla "oficinas"      |
+| `apply_date`                  | Opcional                       | Fechahora         | Fecha y hora de la cita                              |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de tramites por usuario
+
+Tabla llamada `tramitesxusers`. Esta entidad almacena la relación de tramites y usuarios. Hace uso de las entidades catálogo como [tramites](#tabla-de-tramites), [users](#tabla-de-usuarios).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_tramitesxusers`           | Obligatoria                    | Numerico¹         | Identificador autonumerico de la relacion tramite x usuario |
+| `tramite_id`                  | Obligatoria                    | Numerico¹         | Idenfificador de trámite de la tabla "tramites"      |
+| `user_id`                     | Obligatoria                    | Numerico¹         | Idenfificador de usuario de la tabla "users"         |
+| `lunes_inicio`                | Opcional                       | Tiempo            | Hora de inicio el dia lunes de ese tramite y usuario |
+| `lunes_fin`                   | Opcional                       | Tiempo            | Hora de fin el dia lunes de ese tramite y usuario    |
+| `martes_inicio`               | Opcional                       | Tiempo            | Hora de inicio el dia martes de ese tramite y usuario|
+| `martes_fin`                  | Opcional                       | Tiempo            | Hora de fin el dia martes de ese tramite y usuario   |
+| `miercoles_inicio`            | Opcional                       | Tiempo            | Hora de inicio el dia miercoles de ese tramite y usuario |
+| `miercoles_fin`               | Opcional                       | Tiempo            | Hora de fin el dia miercoles de ese tramite y usuario|
+| `jueves_inicio`               | Opcional                       | Tiempo            | Hora de inicio el dia jueves de ese tramite y usuario|
+| `jueves_fin`                  | Opcional                       | Tiempo            | Hora de fin el dia jueves de ese tramite y usuario   |
+| `viernes_inicio`              | Opcional                       | Tiempo            | Hora de inicio el dia viernes de ese tramite y usuario |
+| `viernes_fin`                 | Opcional                       | Tiempo            | Hora de fin el dia viernes de ese tramite y usuario  |
+| `sabado_inicio`               | Opcional                       | Tiempo            | Hora de inicio el dia sabado de ese tramite y usuario|
+| `sabado_fin`                  | Opcional                       | Tiempo            | Hora de fin el dia sabado de ese tramite y usuario   |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de evaluaciones
+
+Tabla llamada `valoraciones`. Esta entidad almacena la evaluación solicitad al ciudadano respecto a la atención del tramitador, y a su vez, esta misma almacena la calificación otorgada en caso de ser realizada la evaluación, esto derivado del turno de atención. Hace uso de las entidades catálogo como [turnos](#tabla-de-turnos).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_valoracion`               | Obligatoria                    | Numerico¹         | Identificador autonumerico de la evaluacion          |
+| `turno_id`                    | Obligatoria                    | Numerico¹         | Idenfificador de turno de la tabla "turnos"          |
+| `folio`                       | Obligatoria                    | Texto             | Folio único de la evaluacion de 8 caracteres         |
+| `estrellas`                   | Opcional                       | Tiempo            | Estrellas del ciudadano hacia el tramitador por la atencion recibida |
+| `respuesta1`                  | Opcional                       | Tiempo            | Respuesta 1 de la atencion recibida                  |
+| `respuesta2`                  | Opcional                       | Tiempo            | Respuesta 2 de la atencion recibida                  |
+| `observaciones`               | Opcional                       | Tiempo            | Texto libre de observaciones de la atención brindada |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de ausencias
+
+Tabla llamada `ausencias`. Esta entidad almacena las ausencias que cada tramitador puede tener. El administrador de oficina gestiona las vacaciones (que es la disponibilidad que tendra el tramitador a futuro de sus tramites). Hace uso de las entidades catálogo como [users](#tabla-de-usuarios).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_ausencia`                 | Obligatoria                    | Numerico¹         | Identificador autonumerico de la ausencia            |
+| `user_id`                     | Obligatoria                    | Numerico¹         | Idenfificador de usuarios de la tabla "users"        |
+| `fecha_inicio`                | Obligatoria                    | Texto             | Fecha de inicio de la ausencia del usuario           |
+| `fecha_fin`                   | Obligatoria                    | Tiempo            | Fecha de fin de la ausencia del usuario              |
+| `motivo`                      | Opcional                       | Tiempo            | Motivo de la ausencia del usuario                    |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de videos
+
+Tabla llamada `videos`. Esta entidad almacena los videos que cada oficina pasara en su pantalla si hace uso de una pantalla de espera "Turnera". Solo el administrador de la base de datos puede crear un video.
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_video`                    | Obligatoria                    | Numerico¹         | Identificador autonumerico del video                 |
+| `urlvideo`                    | Obligatoria                    | Texto             | URL del video dentro de la carpeta public_html/videos|
+| `oficina_id`                  | Obligatoria                    | Numerico¹         | Idenfificador de oficina de la tabla "oficinas"      |
+| `orden`                       | Obligatoria                    | Numerico¹         | Orden de secuencia del video por oficina             |
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
 ## Archivos necesarios para el correcto funcionamiento del sitio
 
 ### Proyecto Laravel
