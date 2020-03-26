@@ -26,7 +26,8 @@ Proyecto de generación, confirmación y evaluación de citas programadas y turn
     - [Requerimientos](#requerimientos)
     - [Configuración](#configuraci%C3%B3n)
     - [Instalación por primera vez](#instalaci%C3%B3n-por-primera-vez)
-    - [Actualizaciones](#actualizaciones)
+  - [Licencia](#licencia)	
+  - [Autores](#autores)
 
 ## Acerca de Cero Filas 
 
@@ -350,3 +351,43 @@ Dentro de este folder de git ...
 ## Instrucciones para desarrolladores
 
 Para realizar modificaciones al sitio actual, realizar los siguientes pasos
+
+* ...
+* ...
+
+### Adaptación estetica
+
+En caso de necesitar agregar cambios al css del sitio, ubicarlos en el archivo `...`. Este archivo
+tiene precedencia por sobre los estilos base del sitio. 
+
+
+## Levantar el proyecto en un ambiente productivo
+
+### Requerimientos
+
+Sólo requiere un servidor web que pueda servir los contenidos. 
+
+* Apache
+* ...
+
+### Configuración
+
+* ...
+* ...
+
+### Instalación por primera vez
+
+1. ...
+2. ...
+3. ...
+4. ...
+5. ...
+
+## Licencia
+
+Este proyecto esta licenciado bajo la Licencia MIT - vea el archivo [LICENSE.md](LICENSE.md) para más detalles.
+
+## Autores
+
+* **Angel Cobos** - *H. Ayuntamiento de Veracruz* - [Correo electrónico](mailto:angelcobos@outlook.com)
+* **Damara Tejeda** - *H. Ayuntamiento de Veracruz* - [Correo electrónico](mailto:damara9510@gmail.com)
