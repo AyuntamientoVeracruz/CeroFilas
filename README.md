@@ -7,7 +7,16 @@ Proyecto de generación, confirmación y evaluación de citas programadas y turn
     - [Tabla de citas](#tabla-de-citas)
 	- [Tabla de turnos](#tabla-de-turnos)
 	- [Tabla de usuarios](#tabla-de-usuarios)
-	- [Tabla de trámites](#tabla-de-tramites)
+	- [Tabla de tramites](#tabla-de-tramites)
+	- [Tabla de oficinas](#tabla-de-oficinas)
+	- [Tabla de dependencias](#tabla-de-dependencias)
+	- [Tabla de configuraciones](#tabla-de-configuraciones)
+	- [Tabla de reserva de citas](#tabla-de-reserva-de-citas)
+	- [Tabla de tramites por oficina](#tabla-de-tramites-por-oficina)
+	- [Tabla de tramites por usuario](#tabla-de-tramites-por-usuario)
+	- [Tabla de evaluaciones](#tabla-de-evaluaciones)
+	- [Tabla de ausencias](#tabla-de-ausencias)
+	- [Tabla de videos](#tabla-de-videos)
   - [Archivos necesarios para el correcto funcionamiento del sitio](#archivos-necesarios-para-el-correcto-funcionamiento-del-sitio)
     - [Proyecto Laravel](#proyecto-laravel)
     - [Archivos publicos](#archivos-publicos)
@@ -41,7 +50,7 @@ Contiene formularios convencionales e invocaciones por ajax a backend con inform
 
 ## Base de datos
 
-Se hace uso de una base de datos para almacenar la información de las citas y los turnos en las entidades: turnos, citas. Para llegar a estas entidades, se necesitan tener catálogos de: usuarios, trámites, oficinas, dependencias. Y algunas entidades de relación adicionales: configuraciones, holdingcitas, tramitesxoficinas, tramitesxusers, valoraciones, ausencias.
+Se hace uso de una base de datos para almacenar la información de las citas y los turnos en las entidades: `turnos`, `citas`. Para llegar a estas entidades, se necesitan tener catálogos de: `usuarios`, `tramites`, `oficinas`, `dependencias`. Y algunas entidades de relación adicionales: `configuraciones`, `holdingcitas`, `tramitesxoficinas`, `tramitesxusers`, `valoraciones`, `ausencias` y `videos`.
 
 A continuación se explica cada una de estas entidades.
 
@@ -111,7 +120,7 @@ Tabla llamada `users`. Esta entidad almacena los usuarios del sistema (tramitado
 
 | Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
 | ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
-| `id_user`                     | Obligatoria                    | Numerico¹         | Identificador autonumerico del usuarios              |
+| `id_user`                     | Obligatoria                    | Numerico¹         | Identificador autonumerico del usuario               |
 | `tipo_user`                   | Obligatoria                    | Enum²             | Tipo de usuario del sistema                          |
 | `estatus`                     | Obligatoria                    | Enum³             | Estatus del usuario                                  |
 | `email`                       | Opcional                       | Texto             | Email del usuario con el que hara login en el sistema |
@@ -135,6 +144,67 @@ contar con separadores de miles, comillas, caracter de moneda, ni otros caracter
 ³ Los usuarios pueden estar activos o inactivos, un usuario inactivo no puede iniciar sesión en el sistema, ni es tomado en cuenta para los calculos de los horarios disponibles de una oficina.
 
 ⁴ Un usuario puede (`si`) o no (`no`) estar disponible para atender un turno. 
+
+### Tabla de tramites
+
+Tabla llamada `tramites`. Esta entidad almacena los tramites del sistema. Un tramite puede estar asignado a una dependencia (una dependencia puede tener 1 o mas oficinas). Hace uso de las entidades catálogo como [dependencias](#tabla-de-dependencias).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_tramite`                  | Obligatoria                    | Numerico¹         | Identificador autonumerico del tramite               |
+| `nombre_tramite`              | Obligatoria                    | Texto             | Nombre del tramite                                   |
+| `requisitos`                  | Opcional                       | Texto             | Requisitos del tramite                               |
+| `tiempo_minutos`              | Obligatoria                    | Entero            | Tiempo en minutos que dura el tramite                |
+| `costo`                       | Obligatoria                    | Texto             | Costo del tramite, puede ser texto                   |
+| `codigo`                      | Obligatoria                    | Texto             | Codigo unico del tramite                             |
+| `dependencia_id`              | Opcional                       | Numerico¹         | Idenfificador de dependencia de la tabla "dependencias"  |
+| `warning_message`             | Opcional                       | Texto             | Mensaje de alerta al momento de desplegar requisitos |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de oficinas
+
+Tabla llamada `oficinas`. Esta entidad almacena las oficinas. Una oficina forma parte de una dependencia, esto quiere decir, que una dependencia puede tener mas de una oficina. Hace uso de las entidades catálogo como [dependencias](#tabla-de-dependencias).
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_oficina`                  | Obligatoria                    | Numerico¹         | Identificador autonumerico de la oficina             |
+| `nombre_oficina`              | Obligatoria                    | Texto             | Nombre de la oficina                                 |
+| `slug`                        | Opcional                       | Texto             | Slug del nombre la oficina                           |
+| `dependencia_id`              | Obligatoria                    | Numerico¹         | Idenfificador de dependencia de la tabla "dependencias"  |
+| `coords`                      | Obligatoria                    | Texto             | Coordenadas de la oficina,  formato: lat, long       |
+| `direccion`                   | Opcional                       | Texto             | Direccion en texto de la oficina                     |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
+
+### Tabla de dependencias
+
+Tabla llamada `dependencias`. Esta entidad almacena las dependencias. Una oficina forma parte de una dependencia, esto quiere decir, que una dependencia puede tener mas de una oficina. Solo el administrador de la base de datos puede crear una dependencia.
+
+| Nombre de la columna          | Columna obligatoria / opcional | Tipo de dato      | Detalle                                              |
+| ----------------------------- |------------------------------- | ----------------- | ---------------------------------------------------- |
+| `id_dependencia`              | Obligatoria                    | Numerico¹         | Identificador autonumerico de la dependencia         |
+| `nombre_dependencia`          | Obligatoria                    | Texto             | Nombre de la dependencia                             |
+| `created_by`                  | Opcional                       | Numerico¹         | Identificador de usuario creador del registro        |
+| `created_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de creación del registro             |
+| `updated_by`                  | Opcional                       | Numerico¹         | Identificador de usuario modificador del registro    |
+| `updated_at`                  | Opcional                       | Marca de tiempo   | Marca de tiempo de modificación del registro         |
+
+
+¹ Tener en cuenta que es importante formatear los numeros de forma tal que el separador decimal sea `.` y no deben 
+contar con separadores de miles, comillas, caracter de moneda, ni otros caracteres especiales. 
 
 ## Archivos necesarios para el correcto funcionamiento del sitio
 
