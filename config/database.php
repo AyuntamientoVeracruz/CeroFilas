@@ -43,51 +43,15 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'compracero_app'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'unix_socket' => env('DB_SOCKET'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
-        ],
-
-        'mysql2' => [
-            'driver'    => env('DB_CONNECTION_PAGOS'),
-            'host'      => env('DB_HOST_PAGOS'),
-            'port'      => env('DB_PORT_PAGOS'),
-            'database'  => env('DB_DATABASE_PAGOS'),
-            'username'  => env('DB_USERNAME_PAGOS'),
-            'password'  => env('DB_PASSWORD_PAGOS')
-        ],
-
-        'mysql3' => [
-            'driver'    => env('DB_CONNECTION_OBRAS'),
-            'host'      => env('DB_HOST_OBRAS'),
-            'port'      => env('DB_PORT_OBRAS'),
-            'database'  => env('DB_DATABASE_OBRAS'),
-            'username'  => env('DB_USERNAME_OBRAS'),
-            'password'  => env('DB_PASSWORD_OBRAS')
-        ],
-
-        'mysql4' => [
-            'driver'    => env('DB_CONNECTION_TRANSITO'),
-            'host'      => env('DB_HOST_TRANSITO'),
-            'port'      => env('DB_PORT_TRANSITO'),
-            'database'  => env('DB_DATABASE_TRANSITO'),
-            'username'  => env('DB_USERNAME_TRANSITO'),
-            'password'  => env('DB_PASSWORD_TRANSITO')
-        ],
-        
-        'mysql5' => [
-            'driver'    => env('DB_CONNECTION_CORONAVIRUS'),
-            'host'      => env('DB_HOST_CORONAVIRUS'),
-            'port'      => env('DB_PORT_CORONAVIRUS'),
-            'database'  => env('DB_DATABASE_CORONAVIRUS'),
-            'username'  => env('DB_USERNAME_CORONAVIRUS'),
-            'password'  => env('DB_PASSWORD_CORONAVIRUS')
         ],
 
         'pgsql' => [
