@@ -419,8 +419,7 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
  * Insertar un registro en la tabla `users` con un usuario tipo `superadmin` con el mail que usará de acceso el administrador del sistema, y con el siguiente password (ya encriptado en md5): `$2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW`    -    que significa: `123456`   -     posteriormente puede cambiar el password una vez iniciada sesión. 
  * Insertar un registro en la tabla `configuraciones` con el valor para `service_name` de `google_maps`, y en `service_key` el valor de API Key de tu cuenta de google maps.
  * Revisar que este habilitada la opción de ejecutar `Eventos` de MySQL.
- * Crear el procedimiento:
- 
+ * Crear un procedimiento con nombre `setAssignment` con el siguiente contenido: 
  ```sql
 	 BEGIN	
 		DECLARE finished,finishedusers BOOLEAN DEFAULT FALSE;
@@ -437,9 +436,7 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
 				CLOSE curOficinas;
 				LEAVE getOficina;
 			END IF;
-			
-			
-			
+									
 			BLOCKUSERS: BEGIN
 			
 			DECLARE curUsers CURSOR FOR
@@ -474,10 +471,7 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
 					UPDATE turnos SET user_id=idUser,estatus='enproceso',fechahora_inicio=NOW() 
 					WHERE id_turno = idTurno;
 	
-				END IF;
-				
-				UPDATE users SET created_by='22' 
-				WHERE id_user = idUser;
+				END IF;				
 				
 			END LOOP getUsers;
 			
@@ -486,8 +480,19 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
 		END LOOP getOficina;
 		
 	END
+ ```
+ * Crear un evento llamado `setAssignment` de tipo `recurrente` que se ejecute cada `5 segundos` con fecha de inicio `ahora` sin fecha de fin, que mande a llamar al procedimiento `setAssignment` que acabamos de crear.	
+ * Crear otro evento llamado `expireholdingcita` de tipo `recurrente` que se ejecute cada `1 minuto` con fecha de inicio `ahora` sin fecha de fin con el siguiente contenido:
+ ```sql
+ 	DELETE FROM holdingcitas 
+	WHERE TIMESTAMPDIFF(MINUTE, created_at , NOW()) > 5
+ ```
+ * Crear otro evento llamado `setavailability` de tipo `recurrente` que se ejecute cada `1 día` con fecha de inicio `día actual 8pm` sin fecha de fin con el siguiente contenido:
+ ```sql
+ 	UPDATE users 
+	SET disponibleturno='no'
  ```	
-5. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD).
+5. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD). También más abajo en este mismo archivo debemos configurar nuestros datos de conexión al correo que ejecutará envíos.
 6. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
 7. En este folder copiar las carpetas mencionadas (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (y la reciente carpeta `vendor` que se descomprimió).
 8. También en el mismo folder copiar los archivos mencionados (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel), incluido el reciente archivo `.env` que editamos con los datos de conexión (ya no incluir la subida de la carpeta `vendor.zip`). Y en este mismo folder de `cerofilas` crear las carpeta `storage/app/images` y `storage/framework/sessions`.
@@ -495,6 +500,7 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
 10. Este archivo y todos los demás archivos y carpetas del folder `public_html` copiarlas a la carpeta `public_html` del servidor destino.
 11. Para ver que todo marche bien, ejecutar la url del dominio de nuestro servidor destino, veremos la app pública de creación de citas.
 12. Y probar la url del dominio `/sistema` y usar el usuario que creamos con el password `123456`. Deberíamos ingresar a la app de administración. Si es así, ya podemos crear nuestros usuarios, trámites y relaciones.
+13. Opcionalmente, si queremos que el sistema envie recordatorios diarios, debemos agregar a los `trabajos de Cron` el siguiente comando `wget http://urldedominio/sendrecordatorios` (donde urldedominio es la url de tu servidor destino), indicando que se ejecute diariamente a las 8am.
 
 ## Licencia
 
