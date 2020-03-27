@@ -419,6 +419,74 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
  * Insertar un registro en la tabla `users` con un usuario tipo `superadmin` con el mail que usará de acceso el administrador del sistema, y con el siguiente password (ya encriptado en md5): `$2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW`    -    que significa: `123456`   -     posteriormente puede cambiar el password una vez iniciada sesión. 
  * Insertar un registro en la tabla `configuraciones` con el valor para `service_name` de `google_maps`, y en `service_key` el valor de API Key de tu cuenta de google maps.
  * Revisar que este habilitada la opción de ejecutar `Eventos` de MySQL.
+ * Crear el procedimiento:
+ 
+ ```sql
+	 BEGIN	
+		DECLARE finished,finishedusers BOOLEAN DEFAULT FALSE;
+		DECLARE idOficina,idUser,idTurno,counter BIGINT DEFAULT 0;
+		DECLARE curOficinas CURSOR FOR 
+				SELECT id_oficina FROM oficinas ORDER BY id_oficina ASC;
+		DECLARE CONTINUE HANDLER 
+				FOR NOT FOUND SET finished = TRUE;
+		OPEN curOficinas;        
+		getOficina: LOOP
+		
+			FETCH curOficinas INTO idOficina;
+			IF finished THEN 
+				CLOSE curOficinas;
+				LEAVE getOficina;
+			END IF;
+			
+			
+			
+			BLOCKUSERS: BEGIN
+			
+			DECLARE curUsers CURSOR FOR
+					SELECT id_user FROM users WHERE oficina_id=idOficina and disponibleturno="si" and estatus="activo"
+					and id_user not in 
+					(select user_id from turnos where estatus='enproceso' and oficina_id=idOficina) ORDER BY id_user ASC;
+			DECLARE CONTINUE HANDLER
+					FOR NOT FOUND SET finishedusers = TRUE;
+			OPEN curUsers; 
+			getUsers: LOOP
+				
+				FETCH curUsers INTO idUser;   
+													
+				IF finishedusers THEN
+					SET finishedusers = FALSE;
+					CLOSE curUsers;    
+					LEAVE getUsers;
+				END IF;
+				
+				SELECT count(*) into counter
+				FROM turnos 
+				LEFT JOIN tramitesxusers ON tramitesxusers.tramite_id=turnos.tramite_id 
+				WHERE oficina_id=idOficina and turnos.estatus='creado' and Date(turnos.created_at)=CURDATE() and tramitesxusers.user_id=idUser
+				ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;
+				
+				IF counter>0 THEN
+					SELECT id_turno INTO idTurno
+					FROM turnos 
+					LEFT JOIN tramitesxusers ON tramitesxusers.tramite_id=turnos.tramite_id 
+					WHERE oficina_id=idOficina and turnos.estatus='creado' and Date(turnos.created_at)=CURDATE() and tramitesxusers.user_id=idUser
+					ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;    
+					UPDATE turnos SET user_id=idUser,estatus='enproceso',fechahora_inicio=NOW() 
+					WHERE id_turno = idTurno;
+	
+				END IF;
+				
+				UPDATE users SET created_by='22' 
+				WHERE id_user = idUser;
+				
+			END LOOP getUsers;
+			
+			END BLOCKUSERS;
+				
+		END LOOP getOficina;
+		
+	END
+ ```	
 5. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD).
 6. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
 7. En este folder copiar las carpetas mencionadas (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (y la reciente carpeta `vendor` que se descomprimió).
