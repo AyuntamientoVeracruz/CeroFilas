@@ -402,13 +402,15 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
 2. Descomprimir el archivo `vendor.zip`.
 3. Renombrar el archivo `env` a `.env`.
 4. En en su gestor de MySQL de su preferencia, ejecutar el archivo [cerofila_db.sql](./cerofila_db.sql) para crear la base de datos en el servidor destino.
-5. Insertar un registro en la tabla `users` con un usuario tipo `superadmin` con el mail que usará de acceso el administrador del sistema, y con el siguiente password (ya encriptado en md5): `$2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW`    -    que significa: `123456`   -     posteriormente puede cambiar el password una vez iniciada sesión. 
-6. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD).
-7. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
-8. En este folder copiar las carpetas mencionadas (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (y la reciente carpeta `vendor` que se descomprimió).
-9. También en el mismo folder copiar los archivos mencionados (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (ya no incluir la subida de la carpeta `vendor.zip`) en la carpeta raíz del servidor destino (no meter en `public_html`).
-10. En la carpeta `public_html` que descargamos hay un archivo `htaccess`, renombrar a `.htaccess`.
-11. Este archivo y todos los demás archivos y carpetas del folder `public_html` copiarlas a la carpeta `public_html` del servidor destino.
+ *  Insertar un registro en la tabla `users` con un usuario tipo `superadmin` con el mail que usará de acceso el administrador del sistema, y con el siguiente password (ya encriptado en md5): `$2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW`    -    que significa: `123456`   -     posteriormente puede cambiar el password una vez iniciada sesión. 
+5. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD).
+6. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
+7. En este folder copiar las carpetas mencionadas (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (y la reciente carpeta `vendor` que se descomprimió).
+8. También en el mismo folder copiar los archivos mencionados (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel), incluido el reciente archivo `.env` que editamos con los datos de conexión (ya no incluir la subida de la carpeta `vendor.zip`).
+9. En la carpeta `public_html` que descargamos hay un archivo `htaccess`, renombrar a `.htaccess`.
+10. Este archivo y todos los demás archivos y carpetas del folder `public_html` copiarlas a la carpeta `public_html` del servidor destino.
+11. Para ver que todo marche bien, ejecutar la url del dominio de nuestro servidor destino, veremos la app pública de creación de citas.
+12. Y probar la url del dominio `/sistema` y usar el usuario que creamos con el password `123456`. Deberíamos ingresar a la app de administración. Si es así, ya podemos crear nuestros usuarios, trámites y relaciones.
 
 ## Licencia
 
