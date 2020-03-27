@@ -421,76 +421,76 @@ Sólo requiere un servidor web que tenga los siguientes servicios:
  * Revisar que este habilitada la opción de ejecutar `Eventos` de MySQL.
  * Crear un procedimiento con nombre `setAssignment` con el siguiente contenido: 
  ```sql
-	 BEGIN	
-		DECLARE finished,finishedusers BOOLEAN DEFAULT FALSE;
-		DECLARE idOficina,idUser,idTurno,counter BIGINT DEFAULT 0;
-		DECLARE curOficinas CURSOR FOR 
-				SELECT id_oficina FROM oficinas ORDER BY id_oficina ASC;
-		DECLARE CONTINUE HANDLER 
-				FOR NOT FOUND SET finished = TRUE;
-		OPEN curOficinas;        
-		getOficina: LOOP
+BEGIN	
+	DECLARE finished,finishedusers BOOLEAN DEFAULT FALSE;
+	DECLARE idOficina,idUser,idTurno,counter BIGINT DEFAULT 0;
+	DECLARE curOficinas CURSOR FOR 
+			SELECT id_oficina FROM oficinas ORDER BY id_oficina ASC;
+	DECLARE CONTINUE HANDLER 
+			FOR NOT FOUND SET finished = TRUE;
+	OPEN curOficinas;        
+	getOficina: LOOP
+	
+		FETCH curOficinas INTO idOficina;
+		IF finished THEN 
+			CLOSE curOficinas;
+			LEAVE getOficina;
+		END IF;
+								
+		BLOCKUSERS: BEGIN
 		
-			FETCH curOficinas INTO idOficina;
-			IF finished THEN 
-				CLOSE curOficinas;
-				LEAVE getOficina;
-			END IF;
-									
-			BLOCKUSERS: BEGIN
+		DECLARE curUsers CURSOR FOR
+				SELECT id_user FROM users WHERE oficina_id=idOficina and disponibleturno="si" and estatus="activo"
+				and id_user not in 
+				(select user_id from turnos where estatus='enproceso' and oficina_id=idOficina) ORDER BY id_user ASC;
+		DECLARE CONTINUE HANDLER
+				FOR NOT FOUND SET finishedusers = TRUE;
+		OPEN curUsers; 
+		getUsers: LOOP
 			
-			DECLARE curUsers CURSOR FOR
-					SELECT id_user FROM users WHERE oficina_id=idOficina and disponibleturno="si" and estatus="activo"
-					and id_user not in 
-					(select user_id from turnos where estatus='enproceso' and oficina_id=idOficina) ORDER BY id_user ASC;
-			DECLARE CONTINUE HANDLER
-					FOR NOT FOUND SET finishedusers = TRUE;
-			OPEN curUsers; 
-			getUsers: LOOP
-				
-				FETCH curUsers INTO idUser;   
-													
-				IF finishedusers THEN
-					SET finishedusers = FALSE;
-					CLOSE curUsers;    
-					LEAVE getUsers;
-				END IF;
-				
-				SELECT count(*) into counter
+			FETCH curUsers INTO idUser;   
+												
+			IF finishedusers THEN
+				SET finishedusers = FALSE;
+				CLOSE curUsers;    
+				LEAVE getUsers;
+			END IF;
+			
+			SELECT count(*) into counter
+			FROM turnos 
+			LEFT JOIN tramitesxusers ON tramitesxusers.tramite_id=turnos.tramite_id 
+			WHERE oficina_id=idOficina and turnos.estatus='creado' and Date(turnos.created_at)=CURDATE() and tramitesxusers.user_id=idUser
+			ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;
+			
+			IF counter>0 THEN
+				SELECT id_turno INTO idTurno
 				FROM turnos 
 				LEFT JOIN tramitesxusers ON tramitesxusers.tramite_id=turnos.tramite_id 
 				WHERE oficina_id=idOficina and turnos.estatus='creado' and Date(turnos.created_at)=CURDATE() and tramitesxusers.user_id=idUser
-				ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;
-				
-				IF counter>0 THEN
-					SELECT id_turno INTO idTurno
-					FROM turnos 
-					LEFT JOIN tramitesxusers ON tramitesxusers.tramite_id=turnos.tramite_id 
-					WHERE oficina_id=idOficina and turnos.estatus='creado' and Date(turnos.created_at)=CURDATE() and tramitesxusers.user_id=idUser
-					ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;    
-					UPDATE turnos SET user_id=idUser,estatus='enproceso',fechahora_inicio=NOW() 
-					WHERE id_turno = idTurno;
+				ORDER BY cita_id IS NOT NULL desc, turnos.created_at asc LIMIT 1;    
+				UPDATE turnos SET user_id=idUser,estatus='enproceso',fechahora_inicio=NOW() 
+				WHERE id_turno = idTurno;
 	
-				END IF;				
-				
-			END LOOP getUsers;
+			END IF;				
 			
-			END BLOCKUSERS;
-				
-		END LOOP getOficina;
+		END LOOP getUsers;
 		
-	END
+		END BLOCKUSERS;
+			
+	END LOOP getOficina;
+	
+END
  ```
  * Crear un evento llamado `setAssignment` de tipo `recurrente` que se ejecute cada `5 segundos` con fecha de inicio `ahora` sin fecha de fin, que mande a llamar al procedimiento `setAssignment` que acabamos de crear.	
  * Crear otro evento llamado `expireholdingcita` de tipo `recurrente` que se ejecute cada `1 minuto` con fecha de inicio `ahora` sin fecha de fin con el siguiente contenido:
  ```sql
- 	DELETE FROM holdingcitas 
-	WHERE TIMESTAMPDIFF(MINUTE, created_at , NOW()) > 5
+DELETE FROM holdingcitas 
+WHERE TIMESTAMPDIFF(MINUTE, created_at , NOW()) > 5
  ```
  * Crear otro evento llamado `setavailability` de tipo `recurrente` que se ejecute cada `1 día` con fecha de inicio `día actual 8pm` sin fecha de fin con el siguiente contenido:
  ```sql
- 	UPDATE users 
-	SET disponibleturno='no'
+UPDATE users 
+SET disponibleturno='no'
  ```	
 5. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD). También más abajo en este mismo archivo debemos configurar nuestros datos de conexión al correo que ejecutará envíos.
 6. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
