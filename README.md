@@ -406,7 +406,7 @@ Para realizar modificaciones de estilos al sitio actual, realizar lo siguiente:
 
 Sólo requiere un servidor web que tenga los siguientes servicios: 
 
-* Apache
+* Apache (y opcionalmente tener los los `trabajos de Cron` activos).
 * MySQL 5 o superior (que tenga habilitada la opción de ejecutar `Eventos`)
 * PHP 7.1 (con su extensión mysqli activa)
 
