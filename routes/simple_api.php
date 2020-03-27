@@ -14,9 +14,3 @@ use Illuminate\Http\Request;
 */
 
 
-
-Route::post('/obtenermulta', [
-  'as' => 'montomulta',
-  'uses' => 'TransitoController@getMontoMulta'
-]);
-
