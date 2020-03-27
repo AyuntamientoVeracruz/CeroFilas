@@ -19,12 +19,12 @@ Proyecto de generación, confirmación y evaluación de citas programadas y turn
 	- [Tabla de videos](#tabla-de-videos)
   - [Archivos necesarios para el correcto funcionamiento del sitio](#archivos-necesarios-para-el-correcto-funcionamiento-del-sitio)
     - [Proyecto Laravel](#proyecto-laravel)
+	- [Archivo SQL de DB](#archivo-sql-de-dB)
     - [Archivos publicos](#archivos-publicos)
   - [Instrucciones para desarrolladores](#instrucciones-para-desarrolladores)
     - [Adaptación estetica](#adaptaci%C3%B3n-estetica)
   - [Levantar el proyecto en un ambiente productivo](#levantar-el-proyecto-en-un-ambiente-productivo)
     - [Requerimientos](#requerimientos)
-    - [Configuración](#configuraci%C3%B3n)
     - [Instalación por primera vez](#instalaci%C3%B3n-por-primera-vez)
   - [Licencia](#licencia)	
   - [Autores](#autores)
@@ -351,7 +351,6 @@ El proyecto Laravel se compone de las siguientes carpetas:
 * [resources](./resources)
 * [routes](./routes)
 * [tests](./tests)
-* storage
 
 Y también de los siguientes archivos:
 * [artisan](./artisan)
@@ -359,8 +358,12 @@ Y también de los siguientes archivos:
 * [composer.lock](./composer.lock)
 * [package.json](./package.json)
 * [env](./env) El cual deberá renombrarse y adecuarse
-* [htaccess](./htaccess) El cual deberá renombrarse y adecuarse
 * [vendor.zip](./vendors.zip) El cual deberá descromprimirse en la ruta raíz
+
+### Archivo SQL de DB
+
+El archivo SQL de DB es el siguiente:
+* [cerofila_db.sql](./cerofila_db.sql) El cual como requisito hay que crear manualmente un registro de usuario de tipo `superadmin`, con el mail de preferencia, y con un password encriptado ($2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW) que significa 123456
 
 ### Archivos publicos
 
@@ -369,38 +372,43 @@ Los archivos publicos estan dentro de la siguiente carpeta:
 
 ## Instrucciones para desarrolladores
 
-Para realizar modificaciones al sitio actual, realizar los siguientes pasos
+Para realizar modificaciones al sitio actual, realizar los siguientes pasos:
 
-* ...
-* ...
+* Si se desean agregar o modificar las imagenes de la app pública, puede hacerse accediendo a [public_html/images](./public_html/images)
+* Si se desean agregar o modificar las imagenes de la app de administración, puede hacerse accediendo a [public_html/sis/images](./public_html/sis/images)
+* Si se desean agregar o modificar las scripts de js de la app pública, puede hacerse accediendo a [public_html/js](./public_html/js)
+* Si se desean agregar o modificar las scripts de js de la app de administración, puede hacerse accediendo a [public_html/sis/js](./public_html/sis/js)
 
 ### Adaptación estetica
 
-En caso de necesitar agregar cambios al css del sitio, ubicarlos en el archivo `...`. Este archivo
-tiene precedencia por sobre los estilos base del sitio. 
+Para realizar modificaciones de estilos al sitio actual, realizar lo siguiente:
 
+* Si se desea modificar los estilos de la app pública, deberán modificarse desde el archivo [public_html/css/app.css](./public_html/css/app.css)
+* Si se desea modificar los estilos de la app de administración, deberán modificarse desde el archivo [public_html/sis/css/style.css](./public_html/sis/css/style.css)
 
 ## Levantar el proyecto en un ambiente productivo
 
 ### Requerimientos
 
-Sólo requiere un servidor web que pueda servir los contenidos. 
+Sólo requiere un servidor web que tenga los siguientes servicios: 
 
 * Apache
-* ...
-
-### Configuración
-
-* ...
-* ...
+* MySQL 5 o superior (que tenga habilitada la opción de ejecutar `Eventos`)
+* PHP 7.1 (con su extensión mysqli activa)
 
 ### Instalación por primera vez
 
-1. ...
-2. ...
-3. ...
-4. ...
-5. ...
+1. Clonar el proyecto usando git.
+2. Descomprimir el archivo `vendor.zip`.
+3. Renombrar el archivo `env` a `.env`.
+4. En en su gestor de MySQL de su preferencia, ejecutar el archivo [cerofila_db.sql](./cerofila_db.sql) para crear la base de datos en el servidor destino.
+5. Insertar un registro en la tabla `users` con un usuario tipo `superadmin` con el mail que usará de acceso el administrador del sistema, y con el siguiente password (ya encriptado en md5): `$2y$12$FGFyCBpT6HQ5aEvsx8rClu24ijnYfG9YcwBNhASecS8jxKoGk9FqW`    -    que significa: `123456`   -     posteriormente puede cambiar el password una vez iniciada sesión. 
+6. Editar el archivo `.env`. con el contenido de los datos de conexión a la base de datos recientemente creada (en el apartado DB_DATABASE,DB_USERNAME,DB_PASSWORD).
+7. Crear un folder con el nombre `cerofilas` en la carpeta raíz del servidor destino (no meter en public_html).
+8. En este folder copiar las carpetas mencionadas (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (y la reciente carpeta `vendor` que se descomprimió).
+9. También en el mismo folder copiar los archivos mencionados (que ya descargamos) en [Proyecto Laravel](#proyecto-laravel) (ya no incluir la subida de la carpeta `vendor.zip`) en la carpeta raíz del servidor destino (no meter en `public_html`).
+10. En la carpeta `public_html` que descargamos hay un archivo `htaccess`, renombrar a `.htaccess`.
+11. Este archivo y todos los demás archivos y carpetas del folder `public_html` copiarlas a la carpeta `public_html` del servidor destino.
 
 ## Licencia
 
