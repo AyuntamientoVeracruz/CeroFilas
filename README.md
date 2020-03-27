@@ -40,12 +40,10 @@ Cero Filas nace por iniciativa del H. Ayuntamiento de Veracruz en la administrac
 
 La solicitud de una cita se lleva acabo a través de la plataforma Cero Filas, ingresando a [cerofilas.veracruzmunicipio.gob.mx](https://cerofilas.veracruzmunicipio.gob.mx)
 
-<div>
 <img src="01-elegir-tramite.gif" width="31%" align="left">
 <img src="02-selecciona-fechahora.gif" width="31%" align="left">
 <img src="03-llenar-campos.gif" width="31%" align="left">
-</div>
-
+<br>
 El tramitador tendrá acceso a la plataforma ingresando a [cerofilas.veracruzmunicipio.gob.mx/sistema](https://cerofilas.veracruzmunicipio.gob.mx/sistema), es aquí donde podrá visualizar las citas y turnos pasados, citas y turnos actuales y los futuros. Dentro de esta plataforma, el tramitador podrá crear un historial del ciudadano o acceder a él a través de la CURP.
 
 Para mejorar la atención del tramitador al ciudadano, se le da al tramitante la herramienta de la evaluación, esta se realizará una vez que haya concluido la atención, y llegará mediante correo electrónico, aquí podrá calificar la atención y dejar comentarios acerca de la atención recibida y su experiencia al realizar el trámite.
