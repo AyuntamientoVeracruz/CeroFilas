@@ -342,11 +342,30 @@ contar con separadores de miles, comillas, caracter de moneda, ni otros caracter
 
 ### Proyecto Laravel
 
-Dentro de este folder de git ...
+El proyecto Laravel se compone de las siguientes carpetas:
+
+* [app](./app)
+* [bootstrap](./bootstrap) 
+* [config](./config)
+* [database](./database)
+* [resources](./resources)
+* [routes](./routes)
+* [tests](./tests)
+* storage
+
+Y también de los siguientes archivos:
+* [artisan](./artisan)
+* [composer.json](./composer.json)
+* [composer.lock](./composer.lock)
+* [package.json](./package.json)
+* [env](./env) El cual deberá renombrarse y adecuarse
+* [htaccess](./htaccess) El cual deberá renombrarse y adecuarse
+* [vendor.zip](./vendors.zip) El cual deberá descromprimirse en la ruta raíz
 
 ### Archivos publicos
 
-Dentro de este folder de git ...
+Los archivos publicos estan dentro de la siguiente carpeta:
+* [public_html](./public_html)
 
 ## Instrucciones para desarrolladores
 
