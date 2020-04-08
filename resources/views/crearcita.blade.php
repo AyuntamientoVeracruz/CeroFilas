@@ -93,11 +93,7 @@
                                 <label>Horarios disponibles</label>
                                 <small></small>
                                 <div>
-                                    <!--<a href="#" data-time="09:00">09:00</a>
-                                    <a href="#" data-time="09:30">09:30</a>
-                                    <a href="#" data-time="10:00">10:00</a>
-                                    <a href="#" data-time="10:30">10:30</a>
-                                    <a href="#" data-time="11:00">11:00</a>-->
+                                    
                                 </div>
                             </div>
                                     
