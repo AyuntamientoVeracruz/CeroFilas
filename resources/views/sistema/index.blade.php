@@ -87,7 +87,7 @@
                 </div>
                 <input type="text" class="form-control br text-uppercase" placeholder="Ingrese CURP del ciudadano" name="curp" id="curp" >  
               </div>
-              <quote>Apoye al ciudadano con el <b>CURP</b>, es requerido para el historial, <a href="https://www.gob.mx/curp/" target="_blank">encuéntralo aquí.</a></quote>
+              <quote>Apoye al ciudadano con el <b>CURP</b>, es requerido para el historial, <a href="https://www.gob.mx/curp/" target="_blank" rel="noopener noreferrer">encuéntralo aquí.</a></quote>
             </div>
 
             <div class="col-lg-6 col-md-12 mt20">              
