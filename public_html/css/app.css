@@ -31,7 +31,7 @@
 }
 
 a, h1, h2, h3, h4, h5, h6, span, p, div, label, li, ul {
-    font-family: "NeoSans";
+    font-family: "NeoSans",Helvetica, Arial, Verdana, Tahoma;
 }
 
 body{background: #F0F0F5; font-weight: 500}
@@ -65,7 +65,6 @@ bottom: -10px; height: 20px; line-height: 12px; padding-left: 5px; padding-right
 
 .loading-main{display: block;
     position: fixed;
-    z-index: 100;
     top: 0px;
     left: 0px;
     height: 100%;
@@ -286,7 +285,7 @@ bottom: -10px; height: 20px; line-height: 12px; padding-left: 5px; padding-right
     animation: bounce-button-in 0.45s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
 		
 		.dates .ct-week.selected a{background:#337ab7!important; color:#fff;
-		webkit-transform: scale(0.85);
+		-webkit-transform: scale(0.85);
     transform: scale(0.85); box-shadow: 3px 3px 8px rgba(0,0,0,0.2)}
 
 		.dates .ct-week.available::before{content:""; width:9px; height:9px; background:#A5CB2D;
@@ -306,11 +305,10 @@ bottom: -10px; height: 20px; line-height: 12px; padding-left: 5px; padding-right
 	    text-align: left;
 	    padding: 0.7em;
 	    float: left;
-	    width: 100%; margin-top: 0px; padding-top: 0px
+	    width: 100%; margin-top: 0px; padding-top: 0px;
+	   display: none; margin-bottom: 10px
 	}
 	.ct-button {
-	    color: inherit;
-	    margin-top: 3px;
 	    z-index: 3;
 	    position: relative;
 	    font-weight: 400;
@@ -372,18 +370,18 @@ border-radius:4px; background: #fff; border:1px solid #eee; /* box-shadow: 0px 0
 	}	
 		.hours a:hover{border-color:#337ab7; color:#337ab7;}
 		.hours a.selected{border-color:#337ab7; background-color:#337ab7; color:#ffffff}
-	.hours label{color:#337ab7; position: absolute; width: auto; text-align: center; font-size: 9px; font-weight: normal;
+	.hours label{color:#337ab7; position: absolute; text-align: center; font-size: 9px; font-weight: normal;
 		width: 120px; left: calc(50% - 60px); background: #fff; top:-10px; height: 20px; line-height: 20px;
 		text-transform: uppercase;}
 
-.today-date{display: none; margin-bottom: 10px}
+
 
 .labeled{color:#999; line-height: 40px; float: left; font-size: 9px; font-weight: normal; padding-left: 10px}
 	@media only screen and (max-width: 480px) and (min-width: 320px){
 		.labeled{width:100%; text-align: center; line-height: 12px}
 	}
 
-.etiqueta{ font-size: 14px; font-weight: normal; line-height: 10px; float: left; margin-top: 8px; float: left}
+.etiqueta{ font-size: 14px; font-weight: normal; line-height: 10px; float: left; margin-top: 8px}
 .etiqueta-right{float: right; margin-bottom: 30px}
 	.etiqueta b{width:6px; height: 6px; border-radius:6px; float: left; margin-top: 2px; margin-right: 6px}
 		.etiqueta b.available{ background: #A5CB2D }
@@ -463,7 +461,7 @@ input.texto, textarea {
 input.capitalize{ text-transform: capitalize; }
 .uppercase{ text-transform: uppercase!important; }
 .lowercase{ text-transform: lowercase!important}
-textarea{ padding-top:16px; padding-bottom:8px}
+textarea{ padding-top:16px; padding-bottom:8px;height:140px}
 .inputfield label {
 	font-size: 14px;
 	position: absolute;
@@ -479,7 +477,7 @@ textarea{ padding-top:16px; padding-bottom:8px}
 
 form input:focus~label, form textarea:focus~label, .actived label{top:3px;color:#337ab7!important; padding-bottom: 0px; background:none; font-size: 12px}
 form input:valid~label, form textarea:valid~label{top:3px;color:#000!important;padding-bottom: 0px; background:none}
-textarea{height:140px}
+
 form input.texto:focus,textarea:focus{border:1px solid #337ab7}
 
 .inputfield input::placeholder{color: #c5c5c5; text-transform: none}
@@ -500,7 +498,7 @@ form input.texto:valid,form input.texto:focus{ color:#333}
 noselected{ text-transform:none!important;}
 
 .wrappercontainer{width: 100%; float: left}
-.headerwrapper{ width: 100%;height: 430px; background: #212F4D url(../images/bg.jpg) top center; background-size: cover; position: relative;float:left; width: 100%}
+.headerwrapper{ height: 430px; background: #212F4D url(../images/bg.jpg) top center; background-size: cover; position: relative;float:left; width: 100%}
 	.headerwrapper:before{width:100%; height: 100%; background:none; z-index: 1; content: ""; position: absolute;
 left: 0px; top: 0px}
 
@@ -541,7 +539,7 @@ footer{ background: #D7D4D4; height: 110px; padding-top: 17.5px; padding-bottom:
 		footer{ height: auto }
 		.logofootercontainer{height: 110px; float: left}
 		footer .col-sm-5{ width:50%; height: 110px; display: flex;align-items: center;justify-content: center}
-		.bggray{ width: 100%; margin-top: 0px; height: 110px; margin-bottom: 10px; margin-top: 10px}
+		.bggray{ width: 100%; height: 110px; margin-bottom: 10px; margin-top: 10px}
 		header .col-sm-4{ width: calc(100% - 186px); float: left; }
 		.headerwrapper .menu{ display: none }
 	}
@@ -551,7 +549,7 @@ footer{ background: #D7D4D4; height: 110px; padding-top: 17.5px; padding-bottom:
 		.logofootercontainer{height: 110px; float: left; width: 100%; text-align: center;}
 			.logofootercontainer img{width: auto; height: auto}
 		footer .col-sm-5{ width: 100%; float: left; height: 110px; display: flex;align-items: center;justify-content: center; padding-left: 0px; padding-right: 0px}
-		.bggray{ width: 100%; margin-top: 0px; height: 110px; margin-bottom: 10px; float: left; margin-top: 10px}
+		.bggray{ width: 100%;  height: 110px; margin-bottom: 10px; float: left; margin-top: 10px}
 		header{ height: 80px }
 		.logoheadercontainer{ width: 140px}
 		header .col-sm-4{ width: calc(100% - 140px); float: left; }
@@ -559,7 +557,7 @@ footer{ background: #D7D4D4; height: 110px; padding-top: 17.5px; padding-bottom:
 	}
 
 .responsemessage{ width: 300px; min-height: 100px; border-radius:5px; box-shadow:0px 0px 15px rgba(0,0,0,0.2); padding:10px;
-position: fixed; left: calc(50% - 150px); z-index: 9999; top: -150px; background:#212F4D; color: #fff; text-align:center;
+position: fixed; left: calc(50% - 150px); top: -150px; background:#212F4D; color: #fff; text-align:center;
  cursor: pointer; font-size: 14px;display: flex;align-items: center;justify-content: center; transition:0.2s; z-index: 99991}
 	.responsemessage.showed{top: calc(50% - 50px)}
 	.responsemessage::before{content: "x"; font-size: 12px; position: absolute; right: 10px; top: 10px; z-index: 9999;
@@ -628,12 +626,12 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 			}
 			.concitavisor label close{position: fixed; right: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial"; margin:0px; line-height: 80px; 
+			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
 			 display: flex; flex-direction: column;justify-content: center
 			}	
 			.concitavisor label search{position: fixed; left: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial"; margin:0px; line-height: 80px; 
+			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
 			 display: flex; flex-direction: column;justify-content: center
 			}	
 
@@ -646,7 +644,7 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 
 		.sincitavisor close{ position: fixed; right: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial"; margin:0px; line-height: 80px;
+			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px;
 			display: flex; flex-direction: column;justify-content: center}	
 		.sincitavisor form{ width: 80%; margin-left: 10%}
 			.minisearchcontainer form{ width: calc(100% - 40px); margin-left: 20px; position:relative;}	
