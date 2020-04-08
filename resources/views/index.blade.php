@@ -63,7 +63,7 @@
                 <div class="main-left col-sm-7 col-md-7 col-xs-12 br-5 p15 mb-30">
                     <h3 class="header3">Crea tu cita</h3>
                     
-                    <quote>Antes de empezar, ten a la mano tu <b>CURP</b>, ya que es necesario para el registro, tiene un tiempo límite de 5 minutos para completarlo. Si no lo tienes, <a href="https://www.gob.mx/curp/" target="_blank">encuéntralo aquí.</a></quote>
+                    <quote>Antes de empezar, ten a la mano tu <b>CURP</b>, ya que es necesario para el registro, tiene un tiempo límite de 5 minutos para completarlo. Si no lo tienes, <a href="https://www.gob.mx/curp/" target="_blank" rel="noopener noreferrer">encuéntralo aquí.</a></quote>
 
                     <label class="titlesection" style="margin-bottom: 0px"><b><i class="far fa-id-card"></i></b><span>¿Ya tienes tu CURP a la mano?</span></label>
                                         
