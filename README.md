@@ -1,5 +1,5 @@
 # [Cero Filas](https://cerofilas.veracruzmunicipio.gob.mx)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AyuntamientoVeracruz_CeroFilas&metric=alert_status)](https://sonarcloud.io/dashboard?id=AyuntamientoVeracruz_CeroFilas)
 Proyecto de generación, confirmación y evaluación de citas programadas y turnos para la atención de trámites realizados por el Gobierno de la Ciudad de Veracruz.
 
   - [Acerca de Cero Filas](#acerca-de-cero-filas)
