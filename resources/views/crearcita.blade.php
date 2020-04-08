@@ -53,7 +53,7 @@
                 <div class="main-left col-sm-7 col-md-7 col-xs-12 br-5 p15 mb-30">
                     <h3 class="header3">Pasos para solicitar cita</h3>
                     
-                    <quote>Antes de empezar, ten a la mano tu <b>CURP</b>, ya que es necesario para el registro, tiene un tiempo límite de 5 minutos para completarlo. Si no lo tienes, <a href="https://www.gob.mx/curp/" target="_blank">encuéntralo aquí.</a></quote>
+                    <quote>Antes de empezar, ten a la mano tu <b>CURP</b>, ya que es necesario para el registro, tiene un tiempo límite de 5 minutos para completarlo. Si no lo tienes, <a href="https://www.gob.mx/curp/" target="_blank" rel="noopener noreferrer">encuéntralo aquí.</a></quote>
 
                     <label class="titlesection" data-section="1"><b>1</b><span>¿Qué trámite vas a realizar?</span></label>
                     <p class="descriptionsection">Selecciona el trámite que necesitas. Importante leer el apartado REQUISITOS.</p>
