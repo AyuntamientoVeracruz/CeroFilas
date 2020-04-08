@@ -626,12 +626,12 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 			}
 			.concitavisor label close{position: fixed; right: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
+			 font-weight: bold; font-family:Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
 			 display: flex; flex-direction: column;justify-content: center
 			}	
 			.concitavisor label search{position: fixed; left: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
+			 font-weight: bold; font-family:Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px; 
 			 display: flex; flex-direction: column;justify-content: center
 			}	
 
@@ -644,7 +644,7 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 
 		.sincitavisor close{ position: fixed; right: 10px; bottom: 10px; height: 80px; /*line-height: 70px;*/ font-size: 50px;
 			cursor: pointer; background: #000; color:#fff; width: 80px; text-align: center; border-radius:5px; /*padding: 0px;*/
-			 font-weight: bold; font-family:"Arial",Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px;
+			 font-weight: bold; font-family:Helvetica, Arial, Verdana, Tahoma; margin:0px; line-height: 80px;
 			display: flex; flex-direction: column;justify-content: center}	
 		.sincitavisor form{ width: 80%; margin-left: 10%}
 			.minisearchcontainer form{ width: calc(100% - 40px); margin-left: 20px; position:relative;}	
