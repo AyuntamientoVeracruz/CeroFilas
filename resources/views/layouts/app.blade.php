@@ -27,12 +27,19 @@
             <header>                    
                 <a href="https://www.veracruzmunicipio.gob.mx" class="logoheadercontainer"><img src="{{url('/images/logo.png')}}" class="logo"></a>                    
                 <div class="col-sm-4">
-                    <h2>Citas para trámites</h2>
+                    <h2>{{ __('titlesite') }}</h2>
                     @yield('initlink')
                 </div>
                 <div class="menucontainer">
                     <ul class="menu">
-                        <li><a href="{{route('faq')}}">Preguntas Frecuentes</a></li>
+                        <li><a href="{{route('faq', app()->getLocale())}}">{{ __('faq') }}</a></li>
+                        <li>
+                            <label for="idioma" style="color: #E0B54B; font-size: 12px; text-transform: uppercase;">{{ __('language') }}:</label>
+                            <select name="idioma" onchange="location = this.value;">
+                                <option value="{{ route(Route::currentRouteName(), 'es') }}" @if( app()->getLocale() == "es" ) selected @endif>ES</option>
+                                <option value="{{ route(Route::currentRouteName(), 'en') }}" @if( app()->getLocale() == "en" ) selected @endif>EN</option>
+                            </select>
+                        </li>
                         <!--<li><a href="">Contacto</a></li>-->
                         <!--<li class="rounded"><a href="">Iniciar sesión</a></li>-->
                     </ul>

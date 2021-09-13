@@ -57,7 +57,7 @@
 @endsection
 
 @section('initlink')
-<a href="{{route('/')}}" class="small">Regresar a inicio</a>
+<a href="{{route('/', app()->getLocale())}}" class="small">Regresar a inicio</a>
 @endsection
 
 @section('titlebig')
@@ -90,7 +90,7 @@
                     <p class="descriptionsection megaquote">Seguramente has tenido o tienes alguna duda, por ello nos dimos a la tarea de crear esta sección de preguntas frecuentes dedicada a resolver tus interrogantes de una manera sencilla.</p>
                     
                     <label class="titlesection"><b>1</b><span> ¿Puedo cancelar mi cita?</span></label>
-                    <span class="descriptionsection2">Sí, ingresando en este link <a href="{{route('/')}}"> [https://cerofilas.veracruzmunicipio.gob.mx]</a> e ingresando tu folio.</span>    
+                    <span class="descriptionsection2">Sí, ingresando en este link <a href="{{route('/', app()->getLocale())}}"> [https://cerofilas.veracruzmunicipio.gob.mx]</a> e ingresando tu folio.</span>    
                     
                     <label class="titlesection"><b>2</b><span> ¿Qué pasa si llego tarde a mi cita?</span></label>
                     <span class="descriptionsection2">Tienes tolerancia de 10 min, de lo contrario, tu cita será cancelada y tendrás que generar una nueva.</span> 
@@ -126,7 +126,7 @@
                     <span class="descriptionsection2">Una vez dentro de la página citas para trámites, llena los campos correspondientes y envia los datos. Una vez hecho esto, te llegará un correo de confirmación si ingreaste tu correo electrónico.</span>
 
                     <label class="titlesection"><b>13</b><span> ¿Cómo cancelo mi cita?</span></label>
-                    <span class="descriptionsection2">Ingrensado tu folio en el <a href="{{route('/')}}">siguiente link</a>.</span>
+                    <span class="descriptionsection2">Ingrensado tu folio en el <a href="{{route('/', app()->getLocale())}}">siguiente link</a>.</span>
 
                     <label class="titlesection"><b>14</b><span> ¿Cómo doy a conocer mis quejas y sugerencias de este servicio?</span></label>
                     <span class="descriptionsection2">Al finalizar el trámite, se enviará una encuesta al correo que ingresaste, en donde podrás evaluar la atención, y podrás dejar tu sugerencia. Esto con el fin de que tus próximas visitas tengas una mejor experiencia. </span>

@@ -115,7 +115,7 @@
             </div>
           </div>
             
-          <!--<form action="{{route('usuarios/csv')}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
+          <!--<form action="{{route('usuarios/csv', app()->getLocale())}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
               <div class="form-group row" style="float:right; margin-top:10px; margin-bottom:10px">
                   <div class="col-md-6">
                         <button type="submit" class="btn btn-warning btn-search" style="border-radius:4px">Descarga CSV usuarios <i class="fa fa-download"></i></button>
@@ -187,7 +187,7 @@
                                                   >@if($tramite->estatus=="activo") <small>Aplica: {{$tramite->fecha}}</small> @else Activar @endif</a>
                                                 
                                                 @if($data['rol']=="superadmin")
-                                                <form id="fr_tramite{{$tramite->id_tramite}}" action="{{route('tramites/destroy')}}" name="_method" method="post" style="float:left">
+                                                <form id="fr_tramite{{$tramite->id_tramite}}" action="{{route('tramites/destroy', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                                   <a href="#" 
                                                   class="btn btn-danger btn-sm"
                                                   style="margin-top:10px; float:left" 
@@ -433,7 +433,7 @@
           modal.find('#fdependencia').select2('val',"{{$data['dependencia']->dependencia_id}}");
           $("#fdependencia").select2("readonly", true);
           @endif          
-          modal.find('form').attr('action','{{route("tramites/store")}}');
+          modal.find('form').attr('action','{{route("tramites/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){  
           modal.find('#id_oficina').val("");          
@@ -449,7 +449,7 @@
           @if($data['rol'] == 'admin_oficina')
           $("#fdependencia").select2("readonly", true);
           @endif   
-          modal.find('form').attr('action','{{route("tramites/update")}}');
+          modal.find('form').attr('action','{{route("tramites/update", app()->getLocale())}}');
         }
       });
       //new/edit tramite x oficina
@@ -473,14 +473,14 @@
             return n;
           }  
           modal.find('#ffecha').val(dt.getFullYear() + "-" + appendLeadingZeroes(dt.getMonth()+1) + "-" + appendLeadingZeroes(dt.getDate()) );   
-          modal.find('form').attr('action','{{route("tramites/oficinastore")}}');          
+          modal.find('form').attr('action','{{route("tramites/oficinastore", app()->getLocale())}}');          
         }
         else if ($(this).data('action') == "update"){  
           modal.find('#id_tramite').val($(this).data('tramite'));
           modal.find('#id_oficina').val($(this).data('oficina'));
           modal.find('#id_tramitesxoficinas').val($(this).data('id'));
           modal.find('#ffecha').val($(this).data('fecha'));          
-          modal.find('form').attr('action','{{route("tramites/oficinaupdate")}}');
+          modal.find('form').attr('action','{{route("tramites/oficinaupdate", app()->getLocale())}}');
         }
       });  
 
@@ -491,7 +491,7 @@
         //console.log($this.val().length);
         if($this.val().length==4){
           $.ajax({
-              url: "{{route('getcodetramite')}}"+"/"+$this.val(), 
+              url: "{{route('getcodetramite', app()->getLocale())}}"+"/"+$this.val(), 
               type: "GET",
               dataType : 'json', 
               beforeSend: function(){ $(".loading-main").fadeIn(); },

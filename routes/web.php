@@ -16,6 +16,16 @@
 //////////////////////////////////////////////////////////////////////
 //* APP Routes (HOMEPAGE para generar citas) (CEROFILAS)
 //////////////////////////////////////////////////////////////////////
+Route::redirect('/', '/es');
+
+Route::group(['prefix' => '{language}'], function () {
+
+Route::get('/test', function (){
+  App::setLocale('es');
+  if(App::isLocale('es')){
+    dd(App::getLocale() );
+  }
+});
 
 //go to main page
 Route::get('/', [
@@ -26,7 +36,7 @@ Route::get('/', [
 //crear citas
 Route::get('/crearcita', [
   'as' => 'crearcita',
-  'uses' => 'AppController@crearcitacopy' //'AppController@crearcita'
+  'uses' => 'AppController@crearcita' //'AppController@crearcita'
 ]);
 
 //crear citas
@@ -483,3 +493,4 @@ Route::get('getcitas/{rol?}/{oficina?}/{fecha?}/{estatus?}', [
   'as' => 'getcitas',
   'uses' => 'CrmController@getcitas'
 ]);
+});

@@ -36,7 +36,7 @@
       <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="{{route('sistema')}}"></a>
+      <a class="navbar-brand" href="{{route('sistema', app()->getLocale())}}"></a>
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -57,7 +57,7 @@
             </div>
             <!--<a class="dropdown-item" href="#"><i class="icon-user"></i> Perfil</a>-->          
             <div class="divider"></div>                      	
-            <a class="dropdown-item" href="{{route('logout')}}">
+            <a class="dropdown-item" href="{{route('logout', app()->getLocale())}}">
               <i class="icon-lock"></i> Cerrar sesión
             </a>
                                                                               
@@ -73,7 +73,7 @@
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{route('sistema')}}"><i class="icon-speedometer"></i> Dashboard</a>
+              <a class="nav-link" href="{{route('sistema', app()->getLocale())}}"><i class="icon-speedometer"></i> Dashboard</a>
             </li>
             @if( $data['rol'] == 'admin_oficina' || $data['rol'] == 'superadmin')            
               <li class="nav-title">
@@ -81,29 +81,29 @@
               </li>
               @if($data['rol'] == 'superadmin')
                 <li class="nav-item">
-                  <a href="{{route('dependencias')}}" class="nav-link"><i class="far fa-building"></i> Dependencias</a>
+                  <a href="{{route('dependencias', app()->getLocale())}}" class="nav-link"><i class="far fa-building"></i> Dependencias</a>
                 </li>
               @endif            
               <li class="nav-item">
-                <a href="{{route('tramites')}}" class="nav-link"><i class="far fa-file-alt"></i> Trámites</a>
+                <a href="{{route('tramites', app()->getLocale())}}" class="nav-link"><i class="far fa-file-alt"></i> Trámites</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('usuarios')}}" class="nav-link"><i class="far fa-user"></i> Usuarios</a>
+                <a href="{{route('usuarios', app()->getLocale())}}" class="nav-link"><i class="far fa-user"></i> Usuarios</a>
               </li>           
             @endif 
             @if($data['rol'] == 'tramitador')
             <li class="nav-item">
-              <a href="{{route('viewerturnoscitas')}}" class="nav-link"><i class="fa fa-list"></i> Visor de turnos/citas</a>
+              <a href="{{route('viewerturnoscitas', app()->getLocale())}}" class="nav-link"><i class="fa fa-list"></i> Visor de turnos/citas</a>
             </li>
             @endif             
             <li class="nav-title">
               Configuración
             </li>		      
             <li class="nav-item">
-              <a href="{{route('perfil')}}" class="nav-link"><i class="far fa-id-card"></i> Perfil</a>
+              <a href="{{route('perfil', app()->getLocale())}}" class="nav-link"><i class="far fa-id-card"></i> Perfil</a>
             </li>         
   		      <li class="nav-item">
-              <a class="nav-link" href="{{route('logout')}}" >
+              <a class="nav-link" href="{{route('logout',app()->getLocale())}}" >
                 <i class="icon-lock"></i> Cerrar sesión
               </a>
             </li>	

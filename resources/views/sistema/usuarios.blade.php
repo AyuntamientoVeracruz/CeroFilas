@@ -113,7 +113,7 @@
             </div>
           </div>
             
-          <!--<form action="{{route('usuarios/csv')}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
+          <!--<form action="{{route('usuarios/csv', app()->getLocale())}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
               <div class="form-group row" style="float:right; margin-top:10px; margin-bottom:10px">
                   <div class="col-md-6">
                         <button type="submit" class="btn btn-warning btn-search" style="border-radius:4px">Descarga CSV usuarios <i class="fa fa-download"></i></button>
@@ -183,10 +183,10 @@
                                                   @endif
                                                  >Editar</a>
 
-                                                <a href="{{route('ausenciasusuarios')}}/{{$usuario['id_user']}}" class="btn btn-secondary btn-sm float-left" style="margin-left: 10px">Ausencias</a>  
+                                                <a href="{{route('ausenciasusuarios', app()->getLocale())}}/{{$usuario['id_user']}}" class="btn btn-secondary btn-sm float-left" style="margin-left: 10px">Ausencias</a>  
 
                                                 @if($usuario['id_user']!=$data["user"]->id_user)                                                    
-                                                <form id="fr_user{{$usuario['id_user']}}" action="{{route('usuarios/destroy')}}" name="_method" method="post" style="float:left">
+                                                <form id="fr_user{{$usuario['id_user']}}" action="{{route('usuarios/destroy', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                                   <a href="#" 
                                                   class="btn btn-danger btn-sm"
                                                   style="margin-left:10px; margin-top:0px; float:left" 
@@ -214,7 +214,7 @@
                                                                                            
                                             <td style="text-transform: capitalize">{{$usuario['estatus']}}</td>
                                             <td style="text-transform: capitalize">@if($usuario['tipo_user'] == 'tramitador') Asesor @endif @if($usuario['tipo_user']=='admin_oficina') Administrador Oficina @endif @if($usuario['tipo_user']=='kiosko') Kiosko @endif @if($usuario['tipo_user']=='superadmin') Webmaster @endif</td>
-                                            <td style="text-transform: capitalize"><div style="float:left; width:140px"><a href="{{route('perfiltramitador')}}/{{$usuario['id_user']}}">{{$usuario['nombre']}}</a></div></td>
+                                            <td style="text-transform: capitalize"><div style="float:left; width:140px"><a href="{{route('perfiltramitador', app()->getLocale())}}/{{$usuario['id_user']}}">{{$usuario['nombre']}}</a></div></td>
                                             <td style="text-transform: capitalize">{{$usuario['disponibleturno']}}</td>
                                             <td><a href="mailto:{{$usuario['EMAIL']}}" target="_blank"><div style="float:left; width:220px">{{$usuario['email']}}</div></a></td>
                                                                                             
@@ -286,7 +286,7 @@
                                                         data-oficina          = "{{$usuario['oficina_id']}}"
                                                       >Editar</a>
                                                                                                           
-                                                      <form id="fr_tramitexuser{{$tramite->id_tramitesxusers}}" action="{{route('usuarios/destroytramitexuser')}}" name="_method" method="post" style="float:left">
+                                                      <form id="fr_tramitexuser{{$tramite->id_tramitesxusers}}" action="{{route('usuarios/destroytramitexuser', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                                         <a href="#" 
                                                         class="btn btn-danger btn-sm"
                                                         style="margin-left:10px; margin-top:0px; float:left" 
@@ -589,7 +589,7 @@
           @endif          
           modal.find('#ftipousuario').select2("readonly", false);
           modal.find('#femail').attr("readonly",false);
-          modal.find('form').attr('action','{{route("usuarios/store")}}');
+          modal.find('form').attr('action','{{route("usuarios/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){
           modal.find('#fnombre').val($(this).data('nombre'));
@@ -610,7 +610,7 @@
           @if($data['rol'] == 'admin_oficina')
           $("#foficina").select2("readonly", true);
           @endif   
-          modal.find('form').attr('action','{{route("usuarios/update")}}');
+          modal.find('form').attr('action','{{route("usuarios/update", app()->getLocale())}}');
         }
       });
 
@@ -650,7 +650,7 @@
           modal.find('#fviernesfin').val(""); 
           modal.find('#fsabadoinicio').val(""); 
           modal.find('#fsabadofin').val(""); 
-          modal.find('form').attr('action','{{route("usuarios/storetramitexuser")}}');
+          modal.find('form').attr('action','{{route("usuarios/storetramitexuser", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){
           modal.find('#id_user').val($(this).data('idusuario'));
@@ -669,7 +669,7 @@
           modal.find('#fsabadoinicio').val($(this).data('sabadoinicio')); 
           modal.find('#fsabadofin').val($(this).data('sabadofin'));  
 
-          modal.find('form').attr('action','{{route("usuarios/updatetramitexuser")}}');
+          modal.find('form').attr('action','{{route("usuarios/updatetramitexuser", app()->getLocale())}}');
         }
       });
 

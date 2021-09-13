@@ -109,10 +109,10 @@
     <script src="{{url('/js/instascan.min.js')}}" type="text/javascript"></script>
     <!--booking script-->
     <script type="text/javascript">
-        var confirmationqrurl = "{{route('kioskconfirmationqr')}}/{{$oOficina->id_oficina}}";
-        var searchcitabytexturl = "{{route('kiosksearchcitabytext')}}/{{$oOficina->id_oficina}}";
-        var manualturnurl = "{{route('kioskmanualturn')}}";
-        var gettramitesbykioskourl = "{{route('gettramitesbykiosko')}}/{{$oOficina->id_oficina}}";
+        var confirmationqrurl = "{{route('kioskconfirmationqr', app()->getLocale())}}/{{$oOficina->id_oficina}}";
+        var searchcitabytexturl = "{{route('kiosksearchcitabytext', app()->getLocale())}}/{{$oOficina->id_oficina}}";
+        var manualturnurl = "{{route('kioskmanualturn', app()->getLocale())}}";
+        var gettramitesbykioskourl = "{{route('gettramitesbykiosko', app()->getLocale())}}/{{$oOficina->id_oficina}}";
         var oficina={{$oOficina->id_oficina}};
     </script>
     <script src="{{url('/js/waitingroom.js')}}" type="text/javascript"></script>

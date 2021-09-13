@@ -56,7 +56,7 @@
 @endsection
 
 @section('initlink')
-<a href="{{route('/')}}" class="small">Regresar a inicio</a>
+<a href="{{route('/', app()->getLocale())}}" class="small">Regresar a inicio</a>
 @endsection
 
 @section('titlebig')
@@ -81,7 +81,7 @@
         <div class="container">
 
             @if($tipo=='show')
-            <form class="mt-45" action="{{route('valoracionsave')}}" method="post">
+            <form class="mt-45" action="{{route('valoracionsave', app()->getLocale())}}" method="post">
                 @csrf
                 <div class="main-primary col-sm-8 col-md-8 col-xs-12 br-5 p15 mb-30 col-sm-offset-2">
                     <h3 class="header3">Hola {{$turno->nombre_ciudadano}}!</h3>                    

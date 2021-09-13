@@ -218,7 +218,7 @@
             function getAssignment() {  
 
                 $.ajax({
-                    url: "{{route('getassignmentsfromoffice')}}",
+                    url: "{{route('getassignmentsfromoffice', app()->getLocale())}}",
                     type: 'get',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -24,7 +24,7 @@
 @endsection
 
 @section('initlink')
-<a href="{{route('/')}}" class="small">Regresar a inicio</a>
+<a href="{{route('/', app()->getLocale())}}" class="small">Regresar a inicio</a>
 @endsection
 
 @section('titlebig')
@@ -180,13 +180,13 @@
     
     <!--booking script-->
     <script type="text/javascript">
-        var gettramitesurl = "{{route('gettramites')}}";
-        var getoficinasurl = "{{route('getoficinas')}}";
-        var getavailabledaysurl = "{{route('getavailabledays')}}";
-        var getavailablehoursurl = "{{route('getavailablehours')}}";
-        var savedateurl = "{{route('savedate')}}";
-        var holdingdateurl = "{{route('holdingcita')}}";
-        var removeholdingcitaurl = "{{route('removeholdingcita')}}";
+        var gettramitesurl = "{{route('gettramites', app()->getLocale())}}";
+        var getoficinasurl = "{{route('getoficinas', app()->getLocale())}}";
+        var getavailabledaysurl = "{{route('getavailabledays', app()->getLocale())}}";
+        var getavailablehoursurl = "{{route('getavailablehours', app()->getLocale())}}";
+        var savedateurl = "{{route('savedate', app()->getLocale())}}";
+        var holdingdateurl = "{{route('holdingcita', app()->getLocale())}}";
+        var removeholdingcitaurl = "{{route('removeholdingcita', app()->getLocale())}}";
     </script>
     <script src="{{url('/js/booking.js')}}" type="text/javascript"></script>
 @endsection

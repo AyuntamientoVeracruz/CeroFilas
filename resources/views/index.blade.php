@@ -34,7 +34,7 @@
 @endsection
 
 @section('initlink')
-<a href="https://www.veracruzmunicipio.gob.mx" class="small">Regresar a sitio del municipio</a>
+<a href="https://www.veracruzmunicipio.gob.mx" class="small">{{ __('btn1') }}</a>
 @endsection
 
 @section('titlebig')
@@ -58,7 +58,7 @@
         
         <div class="container">
 
-            <form id="cita-form" method="post" action="{{route('getcita')}}">
+            <form id="cita-form" method="post" action="{{route('getcita', app()->getLocale())}}">
 
                 <div class="main-left col-sm-7 col-md-7 col-xs-12 br-5 p15 mb-30">
                     <h3 class="header3">Crea tu cita</h3>
@@ -67,7 +67,7 @@
 
                     <label class="titlesection" style="margin-bottom: 0px"><b><i class="far fa-id-card"></i></b><span>¿Ya tienes tu CURP a la mano?</span></label>
                                         
-                    <a class="btn btn-primary submit" href="{{route('crearcita')}}">Registrar cita</a>    
+                    <a class="btn btn-primary submit" href="{{route('crearcita', app()->getLocale())}}">Registrar cita</a>    
                     
                     <quote style="margin-bottom: 6px; margin-top: 20px"><b>¿Tienes dudas para registrar tu cita?.</b> Ponemos a tu disposición la <a href="{{url('/pdf/guia-de-usuario.pdf')}}" target="_blank">Guía de usuario</a> para registrar tu cita.</quote>        
 

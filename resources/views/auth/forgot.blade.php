@@ -125,7 +125,7 @@
     <body style="">
 
 		<div class="container">
-        <form id="entry" method="POST" action="{{route('resetpassword')}}" autocomplete="off">
+        <form id="entry" method="POST" action="{{route('resetpassword', app()->getLocale())}}" autocomplete="off">
 		@csrf
             <a href="<?PHP echo url("/") ?>"><img src="{{url('/images/logo-transparent.png')}}" class="logo"/></a>
             @if(session()->has('message'))

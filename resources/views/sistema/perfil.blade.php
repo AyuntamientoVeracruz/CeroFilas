@@ -44,7 +44,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
         @if($tipo=='user')<li class="breadcrumb-item active">Perfil</li>@endif
-        @if($tipo=='tramitador')<li class="breadcrumb-item active"><a href="{{route('usuarios')}}">Usuarios</a></li> <li class="breadcrumb-item active">Perfil</li>@endif
+        @if($tipo=='tramitador')<li class="breadcrumb-item active"><a href="{{route('usuarios', app()->getLocale())}}">Usuarios</a></li> <li class="breadcrumb-item active">Perfil</li>@endif
 
       </ol>
 
@@ -166,7 +166,7 @@
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <form action="{{route('updateperfil')}}" method="post" enctype="multipart/form-data">
+                  <form action="{{route('updateperfil', app()->getLocale())}}" method="post" enctype="multipart/form-data">
                       <div class="modal-body">
 
                           <div class="form-group">
@@ -203,7 +203,7 @@
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <form action="{{route('updatepassword')}}" method="post">
+                  <form action="{{route('updatepassword', app()->getLocale())}}" method="post">
                    <div class="modal-body">
 
                       <div class="form-group">
@@ -263,7 +263,7 @@
 
       $(".showmore").click(function(){
         $.ajax({
-          url: "{{route('getevaluaciones')}}"+"/"+$("#tramitador").val()+"/"+$("#offset").val(), 
+          url: "{{route('getevaluaciones', app()->getLocale())}}"+"/"+$("#tramitador").val()+"/"+$("#offset").val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },

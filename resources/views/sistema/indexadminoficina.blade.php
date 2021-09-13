@@ -69,7 +69,7 @@
             <div class="card table-container">                 
                 <div class="card-header">
                   <h7>
-                    <form id="searchturnoscitas" action="{{route('sistema')}}">
+                    <form id="searchturnoscitas" action="{{route('sistema', app()->getLocale())}}">
                       <k class="lh30">
                         <a href="#" class="btn btn-sm btn-primary br redobutton"><i class="fa fa-redo"></i></a>
                         <div class="filtersizquierdo">
@@ -302,7 +302,7 @@
         $turno=$(this).attr("data-turno");
         $option=$(this).find("option:selected");
         $.ajax({
-          url: "{{route('updateturnos')}}/"+$turno+"/"+$option.val(), 
+          url: "{{route('updateturnos', app()->getLocale())}}/"+$turno+"/"+$option.val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },
@@ -344,7 +344,7 @@
       $("#estatus").select2('val',$estatus);
 
       $.ajax({
-          url: "{{route('getturnos')}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
+          url: "{{route('getturnos', app()->getLocale())}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },
@@ -465,7 +465,7 @@
       $("#estatus").select2('val',$estatus);
 
       $.ajax({
-          url: "{{route('getcitas')}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
+          url: "{{route('getcitas', app()->getLocale())}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },

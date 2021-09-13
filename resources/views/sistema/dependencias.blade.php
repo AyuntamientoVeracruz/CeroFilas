@@ -114,7 +114,7 @@
                             data-title        = "Editando: {{$dependencia->nombre_dependencia}}"
                             data-nombre       = "{{$dependencia->nombre_dependencia}}" 
                           >Editar</a>
-                          <form id="fr_dependencia{{$dependencia->id_dependencia}}" action="{{route('dependencias/destroy')}}" name="_method" 
+                          <form id="fr_dependencia{{$dependencia->id_dependencia}}" action="{{route('dependencias/destroy', app()->getLocale())}}" name="_method" 
                             method="post" style="float:left">
                             <a href="#" 
                             class="btn btn-danger btn-sm float-left br"
@@ -180,7 +180,7 @@
                                                   data-dependencia      = "{{$oficina->dependencia_id}}" 
                                                   >Editar</a>
                                                   
-                                                  <form id="fr_oficina{{$oficina->id_oficina}}" action="{{route('oficinas/destroy')}}" name="_method" 
+                                                  <form id="fr_oficina{{$oficina->id_oficina}}" action="{{route('oficinas/destroy', app()->getLocale())}}" name="_method" 
                                                     method="post" style="float:left">
                                                     <a href="#" 
                                                     class="btn btn-danger btn-sm"
@@ -350,12 +350,12 @@
         if ($(this).data('action') == "store"){
           modal.find('#id_dependencia').val("");
           modal.find('#fnombre').val("");          
-          modal.find('form').attr('action','{{route("dependencias/store")}}');
+          modal.find('form').attr('action','{{route("dependencias/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){                   
           modal.find('#id_dependencia').val($(this).data('id'));
           modal.find('#fnombre').val($(this).data('nombre'));                  
-          modal.find('form').attr('action','{{route("dependencias/update")}}');
+          modal.find('form').attr('action','{{route("dependencias/update", app()->getLocale())}}');
         }
       });
       //new/edit tramite x oficina
@@ -371,7 +371,7 @@
           modal.find('#fnombre').val("");
           modal.find('#fcoords').val("");
           modal.find('#fdireccion').val("");             
-          modal.find('form').attr('action','{{route("oficinas/store")}}');          
+          modal.find('form').attr('action','{{route("oficinas/store", app()->getLocale())}}');          
         }
         else if ($(this).data('action') == "update"){  
           modal.find('#id_dependencia').val($(this).data('dependencia'));   
@@ -379,7 +379,7 @@
           modal.find('#fnombre').val($(this).data('nombre'));
           modal.find('#fcoords').val($(this).data('coords'));
           modal.find('#fdireccion').val($(this).data('direccion'));    
-          modal.find('form').attr('action','{{route("oficinas/update")}}');
+          modal.find('form').attr('action','{{route("oficinas/update", app()->getLocale())}}');
         }
       });         
 

@@ -171,10 +171,10 @@
 
 @section('page-js-script')
   <script type="text/javascript">
-      var setavailabilityurl = "{{route('setavailability')}}";
-      var getassignmenturl = "{{route('getassignment')}}";
-      var gethistorialurl = "{{route('gethistorial')}}";
-      var attendingturnurl = "{{route('attendingturn')}}";
+      var setavailabilityurl = "{{route('setavailability', app()->getLocale())}}";
+      var getassignmenturl = "{{route('getassignment', app()->getLocale())}}";
+      var gethistorialurl = "{{route('gethistorial', app()->getLocale())}}";
+      var attendingturnurl = "{{route('attendingturn',app()->getLocale())}}";
       var oficina="{{$data['oficina']}}";
       var sonidonotificacion="{{url('/sis/mp3/notificacion.mp3')}}";
   </script>

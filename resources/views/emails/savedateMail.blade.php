@@ -55,7 +55,7 @@
     
     @if(isset($tipo))
         @section('initlink')
-        <a href="{{route('/')}}" class="small">Regresar a inicio</a>
+        <a href="{{route('/', app()->getLocale())}}" class="small">Regresar a inicio</a>
         @endsection
         @section('titlebig')
         <h1>Impresión</h1>
@@ -82,7 +82,7 @@
                 <a href="javascript:void(0)" onclick='document.getElementById("form-folio").submit();' 
                 style="background:#cc0000; border-radius:4px; height: 30px; line-height: 30px; padding:10px; color:#fff; text-decoration: none; 
                 font-family: Arial; font-size:12px; margin-left: 20px">Cancelar</a>
-                <form id="form-folio" method="post" action="{{route('cancelarcita')}}">
+                <form id="form-folio" method="post" action="{{route('cancelarcita', app()->getLocale())}}">
                     @csrf
                     <input type="hidden" value="{{$folio}}" id="folio" name="folio">
                 </form>
@@ -135,7 +135,7 @@
             <div style="width: 100%; display: block; float:left">
                                
                 <h1 style="font-size:18px; margin-top: 20px">Hola {{$nombre["text"]}}!</h1> 
-                <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) Te recordamos que mañana tienes una cita para trámite. @else Hemos recibido con éxito tu solicitud de cita. @endif <b>No olvides asistir 10 minutos antes de la fecha/hora reservada. Al llegar a tu cita no olvides confirmar tu asistencia en recepción haciendo Check-in, llevando contigo el folio o QR, así como los requisitos del trámite. En caso que necesites hacerlo, puedes cancelar tu cita <a href="{{route('/')}}">aquí</a> indicando tu folio.</b></p>
+                <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) Te recordamos que mañana tienes una cita para trámite. @else Hemos recibido con éxito tu solicitud de cita. @endif <b>No olvides asistir 10 minutos antes de la fecha/hora reservada. Al llegar a tu cita no olvides confirmar tu asistencia en recepción haciendo Check-in, llevando contigo el folio o QR, así como los requisitos del trámite. En caso que necesites hacerlo, puedes cancelar tu cita <a href="{{route('/', app()->getLocale())}}">aquí</a> indicando tu folio.</b></p>
                 <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">Folio:
                     <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px">{{$folio}}</b>
                 </div>

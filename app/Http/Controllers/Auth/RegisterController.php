@@ -139,7 +139,6 @@ class RegisterController extends Controller
      */
     public function resetPassword(Request $request)
     {
-     	
 		$user = User::where('email',$request->email)->first();		        
 		
 		if($user){

@@ -54,7 +54,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item"><a href="route('usuarios')">Usuarios</a></li>
+      <li class="breadcrumb-item"><a href="route('usuarios', app()->getLocale())">Usuarios</a></li>
       <li class="breadcrumb-item active">Ausencias</li>
     </ol>
 
@@ -175,7 +175,7 @@
                                               data-motivo       = "{{$ausencia->motivo}}" 
                                             >Editar</a> 
 
-                                            <form id="fr_ausencia{{$ausencia->id_ausencia}}" action="{{route('ausencias/destroy')}}" name="_method" method="post" style="float:left">
+                                            <form id="fr_ausencia{{$ausencia->id_ausencia}}" action="{{route('ausencias/destroy', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                               <a href="#" 
                                               class="btn btn-danger btn-sm"
                                               style="margin-left:10px; margin-top:0px; float:left" 
@@ -332,7 +332,7 @@
           modal.find('#ffechainicio').val("");
           modal.find('#ffechafin').val("");                                       
           modal.find('#motivo').val("");
-          modal.find('form').attr('action','{{route("ausencias/store")}}');
+          modal.find('form').attr('action','{{route("ausencias/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){            
           modal.find('#id_ausencia').val($(this).data('id'));
@@ -340,7 +340,7 @@
           modal.find('#ffechainicio').val($(this).data('fechainicio'));
           modal.find('#ffechafin').val($(this).data('fechafin'));    
           modal.find('#motivo').val($(this).data('motivo'));        
-          modal.find('form').attr('action','{{route("ausencias/update")}}');
+          modal.find('form').attr('action','{{route("ausencias/update", app()->getLocale())}}');
         }
       });
       
