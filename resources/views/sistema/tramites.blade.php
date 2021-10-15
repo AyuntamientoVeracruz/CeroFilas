@@ -46,7 +46,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item active">Trámites</li>
+      <li class="breadcrumb-item active">{{ __('lblProcedures1') }}</li>
     </ol>
 
     <div class="container-fluid">
@@ -79,13 +79,13 @@
                           <a class="btn btn-warning btn-search open-modal" href="#" data-toggle="modal" data-target="#myModal"
                           data-action = "store"
                           data-oficina     = @if($data['rol']=='admin_oficina') "{{$data['oficina']}}" @else ""  @endif
-                          data-title  = "Nuevo trámite">Crear nuevo trámite <i class="icon-arrow-right"></i></a>
+                          data-title  = "Nuevo trámite">{{ __('lblProcedures2') }} <i class="icon-arrow-right"></i></a>
                       </div>
                       <div @if($data['rol'] == 'superadmin') class="col-lg-4 col-md-12" @else class="col-lg-1" @endif>
                         @if($data['rol'] == 'superadmin')
                         <div style="margin-top: 2px">
                           <select  name="oficina" id="oficina">
-                              <option value="">Todas las oficinas</option>
+                              <option value="">{{ __('lblProcedures3') }}</option>
                               @if(count($dependenciascombo)> 0 )
                                 @foreach($dependenciascombo as $dependencia)                                          
                                   @foreach($dependencia->oficinas as $oficina)
@@ -104,9 +104,9 @@
                       </div>
                       <div class="col-lg-5">
                         <div class="input-group">
-                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "Buscar por nombre" value = "{{$filterstexto}}">
+                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "{{ __('lblProcedures4') }}" value = "{{$filterstexto}}">
                           <span class="input-group-prepend">
-                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>Buscar</span></button>
+                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>{{ __('lblProcedures5') }}</span></button>
                           </span>
                         </div>
                       </div>
@@ -131,7 +131,7 @@
                   <div class="card">
                        
                       <div class="card-header">
-                        <h5 style="margin-bottom:0px">Oficina {{$oficina->nombre_oficina}}</h5>
+                        <h5 style="margin-bottom:0px">{{ __('lblProcedures6') }} {{$oficina->nombre_oficina}}</h5>
                       </div>
 
                       <div class="card-body">
@@ -142,13 +142,13 @@
                                   <thead>
                                     @if(count($oficina->tramites)> 0 )
                                     <tr>                                                                                  
-                                      <th>Acciones</th>                                        
-                                      <th>Estatus</th>
-                                      <th>Nombre</th>
-                                      <th>Requisitos</th> 
-                                      <th class="text-right">Tiempo (min)</th> 
-                                      <th class="text-right">Costo(s)</th>
-                                      <th class="text-center">Código</th>                                          
+                                      <th>{{ __('lblProcedures7') }}</th>                                        
+                                      <th>{{ __('lblProcedures8') }}</th>
+                                      <th>{{ __('lblProcedures9') }}</th>
+                                      <th>{{ __('lblProcedures10') }}</th> 
+                                      <th class="text-right">{{ __('lblProcedures11') }}</th> 
+                                      <th class="text-right">{{ __('lblProcedures12') }}</th>
+                                      <th class="text-center">{{ __('lblProcedures13') }}</th>                                          
                                     </tr>
                                     @endif
                                   </thead>
@@ -163,7 +163,7 @@
                                                   data-target       = "#myModal"
                                                   data-action       = "update"
                                                   data-id           = "{{$tramite->id_tramite}}"
-                                                  data-title        = "Editando: {{$tramite->nombre_tramite}}"
+                                                  data-title        = "{{ __('lblProcedures14') }}: {{$tramite->nombre_tramite}}"
                                                   data-nombre       = "{{$tramite->nombre_tramite}}"  
                                                   data-requisitos   = "{{$tramite->requisitos}}" 
                                                   data-tiempo       = "{{$tramite->tiempo_minutos}}" 
@@ -171,7 +171,7 @@
                                                   data-codigo       = "{{$tramite->codigo}}" 
                                                   data-dependencia  = "{{$tramite->dependencia_id}}"
                                                   data-warning      = "{{$tramite->warning_message}}"
-                                                >Editar</a>
+                                                >{{ __('lblProcedures33') }}</a>
                                                                                                     
                                                 <a href="#" 
                                                   class="btn @if($tramite->estatus=="activo") btn-success @else btn-secondary @endif btn-sm open-modalTramitexoficina"
@@ -180,11 +180,11 @@
                                                   data-target           = "#myModalTramitexoficina"
                                                   data-action           = @if($tramite->estatus=='activo') "update" @else "store" @endif
                                                   data-id               = "{{$tramite->id_tramitesxoficinas}}"  
-                                                  data-title            = "@if($tramite->estatus!='activo') Activar @else Editar @endif trámite para: {{$oficina->nombre_oficina}}"
+                                                  data-title            = "@if($tramite->estatus!='activo') {{ __('lblProcedures31') }} @else {{ __('lblProcedures33') }} @endif {{ __('lblProcedures36') }} {{$oficina->nombre_oficina}}"
                                                   data-tramite          = "{{$tramite->id_tramite}}"                                                  
                                                   data-oficina          = "{{$tramite->oficina_id}}" 
                                                   data-fecha            = "{{$tramite->apply_date}}" 
-                                                  >@if($tramite->estatus=="activo") <small>Aplica: {{$tramite->fecha}}</small> @else Activar @endif</a>
+                                                  >@if($tramite->estatus=="activo") <small>{{ __('lblProcedures32') }}: {{$tramite->fecha}}</small> @else {{ __('lblProcedures31') }} @endif</a>
                                                 
                                                 @if($data['rol']=="superadmin")
                                                 <form id="fr_tramite{{$tramite->id_tramite}}" action="{{route('tramites/destroy', app()->getLocale())}}" name="_method" method="post" style="float:left">
@@ -193,18 +193,18 @@
                                                   style="margin-top:10px; float:left" 
                                                   data-toggle           = "confirmation"
                                                   data-id               = "{{$tramite->id_tramite}}"
-                                                  data-btn-ok-label     = "Aceptar" 
+                                                  data-btn-ok-label     = "{{ __('lblProcedures15') }}" 
                                                   data-btn-ok-icon      = "fa fa-remove"
                                                   data-btn-ok-class     = "btn btn-danger btn-sm"
-                                                  data-btn-cancel-label = "Cancelar"
+                                                  data-btn-cancel-label = "{{ __('lblProcedures16') }}"
                                                   data-btn-cancel-icon  = "fa fa-chevron-circle-left"
                                                   data-btn-cancel-class = "btn btn-sm btn-warning"
-                                                  data-title            = "Desea borrar este trámite?"
+                                                  data-title            = "{{ __('lblProcedures17') }}"
                                                   data-target           = "#removeTramite"
                                                   data-placement        = "left" 
                                                   data-singleton        = "true" 
                                                   data-type             = "tramite" 
-                                                  >Eliminar</a>
+                                                  >{{ __('lblProcedures18') }}</a>
                                                   @csrf
                                                   <input type="hidden" name="id_tramite" value="{{$tramite->id_tramite}}"/>
                                                 </form>       
@@ -212,10 +212,12 @@
                                                       
                                               </div>
                                             </td>
+
+                                          
                                                                                            
-                                            <td style="text-transform: capitalize"><div style="float:left; width:100px">{{$tramite->estatus}}</div></td> 
+                                            <td style="text-transform: capitalize"><div style="float:left; width:100px"> @if($tramite->estatus =="activo")  {{ __('lblStatusActive') }} @else  {{ __('lblStatusDesactive') }} @endif </div></td> 
                                             <td style="text-transform: capitalize"><div style="float:left; width:160px">{{$tramite->nombre_tramite}}</div></td>
-                                            <td style="text-transform: capitalize"><div class="hidefield"><clicker>↓ Mostrar más</clicker><div>{!! nl2br($tramite->requisitos) !!}</div></div></td>
+                                            <td style="text-transform: capitalize"><div class="hidefield"><clicker>↓ {{ __('lblProcedures34') }}</clicker><div>{!! nl2br($tramite->requisitos) !!}</div></div></td>
                                             <td style="text-transform: capitalize; text-align: right;">{{$tramite->tiempo_minutos}}</td>
                                             <td style="text-transform: capitalize; text-align: right;">{{$tramite->costo}}</td>
                                             <td style="text-transform: capitalize; text-align: center;">{{$tramite->codigo}}</td>
@@ -267,28 +269,28 @@
             <input type="hidden" id="id_oficina" name="id_oficina"  />            
 
             <div class="form-group">
-              <label for="company">Nombre trámite:</label>
-              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="Ingresa nombre del trámite" required maxlength="300"/>
+              <label for="company">{{ __('lblProcedures20') }}</label>
+              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="{{ __('lblProcedures19') }}" required maxlength="300"/>
             </div>
             
             <div class="form-group">
-              <label for="street">Requisitos:</label>
-              <textarea class="form-control" id="frequisitos" name="requisitos" placeholder="Ingresa requisitos" rows="5" ></textarea>
+              <label for="street">{{ __('lblProcedures21') }}:</label>
+              <textarea class="form-control" id="frequisitos" name="requisitos" placeholder="{{ __('lblProcedures22') }}" rows="5" ></textarea>
             </div>
 
             <div class="form-group">
-              <label for="street">Costo(s):</label>
-              <input type="text" class="form-control" id="fcosto" name="costo" placeholder="Describe el costo o costos, indicando a cada uno su signo de pesos" required="" />
+              <label for="street">{{ __('lblProcedures12') }}</label>
+              <input type="text" class="form-control" id="fcosto" name="costo" placeholder="{{ __('lblProcedures23') }}" required="" />
             </div>
 
             <div class="row" style="margin-left: -15px; margin-right: -15px">
               <div class="form-group col-sm-6">
-                <label for="street">Tiempo (min):</label>
+                <label for="street">{{ __('lblProcedures11') }}</label>
                 <input type="number" class="form-control" id="ftiempo" name="tiempo" placeholder="0" required="" />
               </div>
         
               <div class="form-group col-sm-6 codigocontainer">
-                <label for="street">Código:</label>
+                <label for="street">{{ __('lblProcedures13') }}</label>
                 <input type="text" class="form-control text-uppercase" id="fcodigo" name="codigo" placeholder="XXXX" required="" minlength="4" maxlength="4" />
                 <error><i class="fa fa-times"></i></error>
                 <ok><i class="fa fa-check"></i></ok>
@@ -297,15 +299,15 @@
             </div>
 
             <div class="form-group">
-              <label for="company">Mensaje de alerta:</label>
-              <input type="text" class="form-control" id="fwarning" name="warning_message" placeholder="Ingresa texto de alerta" maxlength="100"/>
+              <label for="company">{{ __('lblProcedures24') }}</label>
+              <input type="text" class="form-control" id="fwarning" name="warning_message" placeholder="{{ __('lblProcedures25') }}" maxlength="100"/>
             </div>
                 
             <div class="row">
               <div class="form-group col-sm-12 plr0">
-                <label for="company">Dependencia:</label>
+                <label for="company">{{ __('lblProcedures26') }}:</label>
                 <select id="fdependencia" name="dependencia" required>
-                  <option value="">Seleccione una dependencia</option>  
+                  <option value="">{{ __('lblProcedures27') }}</option>  
                   @if(count($dependencias)> 0 )
                     @foreach($dependencias as $dependencia)                                                                
                         <option value="{{$dependencia->id_dependencia}}">{{$dependencia->nombre_dependencia}}</option>                     
@@ -318,8 +320,8 @@
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblProcedures28') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('lblProcedures29') }}</button>
         </div>
         </form>
       </div>
@@ -349,7 +351,7 @@
             <input type="hidden" id="id_tramitesxoficinas" name="id_tramitesxoficinas">
 
             <div class="form-group">
-              <label for="company">Fecha aplicación:</label>
+              <label for="company">{{ __('lblProcedures30') }}</label>
               <input type="date" class="form-control" id="ffecha" name="fecha" required/>
             </div>
                                                     
@@ -357,8 +359,8 @@
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblProcedures28') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('lblProcedures29') }}</button>
         </div>
         </form>
       </div>
@@ -526,13 +528,15 @@
 
 
       //new/edit tramite x oficina
+      let showLess='{{ __('lblProcedures35') }}';
+      let showMore='{{ __('lblProcedures34') }}';
       $("clicker").click(function (e) {
         $(this).parent().toggleClass("opened");
         if($(this).parent().hasClass("opened")){
-          $(this).html("↑ Mostrar menos");
+          $(this).html(`${showLess}`);
         }
         else{
-          $(this).html("↓ Mostrar más");
+          $(this).html(`${showMore}`);
         }
       });
 

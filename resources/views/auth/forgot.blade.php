@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="Cero Filas // Sistema CRM">
-        <meta name="author" content="Angel Cobos www.arkanmedia.com">
+        <meta name="author" content="Ayuntamiento de Veracruz">
         <link rel="shortcut icon" href="{{url('/sis/img/favicon.ico')}}">
         <title>Cero Filas // Sistema CRM</title>
         <script type="text/javascript" src="{{url('/js/jquery-2.1.4.min.js')}}"></script>
@@ -145,9 +145,9 @@
             </div>
             
             <div class="submit">
-                <button type="submit">Enviar mail</button>
+                <button type="submit">{{ __('btnSendMail') }}</button>
             </div>
-            <a href="<?PHP echo url("login") ?>" class="register">¿Ya tienes cuenta? Iniciar sesión</a>
+            <a href="<?PHP echo url(app()->getLocale()."/login") ?>" class="register">{{ __('btnHaveAccount') }}</a>
         </form>
         </div>
 		</div>

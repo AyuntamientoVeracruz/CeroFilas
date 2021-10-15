@@ -126,7 +126,7 @@
                     <div style="width: 75%; float: left; height: 70px">
                         <span style="color:#212F4D; font-weight: 500; text-transform: uppercase;  font-size: 20px; letter-spacing: 1px; margin-top: 10px; width: 100%; display: block">
                             <span style="width: 100%; display: block; text-align: center;">{{ __("lblSaveDateMail21")}}</span>
-                            <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblResetMail4') }} @else {{ __('lblSaveDateMail22') }} @endif {{ __('lblSaveDateMail23') }}</span>
+                            <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblResetMail5Mail4') }} @else {{ __('lblResetMail5Mail5') }} @endif {{ __('lblResetMail5Mail6') }}</span>
                         </span>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
             
             <div style="width: 100%; display: block; float:left">
                                
-                <h1 style="font-size:18px; margin-top: 20px">>{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
+                <h1 style="font-size:18px; margin-top: 20px">{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
                 <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblSaveDateMail7') }} @else {{ __('lblSaveDateMail8') }} @endif <b>{{ __('lblSaveDateMail9') }}<a href="{{route('/', app()->getLocale())}}">{{ __('lblSaveDateMail12') }}</a> {{ __('lblSaveDateMail10') }}</b></p>
                 <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">{{ __('lblSaveDateMail11') }}
                     <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px">{{$folio}}</b>

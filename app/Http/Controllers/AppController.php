@@ -32,6 +32,7 @@ class AppController extends Controller
      */
     public function home()
     {		
+		
         return view('index');
     }
 
@@ -56,8 +57,17 @@ class AppController extends Controller
     					->where('service_name','google_maps')
     					->first();	
 
-        return view('crearcita')
-        		->with('googlemapskey',$googlemapskey->service_key);
+		$timer=DB::table('configuraciones')
+    					->where('service_name','timer')
+    					->first();	
+
+        //  return view('crearcita')
+        //  		->with('googlemapskey',$googlemapskey->service_key,$timer->service_key);
+
+		return view("crearcita", ["googlemapskey"=>$googlemapskey->service_key,"timer"=>$timer->service_key]);
+
+		///return view('crearcita')
+        	
     }
 
     /**
@@ -212,7 +222,7 @@ class AppController extends Controller
      */
     public function gettramites($oficina=false)
     {		    	
-    	if($oficina){//si recibimos id oficina
+    	if($oficina && is_numeric($oficina)){//si recibimos id oficina
     		if(is_numeric($oficina)){//si es numerico    			
 		    	//$oficina = request()->oficina;
 		    	//dd($oficina);
@@ -267,7 +277,7 @@ class AppController extends Controller
      */	
     public function getoficinas($tramite=false)
     {		
-    	if($tramite){//si recibimos id tramite
+    	if($tramite && is_numeric($tramite)){//si recibimos id tramite
     		if(is_numeric($tramite)){//si es numerico
 	    		$tramite = request()->tramite;
 	    		$tramitesxoficina = Tramitesxoficina::where("tramite_id",$tramite)->whereRaw('Date(apply_date) <= CURDATE()')->get();
@@ -301,9 +311,8 @@ class AppController extends Controller
 	/**
      * Tener lista de dias disponibles por oficina/tramite/mes/anio //SERVICIO PUBLICO
      */	
-    public function getavailabledays($oficina=false,$tramite=false,$mes=false,$anio=false)
+    public function getavailabledays( $lang=false,$oficina=false,$tramite=false,$mes=false,$anio=false)
     {	
-
     	//obtener fecha actual (anio,mes,dia y fecha:dd-mm-yyyy)
     	$currentyear  = date('Y');
     	$currentmonth = date('m');
@@ -315,8 +324,9 @@ class AppController extends Controller
 		
     	//si hay paso de parametro de fecha y es numerica, el mes elegido es el enviado (y el mes no es 13 ni el año 2500)
     	if(is_numeric($mes)&&is_numeric($anio)&&$mes<13&&$anio<2500){      				
-	    	$mes=request()->mes;
-	    	$anio=request()->anio;	    	
+	    	//$mes=request()->mes;
+	    	//$anio=request()->anio;	 
+			 	
     	}else{ //si no hay paso de parametro o no es numerico, seteamos el mes y año actual
     		$mes  = date('m');
     		$anio = date('Y');
@@ -325,7 +335,9 @@ class AppController extends Controller
     	//inicializando mes/anio seleccionado
     	//dia 1 de mes/anio seleccionado
     	$dia1messeleccionado = DateTime::createFromFormat('d-m-Y', '01-'.$mes.'-'.$anio);
+		
     	//dias del mes que vamos a regresar en base a la fecha seleccionada
+		
     	$dias=cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
     	//dia ultimo de mes/anio seleccionado
     	$diaultimomesseleccionado = DateTime::createFromFormat('d-m-Y', $dias.'-'.$mes.'-'.$anio); 
@@ -352,7 +364,8 @@ class AppController extends Controller
 		$diaultimomesseleccionadostring = date_format($diaultimomesseleccionado, 'Y-m-d');
 
     	//si hay oficina y tramite como parametro
-		if(is_numeric($oficina)&&is_numeric($tramite)){ 	
+		//dd($anio);
+		if(is_numeric($oficina) && is_numeric($tramite)){ 	
 
 			/*obteniendo datos base para calculo*/
 			$maxtime = self::getmaxtimefortramiteinoficina($oficina);
@@ -360,7 +373,7 @@ class AppController extends Controller
 			//obtener las citas del mes seleccionado en base al diainicial y diaultimomes
 			if($fechaactual<=$diaultimomesseleccionado){								
 				//obtener las citas del mes seleccionado
-				$citas=self::getcitas("mes",$oficina,$diainicialstring,$diaultimomesseleccionadostring,false,false,false); 
+				$citas=self::getcitas("mes",$lang,$oficina,$diainicialstring,$diaultimomesseleccionadostring,false,false,false); 
 				//obtener las ausencias	del mes seleccionado
 				$ausencias=self::getausencias("mes",$oficina,$diainicialstring,$diaultimomesseleccionadostring,false,false,false); 										
 			}
@@ -442,7 +455,9 @@ class AppController extends Controller
     	//dia 1 de mes/anio seleccionado
     	$dia1messeleccionado = DateTime::createFromFormat('d-m-Y', '01-'.$mes.'-'.$anio);
     	//dias del mes que vamos a regresar en base a la fecha seleccionada
+	
     	$dias=cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
+		
     	//dia ultimo de mes/anio seleccionado
     	$diaultimomesseleccionado = DateTime::createFromFormat('d-m-Y', $dias.'-'.$mes.'-'.$anio); 
     	//obtener el mes de la fecha seleccionada en español
@@ -544,9 +559,10 @@ class AppController extends Controller
 	/**
      * Tener lista de horas disponibles por oficina/tramite/dia/mes/anio //SERVICIO PUBLICO
      */	
-    public function getavailablehours($oficina=false,$tramite=false,$dia=false,$mes=false,$anio=false)
+    public function getavailablehours($lang=false, $oficina=false,$tramite=false,$dia=false,$mes=false,$anio=false)
     {	
-
+		
+		//dd($oficina,$tramite,$dia,$mes,$anio);
     	//obtener fecha actual (anio,mes,dia y fecha:dd-mm-yyyy)
     	$currentyear  = date('Y');
     	$currentmonth = date('m');
@@ -573,7 +589,7 @@ class AppController extends Controller
 			$maxtime = self::getmaxtimefortramiteinoficina($oficina);	
 
 			//obtener las citas del dia seleccionado
-			$citas=self::getcitas("dia",$oficina,false,false,$dia,$mes,$anio); 	
+			$citas=self::getcitas("dia",$lang,$oficina,false,false,$dia,$mes,$anio); 	
 
 			//obtener las ausencias del dia seleccionado
 			$ausencias=self::getausencias("dia",$oficina,false,false,$dia,$mes,$anio); 
@@ -622,7 +638,7 @@ class AppController extends Controller
 			$maxtime = self::getmaxtimefortramiteinoficina($oficina);	
 
 			//obtener las citas del dia seleccionado
-			$citas=self::getcitascopy("dia",$oficina,false,false,$dia,$mes,$anio); 	
+			$citas=self::getcitascopy("dia",$lang,$oficina,false,false,$dia,$mes,$anio); 	
 
 			//obtener las ausencias del dia seleccionado
 			$ausencias=self::getausencias("dia",$oficina,false,false,$dia,$mes,$anio); 
@@ -715,7 +731,7 @@ class AppController extends Controller
 	/**
      * Funcion de apoyo para obtener las citas por oficina y fecha (pudiendo ser por mes(fechainicio,fechafin) o por dia(dia,mes,anio) $tipo) PRIVADO
      */
-	private function getcitas($tipo,$oficina,$fechainicio,$fechafin,$dia,$mes,$anio){
+	private function getcitas($lang=false,$tipo,$oficina,$fechainicio,$fechafin,$dia,$mes,$anio){
 
 		if($tipo=="dia"){
 
@@ -1244,6 +1260,8 @@ class AppController extends Controller
 	    	$fechahora=request()->fechahora;
 	    	$tramite=request()->tramite;
 
+			//dd($oficina, $fechahora, $tramite);
+
 	    	//validacion si al guardar previo ya no hay disponibilidad por que hayan tardado para dar click a la hora	
 	    	
 	    	//obtener dia,mes,anio de fechahora  	
@@ -1255,7 +1273,8 @@ class AppController extends Controller
 	    	$fechahoraarray = explode(" ",$fechahora["value"]);
 	    	$hora=$fechahoraarray[1];
 	    	//obtener horas disponibles del dia  
-	    	$horasdisponibles=self::getavailablehours(intval($oficina["value"]),intval($tramite["value"]),$dia,$mes,$anio);
+	    	$horasdisponibles=self::getavailablehours(false,intval($oficina["value"]),intval($tramite["value"]),$dia,$mes,$anio);
+			//dd($horasdisponibles);
 	    	$data 			= $horasdisponibles->getData();
 	    	//obtener horarios y horaejecucion
 	    	$horaejecucion  = $data->horaejecucion;
@@ -1277,19 +1296,23 @@ class AppController extends Controller
 				$holdingcita->save();
 
 				$errorboolean="false";
-				$description="<k>Fecha/hora reservada con éxito</k>"; 
+				$msg = __('lblAppController1');
+				$description="<k> $msg </k>"; 
 				DB::commit();
 			}else{
 				$holdingcita=[];
 				$errorboolean="true";
-				$description="<k>La fecha/hora ya fue reservada por alguien más a ".$horaejecucion.". Intenta con otra fecha/hora.</k>"; 
+				$msg1 = __('lblAppController2');
+				$msg2 = __('lblAppController3');
+				$description="<k> $msg1 $horaejecucion $msg2 </k>"; 
 			}
 
 		} catch (Exception $e) {
 			DB::rollback();
 			$holdingcita=[];
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
+			$msg = __('lblAppController4');
+			$description=$msg  .$e;
 
 		} 
 		return response()->json([
@@ -1348,20 +1371,24 @@ class AppController extends Controller
 				$holdingcita->save();
 
 				$errorboolean="false";
-				$description="<k>Fecha/hora reservada con éxito</k>"; 
+				$msg = __('lblAppController1');
+				$description="<k> $msg </k>"; 
 				DB::commit();
 			}else{
 				$holdingcita=[];
 				$errorboolean="true";
-				$description="<k>La fecha/hora ya fue reservada por alguien más a ".$horaejecucion.". Intenta con otra fecha/hora.</k>"; 
+				$msg1 = __('lblAppController2');
+				$msg2 = __('lblAppController3');
+				$description="<k> $msg1 $horaejecucion $msg2 </k>"; 
+				
 			}
 
 		} catch (Exception $e) {
 			DB::rollback();
 			$holdingcita=[];
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
-
+			$msg = __('lblAppController4');
+			$description=$msg  .$e;
 		} 
 		return response()->json([
 		    'error' => $errorboolean,
@@ -1386,13 +1413,14 @@ class AppController extends Controller
 	    	$holdingcita = Holdingcita::where('folio',$folio)->delete();
 
 			$errorboolean="false";
-			$description="<k>Fecha liberada con éxito</k>"; 
+			$msg = __('lblAppController51');
+			$description="<k> $msg </k>"; 
 			DB::commit();	
 		} catch (Exception $e) {
 			DB::rollback();
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
-
+			$msg = __('lblAppController4');
+			$description=$msg  .$e;
 		} 
 		return response()->json([
 		    'error' => $errorboolean,
@@ -1407,7 +1435,7 @@ class AppController extends Controller
     /**
      * Tener confirmacion de registro de cita filtrada por folio   //SERVICIO PUBLICO
      */	
-    public function getconfirmacionregistro($folio=false)
+    public function getconfirmacionregistro($lang=false,$folio=false)
     {		
     	if($folio && strlen($folio)==8){//si recibimos folio
     		
@@ -1416,7 +1444,8 @@ class AppController extends Controller
 			
     	}
     	else{//si no recibimos id tramite
-    		return "Falta folio ó Folio esta en formato incorrecto";
+			$msg = __('lblAppController6');
+    		return $msg;
     	}
 		
     }
@@ -1431,6 +1460,7 @@ class AppController extends Controller
     public function getcita(Request $request)
     {		
     	$folio = request()->folio;
+		
 
     	if($folio && strlen($folio)==8){//si recibimos folio
     		
@@ -1446,10 +1476,11 @@ class AppController extends Controller
     	}
     	else{//si no recibimos id tramite
     		if($request->exists){
-    			return "Falta folio ó Folio esta en formato incorrecto";
+				$msg = __('lblAppController6');
+    			return $msg;
     		}	
     		else{
-    			return redirect()->route('/');	
+    			return redirect()->route('/', app()->getLocale());	
     		}
     	}
 		
@@ -1460,8 +1491,9 @@ class AppController extends Controller
     /**
      * Cancelar cita por folio  				  //SERVICIO PUBLICO
      */	
-    public function cancelarcita(Request $request)
+    public function cancelarcita($lang=false,Request $request)
     {
+		
     	$folio = request()->folio;
     	if($folio && strlen($folio)==8){//si recibimos folio
     		try{
@@ -1472,7 +1504,8 @@ class AppController extends Controller
     			//$request = new \Illuminate\Http\Request();
     			//$request->replace(['folio' => $folio]);
     			//return Route::post('getcita', array('uses' => 'AppController@getcita'));//redirect()->route('getcita'); //Redirect::back();
-    			return Redirect()->route('getcita', ['folio'=>$folio]);//::back()->withInput();
+    			//return redirect()->route('getcita', ['folio'=>$folio]);//::back()->withInput();
+				return redirect()->route('/', app()->getLocale());
     		}
     		catch (Exception $e) {
 				DB::rollback();
@@ -1493,6 +1526,7 @@ class AppController extends Controller
      */	
     private function getcitabyfolio($folio=false,$tipo=false)
     {
+		
     	$cita = DB::table('citas')
 			->leftJoin("tramites",'tramites.id_tramite','=','citas.tramite_id')
 			->leftJoin("oficinas",'oficinas.id_oficina','=','citas.oficina_id')
@@ -1566,6 +1600,7 @@ class AppController extends Controller
      */
     public function savedate(Request $request)
     {		
+		
 
     	$ip=$this->getUserIpAddr();//\Request::ip();//request()->getClientIp(true);//$_SERVER['REMOTE_ADDR'];//$this->getIp(); //request()->ip();//"123";//$_SERVER['REMOTE_ADDR'];
 		//validate ip not allow more than 10 requests by hour
@@ -1585,33 +1620,55 @@ class AppController extends Controller
 			         $nombrecortado = explode("#", $nombre["value"]);
 			         if(count($nombrecortado)<3){$error++;$errortext=$errortext."<br>&bull; No colocaste nombre completo";}
 			         else{
+						$msg='';
 			            $nombres=$nombrecortado[0]; 
-			                if (!self::valid_name($nombres)){$error++;$errortext=$errortext."<br>&bull; Nombre debe contener solo letras";}
+			                if (!self::valid_name($nombres))
+							{
+								$msg= __('lblAppController7');
+								$error++;$errortext=$errortext."<br>&bull;".$msg;
+							}
 			                else{$nombre["nombre"]=ucwords($nombres);}
 			            $apellidopaterno=$nombrecortado[1]; 
-			                if (!self::valid_name($apellidopaterno)){$error++;$errortext=$errortext."<br>&bull; Apellido paterno debe contener solo letras";}
+			                if (!self::valid_name($apellidopaterno))
+							{
+								$msg= __('lblAppController8');
+								$error++;$errortext=$errortext."<br>&bull; ".$msg;
+							}
 			                else{$nombre["apellidopaterno"]=ucwords($apellidopaterno);}
 			            $apellidomaterno=$nombrecortado[2];
-			                if (!self::valid_name($apellidomaterno)){$error++;$errortext=$errortext."<br>&bull; Apellido materno debe contener solo letras";}
+			                if (!self::valid_name($apellidomaterno))
+							{
+								$msg= __('lblAppController9');
+								$error++;$errortext=$errortext."<br>&bull;" .$msg;
+							}
 			                else{$nombre["apellidomaterno"]=ucwords($apellidomaterno);}
 			            $nombre["text"]=ucwords($nombres." ".$apellidopaterno." ".$apellidomaterno);
 			         }
 			    $tramite=request()->tramite; 		 
-			    	if (!is_numeric ($tramite["value"])){$error++;$errortext=$errortext."<br>&bull; Trámite debe ser número";}
+			    	if (!is_numeric ($tramite["value"]))
+					{
+						$msg=__('lblAppController10');
+						$error++;$errortext=$errortext."<br>&bull;".$msg;
+					}
 			    	else{
 				    	//validate numero de tramite from db, si no, entonces mostrar error and get text from db for tramite 
 				    	$tramiteobjeto = Tramite::find($tramite["value"]);
+						//dd($tramiteobjeto);
 				    	if(count($tramiteobjeto)>0){
 				   			$tramite["text"]= $tramiteobjeto->nombre_tramite;
 				   			$tramite["requisitos"]= $tramiteobjeto->requisitos;
 				   			$tramite["costo"]= $tramiteobjeto->costo;
 				   		}	
 				   		else{
-				   			$error++;$errortext=$errortext."<br>&bull; Trámite no existe";
+							$msg= __('lblAppController11');
+				   			$error++;$errortext=$errortext."<br>&bull;" .$msg;
 				   		}
 			   		}	        
 			    $oficina=request()->oficina;
-			    	if (!is_numeric ($oficina["value"])){$error++;$errortext=$errortext."<br>&bull; Oficina debe ser número";}
+			    	if (!is_numeric ($oficina["value"]))
+					{
+						$msg= __('lblAppController12');
+						$error++;$errortext=$errortext."<br>&bull; ".$msg;}
 					else{
 				    	//validate numero de oficina from db, si no, entonces mostrar error and get text from db for oficina 
 				    	$oficinaobjeto = Oficina::find($oficina["value"]);
@@ -1621,12 +1678,16 @@ class AppController extends Controller
 				   			$oficina["direccion"]=$oficinaobjeto->direccion;	
 				   		}	
 				   		else{
-				   			$error++;$errortext=$errortext."<br>&bull; Oficina no existe";
+							$msg= __('lblAppController13');
+				   			$error++;$errortext=$errortext."<br>&bull; ".$msg;
 				   		}
 			   		}	           
 			    $fechahora=request()->fechahora;
 			    	if($fechahora["value"]!=null){
-				    	if (!self::valid_date($fechahora["value"])){$error++;$errortext=$errortext."<br>&bull; Fecha inválida";}
+				    	if (!self::valid_date($fechahora["value"]))
+						{
+							$msg = __('lblAppController14');
+							$error++;$errortext=$errortext."<br>&bull; ".$msg;}
 				    	else{
 				    		//validate disponibilidad de fecha/hora, si no, entonces mostrar error
 				    		/*$arraygetavailability = [];
@@ -1647,13 +1708,16 @@ class AppController extends Controller
 				        }	 
 			        }  
 			        else{
-			        	$error++;$errortext=$errortext."<br>&bull; Fecha y hora no seleccionada";
+						$msg = __('lblAppController15');
+						$error++;$errortext=$errortext."<br>&bull; ".$msg;
 			        }    
 			    if(request()->email!=""){     
 			    	$email=request()->email;
 			    	if($email["value"]!=""){		              		        
 			        	$email["value"]=strtolower($email["value"]); 
-			        	if (!self::valid_email($email["value"])){$error++;$errortext=$errortext."<br>&bull; Email inválido";}
+			        	if (!self::valid_email($email["value"])){
+							$msg = __('lblAppController16');
+							$error++;$errortext=$errortext."<br>&bull; ".$msg;}
 			        }
 			        else{
 			        	$email="";
@@ -1667,7 +1731,10 @@ class AppController extends Controller
 			    	$telefono=request()->telefono;
 			    	if($telefono["value"]!=""){		              		        
 			        	$telefono["value"]=strtolower($telefono["value"]); 
-			        	if (!self::valid_phone($telefono["value"])){$error++;$errortext=$errortext."<br>&bull; Teléfono inválido";}
+			        	if (!self::valid_phone($telefono["value"]))
+						{
+							$msg = __('lblAppController17');
+							$error++;$errortext=$errortext."<br>&bull; "+msg;}
 			        }
 			        else{
 			        	$telefono="";
@@ -1679,7 +1746,9 @@ class AppController extends Controller
 
 			    $curp=request()->curp;		        
 			        $curp["value"]=strtoupper($curp["value"]);
-			        if (self::valid_curp($curp["value"])==0){$error++;$errortext=$errortext."<br>&bull; CURP inválido";}
+			        // if (self::valid_curp($curp["value"])==0)
+					// {	$msg = __('lblAppController18')."m";
+					// 	$error++;$errortext=$errortext."<br>&bull; ".$msg;}
 
 			    if($error==0){    
 					
@@ -1744,33 +1813,42 @@ class AppController extends Controller
 				        //retornar json como salida: tipodesalida, descripcion		             
 				        if(count(Mail::failures()) == 0){		
 				            $errorboolean="false";
-							$description="<k>Cita registrada con Folio: <b>".$folio."</b>.<br>Te enviamos un email con la confirmación.<br>Revisa el siguiente link para imprimir la confirmación.<br><a href='".route('getconfirmacionregistro')."/".$folio."'>Imprimir confirmación</a></k>"; 
+							$msg = __('lblAppController19');
+							$msg2 = __('lblAppController20');
+							$msg3 = __('lblAppController21');
+							$msg4 = __('lblAppController22');
+							$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a></k>"; 
 							DB::commit();
 				        }else{ 		     
 				        	DB::rollback();      
 				            $errorboolean="true";
-							$description="Ocurrió un error de envío de mail y la cita no fue registrada, intenta más tarde."; 
+							$msg = __('lblAppController4');
+							$description=$msg; 
 				        } 
 				    }
 				    else{		//user dont give us a mail, so, return a link to print a receipt
 				    	$errorboolean="false";
-						$description="<k>Cita registrada con Folio: <b>".$folio."</b>.<br>Revisa el siguiente link para imprimir la confirmación.<br><a href='".route('getconfirmacionregistro')."/".$folio."'>Imprimir confirmación</a></k>"; 
+						//$description="<k>Cita registrada con Folio: <b>".$folio."</b>.<br>Revisa el siguiente link para imprimir la confirmación.<br><a href='".route('getconfirmacionregistro')."/".$folio."'>Imprimir confirmación</a></k>"; 
+						$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a></k>"; 
 						DB::commit();	
 				    }
 			    }
 			    else{
 			    	$errorboolean="true";
-					$description="Los siguientes campos son incorrectos:".$errortext;
+					$msg = __('lblAppController23');
+					$description=$msg.$errortext;
 			    }
 			} catch (Exception $e) {
 				DB::rollback();
 				$errorboolean="true";
-				$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
+				$msg = __('lblAppController4');
+							$description=$msg.$e; 
 			} 
 		}
 		else{
 			$errorboolean="true";
-			$description="Ya no puedes crear más citas por el momento. Espera 1 hora. ";
+			$msg = __('lblAppController24');
+			$description=$msg;
 		}
         return response()->json([
 		    'error' => $errorboolean,
@@ -1848,7 +1926,9 @@ class AppController extends Controller
 	}
 	public function valid_curp(String $str){
 	    //return preg_match('/^[A-ZÑ&]{3,4}\d{6}(?:[A-Z\d]{8})?$/', $str);
-		return preg_match('/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', $str);
+		//return preg_match('/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', $str);
+		
+		return $str;
 	}
 	private function valid_date(String $str){
 	    $format = 'Y-m-d H:i';

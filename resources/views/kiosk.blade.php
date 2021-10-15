@@ -27,23 +27,23 @@
 @endsection
 
 @section('content')
-    <span class="nombreoficina">Oficina: <b>{{$oOficina->nombre_oficina}}</b></span>
+    <span class="nombreoficina">{{ __('lblKiosk1') }}: <b>{{$oOficina->nombre_oficina}}</b></span>
 
     <div class="responsemessage"></div>
 
     <div class="fullscreencontainer">        
         <span class="logocontainer"><img src="{{url('/images/logo.png')}}" class="logo"></span>
-        <span class="descriptioncontainer"><h1>Selecciona</h1><p>Si registraste una cita, selecciona con cita. Si no registraste ninguna cita, selecciona sin cita. En ambos casos al finalizar se te indicará el tiempo de espera.</p></span>
+        <span class="descriptioncontainer"><h1>{{ __('lblKiosk2') }}</h1><p>{{ __('lblKiosk3') }}</p></span>
         <span class="buttonscontainer">
-            <a href="#" class="concita">Con cita</a>
-            <a href="#" class="sincita">Sin cita</a>
+            <a href="#" class="concita">{{ __('lblKiosk4') }}</a>
+            <a href="#" class="sincita">{{ __('lblKiosk5') }}</a>
         </span>
          
     </div>  
 
     <div class="miniscreencontainer">
         <close><i class="fa fa-times"></i></close>        
-        <span class="descriptioncontainer"><h1 id="confirmationtype"></h1><p>Por favor espere su turno:</p></span>
+        <span class="descriptioncontainer"><h1 id="confirmationtype"></h1><p>{{ __('lblKiosk6') }}</p></span>
         <span class="confirmacioncontainer">
             <h1 id="turno"></h1>
             <b><k id="tiempoaproximado"></k></b>
@@ -53,53 +53,53 @@
     <div class="minisearchcontainer">
         <close><i class="fa fa-times"></i></close>  
         <form id="search-form">      
-            <p class="descriptionsection">Escribe nombre completo, curp o folio <em>*</em></p>
+            <p class="descriptionsection">{{ __('lblKiosk7') }} <em>*</em></p>
             <div class="inputfield">            
-                <input type="text" class="texto" id="search" autocomplete="off" name="search" placeholder="Escribe tu nombre completo, curp o folio de cita" 
+                <input type="text" class="texto" id="search" autocomplete="off" name="search" placeholder="{{ __('lblKiosk7') }}" 
                 minlength="6" required="">
-                <label>Nombre, curp o folio <em>(* si registraste más de 1 cita para el día de hoy, ingresa Folio)</em></label>                          
+                <label>{{ __('lblKiosk8') }} <em>{{ __('lblKiosk9') }}</em></label>                          
             </div>
-            <input type="submit" value="Buscar" class="btn btn-primary" id="buttonbuscar">  
+            <input type="submit" value="{{ __('lblKiosk10') }}" class="btn btn-primary" id="buttonbuscar">  
         </form>
     </div>
 
     <div class="concitavisor">
         <video id="preview" playsinline autoplay muted ></video>
-        <label>Escanea Código QR <close><i class="fa fa-chevron-left"></i> <k>Regresar</k></close> <search><i class="fa fa-search"></i> <k>Buscador</k></search></label>
+        <label>{{ __('lblKiosk11') }} <close><i class="fa fa-chevron-left"></i> <k>{{ __('lblKiosk12') }}</k></close> <search><i class="fa fa-search"></i> <k>{{ __('lblKiosk13') }}</k></search></label>
     </div>
 
     <div class="sincitavisor">
-        <close><i class="fa fa-chevron-left"></i> <k>Regresar</k></close>
+        <close><i class="fa fa-chevron-left"></i> <k>{{ __('lblKiosk12') }}</k></close>
         <form id="turno-form">
-            <label class="titlesection" data-section="1"><b>1</b><span>¿Qué trámite vas a realizar?</span></label>
-            <p class="descriptionsection">Para iniciar, es necesario indiques el trámite que necesitas.</p>
+            <label class="titlesection" data-section="1"><b>1</b><span>{{ __('lblKiosk14') }}</span></label>
+            <p class="descriptionsection">{{ __('lblKiosk15') }}</p>
             <!--mostrar solo tramites correspondientes de la dependencia, por lo que la url de waitingroom nos va a indicar la dependencia donde estamos ubicados-->
             <select class="form-control mb-30 select2-single" id="tramite" required="" name="tramite">
-                <option value="">Seleccione un trámite</option> 
+                <option value="">{{ __('lblKiosk16') }}</option> 
                 @foreach($tramites as $tramite)
                     <option value='{{$tramite["id_tramite"]}}'>{{$tramite["nombre_tramite"]}}</option>        
                 @endforeach                                    
             </select>
 
             <div class="w50 first">
-                <label class="titlesection" data-section="2"><b>2</b><span>¿Cuál es tu nombre?</span></label>
-                <p class="descriptionsection">Es necesario indiques tu nombre.</p>
+                <label class="titlesection" data-section="2"><b>2</b><span>{{ __('lblKiosk17') }}</span></label>
+                <p class="descriptionsection">{{ __('lblKiosk17') }}.</p>
                 <div class="inputfield">
-                    <input type="text" class="texto capitalize" id="nombre" autocomplete="off" name="nombre" placeholder="Escribe tu nombre completo" minlength="2" required="">
-                    <label>NOMBRE COMPLETO </label>
+                    <input type="text" class="texto capitalize" id="nombre" autocomplete="off" name="nombre" placeholder="{{ __('lblKiosk19') }}" minlength="2" required="">
+                    <label>{{ __('lblKiosk20') }} </label>
                 </div>  
             </div>  
 
             <div class="w50 last">
-                <label class="titlesection" data-section="3"><b>3</b><span>¿Cuál es tu CURP?</span></label>
-                <p class="descriptionsection">Es necesario indiques tu CURP.</p>
+                <label class="titlesection" data-section="3"><b>3</b><span>{{ __('lblKiosk21') }}</span></label>
+                <p class="descriptionsection">{{ __('lblKiosk22') }}<.</p>
                 <div class="inputfield">
-                    <input type="text" class="texto uppercase" id="curp" autocomplete="off" name="curp" placeholder="18 dígitos" minlength="18" maxlength="18">
-                    <label>CURP </label>
+                    <input type="text" class="texto uppercase" id="curp" autocomplete="off" name="curp" placeholder="{{ __('lbldigits') }}" minlength="9" maxlength="9">
+                    <label>{{ __('lblKiosk23') }} </label>
                 </div>  
             </div>
 
-            <input type="submit" value="Crear turno" class="enviar">
+            <input type="submit" value="{{ __('lblKiosk24') }}" class="enviar">
         </form>
     </div>
 @endsection
@@ -114,7 +114,10 @@
         var manualturnurl = "{{route('kioskmanualturn', app()->getLocale())}}";
         var gettramitesbykioskourl = "{{route('gettramitesbykiosko', app()->getLocale())}}/{{$oOficina->id_oficina}}";
         var oficina={{$oOficina->id_oficina}};
+       
+        var lblKiosk16="{{__('lblKiosk16') }}"; 
     </script>
+   
     <script src="{{url('/js/waitingroom.js')}}" type="text/javascript"></script>
 @endsection
 

@@ -55,11 +55,11 @@ class KioskController extends Controller
                 return view('kiosk', compact("oOficina","tramites"));
             }
             else{
-                return "Oficina no existe";
+                return __('lblKiskoController1');
             }
         }
         else{
-            return "Oficina no existe";
+            return __('lblKiskoController1');
         }
     }
 
@@ -132,6 +132,7 @@ class KioskController extends Controller
      */
     public function confirmationqr($oficina=false, $folio=false)
     {	
+        dd('confirmationqr');
         //buscando la cita en base al folio leido del qr y la oficina
         $oCita = Cita::where("folio",$folio)->where("oficina_id",$oficina)->first();
         //llamando a funcion privada de validacion de cita
@@ -146,11 +147,14 @@ class KioskController extends Controller
     /**
      *  Buscar cita por texto (nombre, curp o folio) de cita para generar turno  //SERVICIO PUBLICO
      */
-    public function searchcitabytext($oficina=false, $text=false)
+    public function searchcitabytext($lang=false,$oficina=false, $text=false)
     {   
+     
+       
         //buscando la cita en base al texto
         if(strlen($text)==8){      //buscando por folio
             $oCita = Cita::where("folio",$text)->where("oficina_id",$oficina)->first();
+            
         }else{
             //en ambos casos si el nombre o rfc es buscado, validar que si ya llego tarde a la primera cita, pueda buscar la segunda
             if(strlen($text)==18 && app('App\Http\Controllers\AppController')->valid_curp(strtoupper($text))!=0){      //buscando por curp                
@@ -171,10 +175,12 @@ class KioskController extends Controller
                 $sql_with_bindings = str_replace_array('?', $query->getBindings(), $query->toSql());    
                 dd($sql_with_bindings);
                 */
-                if(count($oCita)==0){     
+                if(count($oCita)==0){   
+                    dd("ccc");
+                    $msg=  __('lblKiskoController2');
                     return response()->json([
                         'error' => "true",
-                        'errordescription' => "No hay cita para este momento con este CURP en esta oficina"
+                        'errordescription' => $msg
                     ]); 
                 }
             }
@@ -187,16 +193,18 @@ class KioskController extends Controller
                         ->whereRaw('Date(fechahora) = CURDATE()')
                         ->orderBy('fechahora','ASC')
                         ->first();
-                if(count($oCita)==0){     
+                if(count($oCita)==0){   
+                    $msg=  __('lblKiskoController3');  
                     return response()->json([
                         'error' => "true",
-                        'errordescription' => "No hay cita para este momento con este Nombre en esta oficina"
+                        'errordescription' => $msg
                     ]); 
                 }
             }
         }
         //llamando a funcion privada de validacion de cita   
-        $response=self::validatecita($oficina,$oCita)->getData();
+     
+        $response=self::validatecita($lang,$oficina,$oCita)->getData();
         return response()->json($response);
     }
 
@@ -207,10 +215,12 @@ class KioskController extends Controller
     /**
      *  Funcion privada para validar cita e invocar a generar turno
      */
-    private function validatecita($oficina, $oCita)
+    private function validatecita($lang=false,$oficina, $oCita)
     {  
+        
 
         if(count($oCita)>0){ 
+           
 
             $cita_fechahora=$oCita->fechahora;
             $cita_idcita=$oCita->id_cita;
@@ -229,6 +239,7 @@ class KioskController extends Controller
 
                 //si la cita es del dia actual, entonces continuamos
                 if($fechaactual==$fechacita){ 
+                
                     //si la hora de la cita menor a la de la hora actual, entonces continuamos    
                     //if($fechahoracita>=$fechahoraactual){  
                     $tiempo=(strtotime($cita_fechahora)-time())/60;   
@@ -245,43 +256,49 @@ class KioskController extends Controller
                                 return response()->json($turn);
                             }
                             else{
+                                $msg=  __('lblKiskoController4');  
                                 return response()->json([
                                     'error' => "true",
-                                    'errordescription' => "La cita ya tiene turno"
+                                    'errordescription' => $msg
                                 ]);                
                             }
                         }
                         else{
+                            $msg=  __('lblKiskoController5'); 
                             return response()->json([
                                 'error' => "true",
-                                'errordescription' => "Llegaste tarde a tu cita, tendrás que sacar una nueva cita"
+                                'errordescription' => $msg
                             ]); 
                         }
                     }
                     else{
+                        $msg=  __('lblKiskoController6');
                         return response()->json([
                             'error' => "true",
-                            'errordescription' => "Llegaste mucho antes a tu cita, debes estar máximo 20 minutos antes de tu cita"
+                            'errordescription' => $msg
                         ]); 
                     }
                 }else{
+                    $msg=  __('lblKiskoController7');
                     return response()->json([
                         'error' => "true",
-                        'errordescription' => "La cita no es del día de hoy"
+                        'errordescription' => $msg
                     ]); 
                 }
             }
             else{
+                $msg=  __('lblKiskoController8');
                 return response()->json([
                         'error' => "true",
-                        'errordescription' => "Cancelaste la cita"
+                        'errordescription' => $msg
                     ]);
             }
         }
         else{
+            $msg=  __('lblKiskoController9');
             return response()->json([
                     'error' => "true",
-                    'errordescription' => "La cita no existe para esta oficina"
+                    'errordescription' => $msg
                 ]);
         }
     }
@@ -301,6 +318,7 @@ class KioskController extends Controller
      */
     public function manualturn(Request $request)
     {
+       
         
         $oficina=request()->oficina;
         $tramite=request()->tramite;
@@ -312,9 +330,10 @@ class KioskController extends Controller
             return response()->json($turn);
         }
         else{
+            $msg=  __('lblKiskoController10');
             return response()->json([
                 'error' => "true",
-                'errordescription' => "Hay un error con los datos ingresados, verifica nuevamente."
+                'errordescription' => $msg
             ]);   
         }
     }
@@ -326,8 +345,10 @@ class KioskController extends Controller
     /**
      * Funcion de apoyo para crear turno
      */ 
-    public function createturn($turntype,$tramite,$oficina,$curp,$cita=false,$nombre=false)
+    public function createturn( $turntype,$tramite,$oficina,$curp,$cita=false,$nombre=false)
     {
+       
+
         DB::beginTransaction();
         try {
 
@@ -366,15 +387,22 @@ class KioskController extends Controller
                 $dia    = intval(date("d")); 
                 $mes    = intval(date("m"));
                 $anio   = intval(date("Y"));
-                $siguienteshorasdisponibles=app('App\Http\Controllers\AppController')->getavailablehours(intval($oficina),intval($tramite),$dia,$mes,$anio);
+                $siguienteshorasdisponibles=app('App\Http\Controllers\AppController')->getavailablehours(null ,intval($oficina),intval($tramite),$dia,$mes,$anio);
                 $data   = $siguienteshorasdisponibles->getData(); 
+                
+               
                 $horarios = (array) $data->horas[0]->horarios;
+
+              ;
+               
                 $hora=""; 
                 //checamos si horarios de la funcion tiene elementos
                 foreach($horarios as $elementey => $element){
                     $hora=$elementey;
                     break;
                 }
+
+                
                 //si hay una hora
                 if($hora!=""){
                     $fechahoraactual = new DateTime(date('Y-m-d H:i:s'));               //obtenemos la fechahora actual
@@ -426,17 +454,17 @@ class KioskController extends Controller
            
             //si el tipo de turno es por cita, la confirmacion es por cita
             if($turntype=="cita"){
-                $confirmationtype = "Cita confirmada";
-                $tiempoaproximado = "Espere su llamado de turno en breve";
+                $confirmationtype = __('lblKiskoController11');
+                $tiempoaproximado = __('lblKiskoController12');
             }   //si no, la confirmacion es por turno
             else{
-                $confirmationtype = "Turno creado";
+                $confirmationtype = __('lblKiskoController13');
 
                 $tiempohoras = $tiempoaproximado/60;
                 $horas = floor($tiempohoras);
                 $minutos = $tiempohoras - $horas;
                 $minutos = str_pad(round($minutos*60,0), 2, '0', STR_PAD_LEFT); 
-                $tiempoaproximado = "Tiempo aproximado de espera ".str_pad($horas,2,'0',STR_PAD_LEFT)." hora(s) y ".$minutos." minuto(s)";
+                $tiempoaproximado = __('lblKiskoController14') .str_pad($horas,2,'0',STR_PAD_LEFT).__('lblKiskoController16')." ".$minutos.__('lblKiskoController17');
             }
             DB::commit();
             //dd($arraytiempos); 
@@ -449,10 +477,12 @@ class KioskController extends Controller
             ]);
 
         } catch (Exception $e) {
+            dd($e);
             DB::rollback();
+            $msg=__('lblKiskoController15');
             return response()->json([
                 'error' => "true",
-                'errordescription' => "Ocurrió un error en la base de datos, intenta más tarde. ".$e
+                'errordescription' => $msg.$e
             ]);
 
         }
@@ -484,11 +514,11 @@ class KioskController extends Controller
                 return view('turnera', compact("oOficina","tramites","videos","marquesinas"));
             }
             else{
-                return "Oficina no existe";
+                return __('lblKiskoController1');
             }
         }
         else{
-            return "Oficina no existe";
+            return __('lblKiskoController1');
         }
     }
 

@@ -58,20 +58,26 @@ class LoginController extends Controller
     	return redirect('/login');*/
         $this->guard()->logout();
         $request->session()->invalidate();
-        return redirect('/login');
+        // return redirect('/login');
+        return redirect()->route('login', app()->getLocale());
     }
 
     public function authenticated(Request $request, $user)
     {
         if ($user->estatus!="activo") {
             auth()->logout();
-            return back()->with('message', 'Hola, tu cuenta ya no esta activa.');
+            
+		
+            $msg = __('lblLoginController1');
+
+            return back()->with('message', $msg );
         }
         if ($user->tipo_user=="tramitador"||$user->tipo_user=="admin_oficina"||$user->tipo_user=="superadmin"){            
-             return redirect()->route('sistema');
+            // return redirect()->back('sistema', app()->getLocale());
+            return redirect()->route('sistema', app()->getLocale());
         }
         if ($user->tipo_user=="kiosko"){            
-             return redirect()->route('kiosk');
+            return redirect()->route('kiosk', app()->getLocale());
         }
     }
 

@@ -54,8 +54,8 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item"><a href="route('usuarios', app()->getLocale())">Usuarios</a></li>
-      <li class="breadcrumb-item active">Ausencias</li>
+      <li class="breadcrumb-item"><a href="route('usuarios', app()->getLocale())">{{ __('lblUsers') }}</a></li>
+      <li class="breadcrumb-item active">>{{ __('lblAbsences') }}</li>
     </ol>
 
     <div class="container-fluid">
@@ -88,13 +88,13 @@
                           <a class="btn btn-warning btn-search open-modal" href="#" data-toggle="modal" data-target="#myModal"
                           data-action = "store"
                           data-usuario= "{{$usuario->id_user}}"
-                          data-title  = "Nueva ausencia">Crear nueva ausencia <i class="icon-arrow-right"></i></a>
+                          data-title  = "Nueva ausencia">{{ __('lblCreateNewAbsence') }} <i class="icon-arrow-right"></i></a>
                       </div>
                       <div class="col-lg-9 col-md-12 ">
                         <div class="col-md-6 separator leftfilter">
                             <div class="input-prepend input-group">
                               <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-calendar" style="margin-right:10px"></i> Desde f. inicio</span>
+                                <span class="input-group-text"><i class="fa fa-calendar" style="margin-right:10px"></i> {{ __('lblFromStartDate') }}</span>
                               </div>
                               <input id="datetimepicker1" class="form-control" size="16" type="text" placeholder="YYYY-MM-DD" required value="{{$filtersfecha1}}"
                                name="filtersfecha1" autocomplete="off">
@@ -104,7 +104,7 @@
                            <div class="col-md-6 separator rightfilter">
                             <div class="input-prepend input-group">
                               <div class="input-group-prepend">
-                                <span class="input-group-text">Hasta f. inicio</span>
+                                <span class="input-group-text">{{ __('lblEndtDate') }}</span>
                               </div>
                               <input id="datetimepicker2" class="form-control" size="16" type="text" placeholder="YYYY-MM-DD" required value="{{$filtersfecha2}}"
                                name="filtersfecha2" autocomplete="off">

@@ -69,10 +69,10 @@ class CrmController extends Controller
         		->with('dependenciascombo',$dependenciascombo);
         }
         if($data["rol"]=="kiosko"){
-        	return redirect()->route('kiosk');
+        	return redirect()->route('kiosk', app()->getLocale());
         }
         if($data["rol"]=="turnera"){
-        	return redirect()->route('turnera');
+        	return redirect()->route('turnera', app()->getLocale());
         }
         if($data["rol"]=="superadmin"){
         	return view('sistema.indexsuperadmin')
@@ -104,7 +104,12 @@ class CrmController extends Controller
     /*display viewer*/
     private function displayviewer($tipo=false,$data=false){
     	//$filterestatus=request()->filterestatus;
-    	$turnos=self::getturnos($data['rol'],$data['oficina'],date('Y-m-d').'@'.date('Y-m-d'),'creado');        	
+    	
+		$fecha=date('Y-m-d')."@".date('Y-m-d');
+		$lang=null;
+	
+		
+		$turnos=self::getturnos($lang, $data['rol'],$data['oficina'],$fecha,'creado');        	
 
     	//getting usuarios
     	$usuarios=DB::table('users')
@@ -128,10 +133,15 @@ class CrmController extends Controller
 
     /***AJAX FUNCTIONS TO GET/UPDATE TURNOS VIEWER***/
 	//getting turnos (aux function)
-	public function getturnos($rol=false,$oficina=false,$fecha=false,$status=false)
+	public function getturnos($lang=false,$rol=false,$oficina=false,$fecha=false,$status=false)
 	{
+		
 		//spliting fecha
 		$fechas=explode("@", $fecha);
+	
+		
+		
+		
 		//getting turnos
 		$turnos=DB::table('turnos')
     		->leftJoin('tramites','tramites.id_tramite','=','turnos.tramite_id')
@@ -139,13 +149,21 @@ class CrmController extends Controller
     		->leftJoin('citas','citas.id_cita','=','turnos.cita_id')
     		->orderBy('created_at','DESC')
     		->select('turnos.*', 'tramites.nombre_tramite', 'users.nombre', 'citas.folio as cita', DB::raw('time_format(time(turnos.created_at),"%H:%i") as creado'),
-    			DB::raw('DATE_FORMAT(turnos.created_at, "%d de %b, %Y") as fechacreado'),
+    		DB::raw('DATE_FORMAT(turnos.created_at, "%d de %b, %Y") as fechacreado'),
     		DB::raw('time_format(time(turnos.fechahora_inicio),"%H:%i") as inicio'), DB::raw('time_format(time(turnos.fechahora_fin),"%H:%i") as fin'))
-    		->whereRaw('Date(turnos.created_at) >= "'.$fechas[0].'"')
-    		->whereRaw('Date(turnos.created_at) <= "'.$fechas[1].'"');
+    		//  ->whereRaw('Date(turnos.created_at) >= "'.$fecha.'"')
+    	    //  ->whereRaw('Date(turnos.created_at) <= "'.$fecha2.'"');
+			  ->whereRaw('Date(turnos.created_at) >= "'.$fechas[0].'"')
+    		  ->whereRaw('Date(turnos.created_at) <= "'.$fechas[1].'"');
+
+			
     	if($status){
+			
     		$turnos=$turnos->where('turnos.estatus',$status);
+			
+			
     	}
+		
     	//if($rol=='admin_oficina'){
     		$turnos = $turnos->where('turnos.oficina_id',$oficina);
     	//}	
@@ -155,7 +173,7 @@ class CrmController extends Controller
 	}		
 	/***AJAX FUNCTIONS TO GET/UPDATE CITAS VIEWER***/
 	//getting citas (aux function)
-	public function getcitas($rol=false,$oficina=false,$fecha=false,$status=false)
+	public function getcitas($lang=false, $rol=false,$oficina=false,$fecha=false,$fecha2,$status=false)
 	{		
 		//spliting fecha
 		$fechas=explode("@", $fecha);
@@ -167,8 +185,8 @@ class CrmController extends Controller
     		->select('citas.*', 'tramites.nombre_tramite',DB::raw('time_format(time(citas.fechahora),"%H:%i") as creado'),
     			DB::raw('DATE_FORMAT(citas.fechahora, "%d de %b, %Y") as fechacreado'),DB::raw('folio as cita'))
     		->whereNull('statuscita')
-    		->whereRaw('Date(citas.fechahora) >= "'.$fechas[0].'"')
-    		->whereRaw('Date(citas.fechahora) <= "'.$fechas[1].'"');
+    		->whereRaw('Date(citas.fechahora) >= "'.$fecha.'"')
+    		->whereRaw('Date(citas.fechahora) <= "'.$fecha2.'"');
     	//if($rol=='admin_oficina'){
     		$citas = $citas->where('citas.oficina_id',$oficina);
     	//}	
@@ -226,7 +244,7 @@ class CrmController extends Controller
 		return $citas;	
 	}
 	//update turnos (aux function)
-	public function updateturnos($turno=false,$tramitador=false)
+	public function updateturnos($lang=false,$turno=false,$tramitador=false)
 	{
 
 		DB::beginTransaction();
@@ -277,13 +295,14 @@ class CrmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function perfiltramitador($tramitador)
+    public function perfiltramitador($tramitador,$tramitador2)
     {				
+	
 		$data = Helper::getMenuData();
 		if($data['rol']=='tramitador'){
-			return redirect()->route('perfil');  
+			return redirect()->route('perfil', app()->getLocale());  
 		}
-		$profile=self::getprofile($tramitador,'tramitador',$data);
+		$profile=self::getprofile($tramitador2,'tramitador',$data);
         return $profile;
     }
 
@@ -397,9 +416,15 @@ class CrmController extends Controller
 		}
 		try {
 	  		$usuario->save();
-			return redirect()->back()->with('success', 'El usuario ('.$usuario->nombre.') se actualizó correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error al actualizar, intenta mas tarde. '.$e);
+
+			$respuesta = '';
+
+			$respuesta = __('lblCrmController1').$usuario->nombre.__('lblCrmController2');
+		
+			return redirect()->back()->with('success', $respuesta);
+		}catch(\Illuminate\Database\QueryException $e){	
+			$msg=__('lblCrmController3');
+		  	return redirect()->back()->with('errors', $msg.$e);
 		}
 	}
 
@@ -413,20 +438,25 @@ class CrmController extends Controller
 		$usuario= User::find($user);
 	    //checking actual password
 		if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
-			return redirect()->back()->with('errors', 'El password actual no es correcto');
+			$msg=__('lblCrmController4');
+			return redirect()->back()->with('errors', $msg);
 		}
 		if(strcmp($request->get('current-password'), $request->get('pass')) == 0){
 			//Current password and new password are same
-			return redirect()->back()->with("errors","Su nuevo password no puede ser igual que el actual. Por favor elija un nuevo password.");
+			$msg=__('lblCrmController5');
+			return redirect()->back()->with("errors",$msg);
 		}
 		//Set values to update.
 		if (request()->has('pass')) {( !empty($request->get('pass'))  ? $usuario->password = bcrypt($request->get('pass')) : null );}	
 		
 		try {
 	  		$usuario->save();
-			return redirect()->back()->with('success', 'El password del usuario ('.$usuario->nombre.') se actualizó correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error al actualizar, intenta mas tarde. '.$e);
+			$msg=__('lblCrmController6');
+			$msg2=__('lblCrmController7');
+			return redirect()->back()->with('success', $msg .$usuario->nombre. $msg2);
+		}catch(\Illuminate\Database\QueryException $e){	
+			$msg=__('lblCrmController3');
+		  	return redirect()->back()->with('errors', $msg .$e);
 		}
 	}
 
@@ -455,14 +485,16 @@ class CrmController extends Controller
 	    	$user->save();
 
 			$errorboolean="false";
-			$description="Disponibilidad actualizada"; 
+			$msg=__('lblCrmController8');
+			$description=$msg; 
 			DB::commit();		
 
 		} catch (Exception $e) {
 			DB::rollback();
 			$user=[];
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
+			$msg = __('lblCrmController9');
+			$description=$msg.$e;
 
 		} 
 		return response()->json([
@@ -501,7 +533,8 @@ class CrmController extends Controller
 	    		}
 
 	    		$errorboolean="false";
-				$description="Búsqueda de asignación ejecutada."; 
+				$msg=__('lblCrmController10');
+				$description=$msg; 
 	    		//if horainicio isnull, update turno set horainicio=now()
 	    		if($turno->fechahora_inicio==""){
 	    			DB::beginTransaction();
@@ -510,13 +543,15 @@ class CrmController extends Controller
 				    	$turnoactualizado->fechahora_inicio = now();	
 				    	$turnoactualizado->save();
 						$errorboolean="false";
-						$description="Búsqueda y fecha actualizada"; 
+						$msg=__('lblCrmController11');
+						$description=$msg; 
 						DB::commit();
 						$turno->fechahora_inicio = $turnoactualizado->fechahora_inicio;
 					} catch (Exception $e) {
 						DB::rollback();
 						$errorboolean="true";
-						$description="Ocurrió un error en la base de datos actualizando la hora de inicio. ".$e;
+						$msg=__('lblCrmController9');
+						$description=$msg .$e;
 					} 	
 	    		}	
 	    		$asignacion["turno"]=$turno;    		
@@ -524,7 +559,7 @@ class CrmController extends Controller
 			else{ //si no hay turno en proceso para el usuario, entonces indicamos que no hay turno en proceso
 				$asignacion["enproceso"]="no";
 				$errorboolean="false";
-				$description="Búsqueda de asignación ejecutada."; 
+				$description=__('lblCrmController10');
 			}
 
 								
@@ -533,7 +568,8 @@ class CrmController extends Controller
 			DB::rollback();
 			$asignacion=[];
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos.".$e;
+			$msg=__('lblCrmController9');
+			$description=$msg .$e;
 
 		} 
 		return response()->json([
@@ -592,7 +628,7 @@ class CrmController extends Controller
 	    	}
 
 	    	$errorboolean="false";
-			$description="Atención finalizada."; 	
+			$description= __('lblAppController25'); 	
 	    	if($email!=""){
 	    		//getting full info from turno 	
 	    		$turnocompuesto	= DB::table('turnos')
@@ -610,13 +646,14 @@ class CrmController extends Controller
 	    		$valoracion->save();
 	    		//send valoracion by mail	
 	    		$sendmail = app('App\Http\Controllers\Auth\RegisterController')->requestValoracion($turnocompuesto,$foliovaloracion);
-	    		if($sendmail=="true"){
+	    		
+				if($sendmail=="true"){
 	    			$errorboolean="false";
-					$description="Atención finalizada, se envió mail de evaluación."; 
+					$description=__('lblAppController26'); 
 	    		}
 	    		else{
 	    			$errorboolean="false";
-					$description="Atención finalizada, no se envió mail de evaluación.";
+					$description=__('lblAppController27'); ;
 	    		}
 	    	}	
 
@@ -627,7 +664,7 @@ class CrmController extends Controller
 			DB::rollback();
 			$turno=[];
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos, intenta más tarde. ".$e;
+			$description=__('lblAppController9') .$e;
 
 		} 
 		return response()->json([
@@ -655,7 +692,7 @@ class CrmController extends Controller
 	/**
      * gethistorial (obtener historial de atencion del ciudadano a partir del curp)
      */
-    public function gethistorial($curp=false, $oficina=false)
+    public function gethistorial($lang=false,$curp=false, $oficina=false)
     {    	
     	try {
 			//creando array historico
@@ -676,17 +713,17 @@ class CrmController extends Controller
 	    			->limit(5)
 	    			->get();
 	    		$errorboolean="false";
-				$description="Búsqueda de historial ejecutada."; 
+				$description= __('lblCrmController14'); 
 			}
 			else{ //si no existe usuario autorizado a buscar historial				
 				$errorboolean="true";
-				$description="Sin permisos para buscar historial.";
+				$description= __('lblCrmController15');
 			}						
 
 		} catch (Exception $e) {
 			DB::rollback();
 			$errorboolean="true";
-			$description="Ocurrió un error en la base de datos.".$e;
+			$description= __('lblCrmController9').$e;
 
 		} 
 		return response()->json([
@@ -846,14 +883,20 @@ class CrmController extends Controller
 		try {
 	  		$usuario->save();
 	  		if($status=="activo"){
-	  			$status_string="activó";	
+	  			$status_string=__('lblCrmController19');	
 	  		}
 	  		else{
-	  			$status_string="desactivó";
+	  			$status_string=__('lblCrmController20');
 	  		}	
-			return redirect()->back()->with('success', 'El usuario ('.$usuario->nombre.') se '.$status_string.' correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error, intenta mas tarde. '.$e);
+
+			$msg=	 __('lblCrmController1');
+			$msg2=	 __('lblCrmController17');
+			$msg3=	 __('lblCrmController18');
+
+			return redirect()->back()->with('success', $msg .$usuario->nombre. $msg2  .$status_string. $msg3);
+		}catch(\Illuminate\Database\QueryException $e){		
+			$msg=	 __('lblCrmController16');
+		  	return redirect()->back()->with('errors', $msg.$e);
 		}
 	}
 	
@@ -868,7 +911,8 @@ class CrmController extends Controller
 			 if($request->get('email')!=""){
 			 	$usuarioemail = User::where('email',$request->get('email'))->get();
 			 	if(count($usuarioemail)>0){
-			 		return redirect()->back()->with('errors', 'Ocurrió un error. Ya existe un usuario registrado con ese email ('.$request->get('email').').');		
+				    $msg= __('lblCrmController21');
+			 		return redirect()->back()->with('errors', $msg .$request->get('email').').');		
 			 	}
 			 	$usuario->email = $request->get('email');
 			 }
@@ -880,10 +924,14 @@ class CrmController extends Controller
 			 $usuario->save();						 						 						 
 		 } catch(\Exception $e){			
 			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$msg=__('lblCrmController16');
+			return redirect()->back()->with('errors', $msg .$error);			
 		 }
 
-		 return redirect()->back()->with('success', 'El usuario ('.$usuario->nombre.') se guardó correctamente.');
+
+		 $respuesta = __('lblCrmController1').$usuario->nombre.__('lblCrmController2');
+
+		 return redirect()->back()->with('success', $respuesta);
 	}
 
 	/**
@@ -909,9 +957,15 @@ class CrmController extends Controller
 
 		try {
 	  		$usuario->save();
-			return redirect()->back()->with('success', 'El usuario ('.$usuario->nombre.') se actualizó correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error al actualizar, intenta mas tarde. '.$e);
+
+			$respuesta = '';
+
+			$respuesta = __('lblCrmController1').$usuario->nombre.__('lblCrmController2');
+
+			return redirect()->back()->with('success', $respuesta);
+		}catch(\Illuminate\Database\QueryException $e){	
+			$msg=		 __('lblCrmController16');
+		  	return redirect()->back()->with('errors', $msg .$e);
 		}
 	}
 
@@ -926,10 +980,14 @@ class CrmController extends Controller
 				->leftjoin('tramites','tramites.id_tramite','=','tramitesxusers.tramite_id')
 				->leftjoin('users','users.id_user','=','tramitesxusers.user_id')
 				->where('id_tramitesxusers',$tramitexuser->id_tramitesxusers)->first();
-	  		$tramitexuser->delete();	  			
-			return redirect()->back()->with('success', 'El trámite ('.$datostramite->nombre_tramite.') del usuario ('.$datostramite->nombre.') se eliminó correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error, intenta mas tarde. '.$e);
+	  		$tramitexuser->delete();	
+			  $msg=  __('lblCrmController22'); 
+			  $msg2=  __('lblCrmController23'); 	
+			  $msg3=  __('lblCrmController24'); 		
+			return redirect()->back()->with('success', $msg.$datostramite->nombre_tramite.$msg2.$datostramite->nombre.$msg3);
+		}catch(\Illuminate\Database\QueryException $e){	
+			$msg=		 __('lblCrmController16');		
+		  	return redirect()->back()->with('errors', $msg .$e);
 		}
 	}
 
@@ -960,16 +1018,23 @@ class CrmController extends Controller
 
 			 $tramiteusuario = Tramitesxuser::where('tramite_id',$request->get('tramite'))->where('user_id',$request->get('id_user'))->get();
 		 	 if(count($tramiteusuario)>0){
-		 		return redirect()->back()->with('errors', 'Ocurrió un error. Ya existe el trámite ('.$tramitedato->nombre_tramite.') para el usuario ('.$userdato->nombre.').');		
+				$msg=   __('lblCrmController26');
+				$msg2=		 __('lblCrmController27');
+		 		return redirect()->back()->with('errors', $msg.$tramitedato->nombre_tramite.$msg2.$userdato->nombre.').');		
 		 	 }	
 			 			 		 			  			 
 			 $tramitesxusers->save();					 						 						 
 		 } catch(\Exception $e){			
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=	 __('lblCrmController26');	
+			return redirect()->back()->with('errors', $msg.$error);			
 		 }
 
-		 return redirect()->back()->with('success', 'El trámite ('.$tramitedato->nombre_tramite.') del usuario ('.$userdato->nombre.') se guardó correctamente.');
+		 $msg=  __('lblCrmController22'); 
+		 $msg2=  __('lblCrmController23'); 	
+		 $msg3=  __('lblCrmController24'); 
+
+		 return redirect()->back()->with('success', $msg.$tramitedato->nombre_tramite.$msg2.$userdato->nombre.$msg3);
 	}
 
 	/**
@@ -1002,14 +1067,20 @@ class CrmController extends Controller
 		 		->where('id_tramitesxusers','!=',$request->get('id_tramitexuser'))
 		 		->get();
 	 	 if(count($tramiteusuario)>0){
-	 		return redirect()->back()->with('errors', 'Ocurrió un error. Ya existe el trámite ('.$tramitedato->nombre_tramite.') para el usuario ('.$userdato->nombre.').');		
+			  $msg=__('lblCrmController22');
+			  $msg2=__('lblCrmController27');
+	 		return redirect()->back()->with('errors', $msg.$tramitedato->nombre_tramite.$msg2.$userdato->nombre.').');		
 	 	 }		
 
 		try {
 	  		$tramitesxusers->save();
-			return redirect()->back()->with('success', 'El trámite ('.$tramitedato->nombre_tramite.') del usuario ('.$userdato->nombre.') se actualizó correctamente.');
-		}catch(\Illuminate\Database\QueryException $e){			
-		  	return redirect()->back()->with('errors', 'Hubo un error al actualizar, intenta mas tarde. '.$e);
+			  $msg=__('lblCrmController22');
+			  $msg2=__('lblCrmController24');
+			  $msg3=__('lblCrmController25');
+			return redirect()->back()->with('success', $msg.$tramitedato->nombre_tramite.$msg2.$userdato->nombre.$msg3);
+		}catch(\Illuminate\Database\QueryException $e){		
+			$msg=	__('lblCrmController16');
+		  	return redirect()->back()->with('errors', $msg .$e);
 		}
 	}
 
@@ -1025,9 +1096,9 @@ class CrmController extends Controller
     /**
      * ausenciasusuariosListar (obtener historial de ausencias por usuarios)
      */
-    public function ausenciasusuariosListar($usuario=false)
+    public function ausenciasusuariosListar($lang='', $usuario=false)
 	{
-		
+		//dd($lang, $usuario);
 		$data = Helper::getMenuData();
 
 		if($data["rol"]=="tramitador"){ return redirect('sistema'); }
@@ -1094,7 +1165,7 @@ class CrmController extends Controller
 											   ->with('usuario',$usuario);
 			}
 			else{
-				return redirect()->route('usuarios');
+				return redirect()->route('usuarios', app()->getLocale());
 			}
 		}		
 	}
@@ -1117,11 +1188,12 @@ class CrmController extends Controller
 					
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),0,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),0,50);	
+			$msg=	__('lblCrmController16');	
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'La ausencia se guardó correctamente.');
+		$msg=	__('lblCrmController30');
+		return redirect()->back()->with('success', $msg);
 	}
 
 	/**
@@ -1142,10 +1214,11 @@ class CrmController extends Controller
 		} catch(\Exception $e){	
 			DB::rollback();	
 			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$msg=	__('lblCrmController16');	
+			return redirect()->back()->with('errors', $msg.$error);		
 		}
-
-		return redirect()->back()->with('success', 'La ausencia se actualizó correctamente.');
+		$msg=	__('lblCrmController31');
+		return redirect()->back()->with('success', $msg);
 	}
 
 	/**
@@ -1161,9 +1234,11 @@ class CrmController extends Controller
 		} catch(\Exception $e){	
 			DB::rollback();										
 			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$msg=	__('lblCrmController16');	
+			return redirect()->back()->with('errors', $msg.$error);	
 		}
-		return redirect()->back()->with('success', 'La ausencia se eliminó correctamente.');
+		$msg=__('lblCrmController32');	
+		return redirect()->back()->with('success', $msg);
 	}
 
 
@@ -1332,11 +1407,13 @@ class CrmController extends Controller
 			}			
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),0,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),0,50);	
+			$msg=	__('lblCrmController16');	
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'El trámite ('.$tramites->nombre_tramite.') se guardó correctamente.');
+	    $msg=	__('lblCrmController22');
+		$msg2=	__('lblCrmController33');	
+		return redirect()->back()->with('success', $msg.$tramites->nombre_tramite.$msg2);
 	}
 
 	/**
@@ -1368,11 +1445,13 @@ class CrmController extends Controller
 
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=	__('lblCrmController16');
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'El trámite ('.$tramites->nombre_tramite.') se actualizó correctamente.');
+		$msg=	__('lblCrmController22');
+		$msg2=__('lblCrmController29');
+		return redirect()->back()->with('success', $msg.$tramites->nombre_tramite.$msg2);
 	}
 
 	/**
@@ -1386,7 +1465,8 @@ class CrmController extends Controller
 			try {		 		
 				$tramitesxuser= Tramitesxuser::where("tramite_id",$request->get('id_tramite'))->get();
 				if(count($tramitesxuser)>0){
-					return redirect()->back()->with('errors', 'No se puede borrar este trámite, esta siendo usada en otras entidades.');
+					$msg=	__('lblCrmController34');
+					return redirect()->back()->with('errors', $msg);
 				}
 				else{
 					$tramitesxoficina= Tramitesxoficina::where("tramite_id",$request->get('id_tramite'));
@@ -1395,8 +1475,9 @@ class CrmController extends Controller
 				}		
 			} catch(\Exception $e){	
 				DB::rollback();										
-				$error=substr($e->getMessage(),1,50);			
-				return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+				$error=substr($e->getMessage(),1,50);
+				$msg=	__('lblCrmController16');			
+				return redirect()->back()->with('errors', $msg.$error);			
 			}			
 
 			$tramite= Tramite::find($request->get('id_tramite'));
@@ -1405,12 +1486,16 @@ class CrmController extends Controller
 		} catch(\Exception $e){	
 			DB::rollback();			
 			if($e->getCode()==23000 && $e->errorInfo[1]==1451){
-				return redirect()->back()->with('errors', 'No se puede borrar este trámite, esta siendo usada en otras entidades.');
+				$msg=	__('lblCrmController34');
+				return redirect()->back()->with('errors', $msg);
 			}				
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);
+			$msg=	__('lblCrmController16');			
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-		return redirect()->back()->with('success', 'El trámite ('.$tramite->nombre_tramite.') se eliminó correctamente.');
+		$msg=	__('lblCrmController22');
+		$msg2=	__('lblCrmController25');
+		return redirect()->back()->with('success', $msg.$tramite->nombre_tramite.$msg2);
 	}	
 
 	/**
@@ -1434,11 +1519,15 @@ class CrmController extends Controller
 						
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=	__('lblCrmController16');		
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
 
-		return redirect()->back()->with('success', 'El trámite ('.$tramites->nombre_tramite.') para la oficina ('.$oficinas->nombre_oficina.') se guardó correctamente.');
+		$msg=	__('lblCrmController16');
+		$msg2=	__('lblCrmController35');	
+		$msg3=	__('lblCrmController33');	
+		return redirect()->back()->with('success', $msg.$tramites->nombre_tramite.$msg2.$oficinas->nombre_oficina.$msg3);
 	}
 
 	/**
@@ -1460,11 +1549,15 @@ class CrmController extends Controller
 						
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);		
+			$msg=	__('lblCrmController16');	
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
+		$msg=	__('lblCrmController16');
+		$msg2=	__('lblCrmController35');	
+		$msg3=	__('lblCrmController29');	
 
-		return redirect()->back()->with('success', 'El trámite ('.$tramites->nombre_tramite.') para la oficina ('.$oficinas->nombre_oficina.') se actualizó correctamente.');
+		return redirect()->back()->with('success', $msg.$tramites->nombre_tramite.$msg2.$oficinas->nombre_oficina.$msg3);
 	}
 	/**
      * Saber si un codigo de tramite esta usado
@@ -1475,15 +1568,16 @@ class CrmController extends Controller
     		$code=Tramite::where('codigo',$code)->get();
     		if(count($code)>0){
     			$error="true";
-				$description='El código ya ha sido usado, elige otro';
+				
+				$description= __('lblCrmController36');
     		}
     		else{
     			$error="false";
-				$description='Código libre';
+				$description=__('lblCrmController37');
     		}
 		} catch(\Exception $e){	
 			$error="false";
-			$description='Ocurrió un error, intenta mas tarde. '.$error;
+			$description=__('lblCrmController37') .$error;
 		}
 		return response()->json([
 		    'error' => $error,
@@ -1573,11 +1667,13 @@ class CrmController extends Controller
 					
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),0,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),0,50);	
+			$msg=__('lblCrmController16')	;	
+			return redirect()->back()->with('errors', $msg .$error);			
 		}
-
-		return redirect()->back()->with('success', 'La dependencia ('.$dependencia->nombre_dependencia.') se guardó correctamente.');
+		$msg=__('lblCrmController38')	;
+		$msg2=__('lblCrmController33')	;
+		return redirect()->back()->with('success', $msg.$dependencia->nombre_dependencia.$msg2);
 	}
 
 	/**
@@ -1595,11 +1691,13 @@ class CrmController extends Controller
 			
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=__('lblCrmController16')	;
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'La dependencia ('.$dependencia->nombre_dependencia.') se actualizó correctamente.');
+		$msg=__('lblCrmController38')	;
+		$msg2=__('lblCrmController7')	;
+		return redirect()->back()->with('success', $msg.$dependencia->nombre_dependencia.$msg2);
 	}
 
 	/**
@@ -1615,12 +1713,16 @@ class CrmController extends Controller
 		} catch(\Exception $e){	
 			DB::rollback();			
 			if($e->getCode()==23000 && $e->errorInfo[1]==1451){
-				return redirect()->back()->with('errors', 'No se puede borrar esta dependencia, esta siendo usada en otras entidades.');
+				$msg=__('lblCrmController39')	;
+				return redirect()->back()->with('errors', $msg);
 			}				
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=__('lblCrmController16')	;		
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-		return redirect()->back()->with('success', 'La dependencia ('.$dependencia->nombre_dependencia.') se eliminó correctamente.');
+		$msg=__('lblCrmController38')	;	
+		$msg=__('lblCrmController25')	;	
+		return redirect()->back()->with('success', $msg.$dependencia->nombre_dependencia.$msg2);
 	}
 
 
@@ -1643,11 +1745,13 @@ class CrmController extends Controller
 					
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);
+			$msg=__('lblCrmController16')	;				
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'La oficina ('.$oficina->nombre_oficina.') se guardó correctamente.');
+		$msg=__('lblCrmController40')	;
+		$msg2=__('lblCrmController33');
+		return redirect()->back()->with('success', $msg.$oficina->nombre_oficina.$msg2);
 	}
 
 	/**
@@ -1668,11 +1772,13 @@ class CrmController extends Controller
 						
 		} catch(\Exception $e){	
 			DB::rollback();				
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);		
+			$msg=__('lblCrmController16')	;	
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'La oficina ('.$oficina->nombre_oficina.') se actualizó correctamente.');
+		$msg=__('lblCrmController40')	;
+		$msg2=__('lblCrmController29');
+		return redirect()->back()->with('success', $msg.$oficina->nombre_oficina.$msg2);
 	}
 
 	/**
@@ -1688,12 +1794,16 @@ class CrmController extends Controller
 		} catch(\Exception $e){	
 			DB::rollback();			
 			if($e->getCode()==23000 && $e->errorInfo[1]==1451){
-				return redirect()->back()->with('errors', 'No se puede borrar esta oficina, esta siendo usada en otras entidades.');
+				$msg=__('lblCrmController41');
+				return redirect()->back()->with('errors', $msg);
 			}				
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);
+			$msg=__('lblCrmController16');			
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-		return redirect()->back()->with('success', 'La oficina ('.$oficina->nombre_oficina.') se eliminó correctamente.');
+		$msg=__('lblCrmController40');
+		$msg=__('lblCrmController25');
+		return redirect()->back()->with('success', $msg.$oficina->nombre_oficina.$msg2);
 	}
 
 
@@ -1718,11 +1828,12 @@ class CrmController extends Controller
 			*/			
 		} catch(\Exception $e){	
 			DB::rollback();	
-			$error=substr($e->getMessage(),1,50);			
-			return redirect()->back()->with('errors', 'Ocurrió un error, intenta mas tarde. '.$error);			
+			$error=substr($e->getMessage(),1,50);	
+			$msg=__('lblCrmController16');		
+			return redirect()->back()->with('errors', $msg.$error);			
 		}
-
-		return redirect()->back()->with('success', 'El turno se actualizó correctamente.');
+		$msg=__('lblCrmController42');	
+		return redirect()->back()->with('success', $msg);
 	}
 
 

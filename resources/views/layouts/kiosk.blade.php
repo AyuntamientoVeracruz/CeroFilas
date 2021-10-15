@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" href="{{url('/sis/img/favicon.ico')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Citas para trámites</title>
+    <title>{{ __('lblAppointments') }}</title>
     <!--bootstrap main-->
     <link rel="stylesheet" href="{{url('/css/bootstrap.css')}}" type="text/css" media="all">
     <!--tooltip-->
@@ -19,7 +19,7 @@
 
 <body class="fullscreen">
     <div class="loading-main">
-        <div class="loader">Cargando...</div>
+        <div class="loader">{{ __('lblLoading') }}</div>
     </div>  
 
     @yield('content')   
@@ -28,6 +28,14 @@
     <!--time (moment)-->
     <script src="{{url('/js/moment.min.js')}}" type="text/javascript"></script>
     <script src="{{url('/js/moment-with-locales.min.js')}}" type="text/javascript"></script>
+    
+    <script type="text/javascript">  
+     var lblPlacheHolderSearch="{{ __('lblPlacheHolderSearch') }}"; 
+
+        
+
+    </script>
+    
     <!--combobox search (select2)-->
     <script src="{{url('/js/select2.full.js')}}"></script>        
     

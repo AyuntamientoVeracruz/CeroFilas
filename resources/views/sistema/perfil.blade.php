@@ -43,8 +43,8 @@
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
-        @if($tipo=='user')<li class="breadcrumb-item active">Perfil</li>@endif
-        @if($tipo=='tramitador')<li class="breadcrumb-item active"><a href="{{route('usuarios', app()->getLocale())}}">Usuarios</a></li> <li class="breadcrumb-item active">Perfil</li>@endif
+        @if($tipo=='user')<li class="breadcrumb-item active">{{ __('lblProfile1') }}</li>@endif
+        @if($tipo=='tramitador')<li class="breadcrumb-item active"><a href="{{route('usuarios', app()->getLocale())}}">{{ __('lblProfile2') }}</a></li> <li class="breadcrumb-item active">{{ __('lblProfile1') }}</li>@endif
 
       </ol>
 
@@ -74,17 +74,23 @@
                                   <div class="author">
                                     <span class="avatar border-white"><img src="{{url('/sis/img/user.svg')}}" /></span>
                                     <h4 class="title"> {{ $user["name"] }}<br />
-                                      <b style="color:rgba(0,0,0,0.6); font-weight:normal; font-size:0.8em">@if( $user['rol'] == 'superadmin') Superadministrador @endif @if( $user['rol'] == 'admin_oficina') Administrador Oficina @endif @if( $user['rol'] == 'tramitador') Asesor @endif @if( $user['rol'] == 'kiosko') Kiosko @endif</b>
+                                      <b style="color:rgba(0,0,0,0.6); font-weight:normal; font-size:0.8em">@if( $user['rol'] == 'superadmin') Superadministrador @endif @if( $user['rol'] == 'admin_oficina') {{ __('lblProfile28') }}  @endif @if( $user['rol'] == 'tramitador') {{ __('lblProfile30') }}  @endif @if( $user['rol'] == 'kiosko') {{ __('lblProfile29') }}  @endif</b>
                                       <br>
-                                      <small>Oficina: {{ $user['dependencia']->nombre_oficina }}</small>                                                                            
+                                      <small>{{ __('lblProfile3') }}
+                                        
+                                          @if($user['dependencia'])
+                                            {{ $user['dependencia']->nombre_oficina }} 
+                                          @endif
+                                        
+                                      </small>                                                                            
                                     </h4>
                                   </div>
                                  
                                   <p class="description text-center" style="margin-bottom: 20px">
                                   	 <i class="icon-envelope-open"></i><a href="mailto:{{ $user['user']->email }}" target="_blank" style="color:#151b1e"> {{ $user['user']->email }}</a><br>
-                                     @if( $user['rol'] == 'tramitador') @if($user['user']->disponibleturno=="si") <i class="icon-check"></i> Disponible para turno @else <i class="icon-close"></i> No Disponible para turno  @endif <br>@endif
+                                     @if( $user['rol'] == 'tramitador') @if($user['user']->disponibleturno=="si") <i class="icon-check"></i> {{ __('lblProfile27') }} @else <i class="icon-close"></i> {{ __('lblProfile26') }}  @endif <br>@endif
                                       @if($tipo=='user')<br>
-                                     <a href="#" data-toggle="modal" data-target="#myModal"  class="btn btn-warning btn-sm open-modal">Editar</a> <a href="#" data-toggle="modal" data-target="#myModalPassword" class="btn btn-secondary btn-sm">Cambiar password</a>
+                                     <a href="#" data-toggle="modal" data-target="#myModal"  class="btn btn-warning btn-sm open-modal">{{ __('lblProfile4') }}</a> <a href="#" data-toggle="modal" data-target="#myModalPassword" class="btn btn-secondary btn-sm">{{ __('lblProfile5') }}</a>
                                      @endif  
                                   </p>
                                   
@@ -98,7 +104,7 @@
                         <div class="col-lg-8 col-md-7 float-left">
                         	<div class="card">
                             <div class="card-header">
-                              <h5 style="margin-bottom:0px">Evaluaciones
+                              <h5 style="margin-bottom:0px">{{ __('lblProfile6') }}
                                 <stars>
                                   @for($i=1;$i<=$estrellas;$i++)
                                     <i class="fa fa-star stared"></i>
@@ -125,20 +131,20 @@
                                         @for($i=$valoracion->estrellas+1;$i<=5;$i++)
                                           <i class="far fa-star stared"></i>
                                         @endfor
-                                        <fecha><small>Fecha/Hora atención</small>{{$valoracion->fecha}}</fecha>
+                                        <fecha><small>{{ __('lblProfile7') }}</small>{{$valoracion->fecha}}</fecha>
                                       </span>  
-                                      <span class="responsesmall"><quote>Trámite</quote> {{$valoracion->nombre_tramite}}</span>
-                                      <span class="responsesmall"><quote>Pregunta 1</quote> ¿El asesor le atendió de manera cordial? <b>{{$valoracion->respuesta1}}</b></span>
-                                      <span class="responsesmall"><quote>Pregunta 2</quote> ¿El asesor pudo ayudarle con su trámite? <b>{{$valoracion->respuesta2}}</b></span>
-                                      <span class="response"><quote>Observaciones</quote> @if($valoracion->observaciones!=""){!! nl2br($valoracion->observaciones) !!}@else---@endif</span>
+                                      <span class="responsesmall"><quote>{{ __('lblProfile8') }}</quote> {{$valoracion->nombre_tramite}}</span>
+                                      <span class="responsesmall"><quote>{{ __('lblProfile9') }}</quote> {{ __('lblProfile12') }} <b>{{$valoracion->respuesta1}}</b></span>
+                                      <span class="responsesmall"><quote>{{ __('lblProfile10') }}</quote> {{ __('lblProfile13') }}  <b>{{$valoracion->respuesta2}}</b></span>
+                                      <span class="response"><quote>{{ __('lblProfile11') }}</quote> @if($valoracion->observaciones!=""){!! nl2br($valoracion->observaciones) !!}@else---@endif</span>
                                       @endforeach 
                                     </div>  
                                     @if($totalvaloraciones>$offset)
-                                    <div class="showmorecontainer"><a href="#" class="btn btn-sm btn-primary showmore">Mostrar más</a></div>  
+                                    <div class="showmorecontainer"><a href="#" class="btn btn-sm btn-primary showmore">{{ __('lblProfile15') }}</a></div>  
                                     @endif
 
                                 @else
-                                    <h6>Aún no tienes evaluaciones</h6>                                                                                                                            
+                                    <h6>{{ __('lblProfile14') }}</h6>                                                                                                                            
                                 @endif
                                                             	                                      
                               </div>
@@ -161,7 +167,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Editar perfil</h4>
+                    <h4 class="modal-title">{{ __('lblProfile16') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -170,20 +176,20 @@
                       <div class="modal-body">
 
                           <div class="form-group">
-                            <label for="company">Nombre completo:</label>
+                            <label for="company">{{ __('lblProfile17') }}</label>
                             <input type="text" class="form-control" id="nombres" name="nombre"  value="{{ $user['user']->nombre }}" placeholder="" required>
                           </div>
                           
                           <div class="form-group">
-                            <label for="vat">Email:</label>
+                            <label for="vat">{{ __('lblProfile18') }}</label>
                             <input type="text" class="form-control" id="email"  name="email" value= "{{ $user['user']->email }}" placeholder="p.e.: mail@dominio.com" readonly="readonly">
                           </div>                                                    
 
                       </div>
                       <div class="modal-footer">
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-warning">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblProfile19') }}</button>
+                        <button type="submit" class="btn btn-warning">{{ __('lblProfile20') }}</button>
                       </div>
                     </form>
                 </div>
@@ -198,7 +204,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h4 class="modal-title">Editar password</h4>
+                    <h4 class="modal-title">{{ __('lblProfile21') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -207,25 +213,25 @@
                    <div class="modal-body">
 
                       <div class="form-group">
-                        <label for="company">Password actual:</label>
-                        <input type="password" class="form-control" id="current-password" name="current-password"  placeholder="Actual password" required>
+                        <label for="company">{{ __('lblProfile22') }}</label>
+                        <input type="password" class="form-control" id="current-password" name="current-password"  placeholder="{{ __('lblProfile22') }}" required>
                       </div>
 
                       <div class="form-group">
-                        <label for="company">Nuevo Password:</label>
-                        <input type="password" class="form-control" id="pass"  name="pass" placeholder="Nuevo password" required>
+                        <label for="company">{{ __('lblProfile23') }}</label>
+                        <input type="password" class="form-control" id="pass"  name="pass" placeholder="{{ __('lblProfile23') }}" required>
                       </div>
 
                       <div class="form-group">
-                        <label for="vat">Confirmar password:</label>
-                        <input type="password" class="form-control" id="pass_confirmation"  name="pass_confirmation" placeholder="Confirmar password" required>
+                        <label for="vat">{{ __('lblProfile24') }}</label>
+                        <input type="password" class="form-control" id="pass_confirmation"  name="pass_confirmation" placeholder="{{ __('lblProfile24') }}" required>
                       </div>
 
                    </div>
                    <div class="modal-footer">
                     @csrf
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-warning">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblProfile19') }}</button>
+                    <button type="submit" class="btn btn-warning">{{ __('lblProfile20') }}</button>
                    </div>
                  </form>
                 </div>
@@ -321,7 +327,8 @@
   var password = document.getElementById("pass"), confirm_password = document.getElementById("pass_confirmation");
   function validatePassword(){
     if(password.value != confirm_password.value) {
-      confirm_password.setCustomValidity("Passwords no coinciden");
+      let msg=
+      confirm_password.setCustomValidity("{{ __('lblProfile25') }}");
     } else {
       confirm_password.setCustomValidity('');
     }

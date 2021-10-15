@@ -30,10 +30,10 @@ class ResetMail extends Mailable
      */
      public function build()
     {
-          $address = 'citas@veracruzmunicipio.gob.mx';
-          $name = 'Ayuntamiento de Veracruz';
-          $subject = 'Nuevo password de acceso al sistema';
-		  return $this->view('emails.resetMail')
+         $address = __('lblEmailInstitutional');
+          $name = __('lblName');
+          $subject =  __('lblMsg2');
+          return $this->view('emails.resetMail')
 						->from($address, $name)
 						->subject($subject);
     }

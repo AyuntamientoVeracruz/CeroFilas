@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Página no encontrada - 404</title>
-    <meta name="author" content="Angel Cobos www.arkanmedia.com">
+    <title>{{ __('lblError404') }}</title>
+    
     <link rel="shortcut icon" href="{{url('/sis/img/favicon.ico')}}">
     <link rel="stylesheet" href="{{url('/css/app.css')}}" type="text/css" media="all">
     <style type="text/css">
@@ -39,7 +39,7 @@
 	<p>    	
         <img src="{{url('/images/logo-transparent.png')}}">
         
-        <span class="notfound"><b>error 404</b><br />Lo sentimos, la página que estas buscando no existe.</span>
+        <span class="notfound"><b> {{ __('lblError404') }}</b><br />{{ __('lblError404Description') }}</span>
         
     </p>
  
