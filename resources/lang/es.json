@@ -639,7 +639,10 @@
     
     "lbldigits":"9 dígitos",
     
-    "lblMrs":"Sr/Sra:"
+    "lblMrs":"Sr/Sra:",
+
+    "lblAppController28":"​Application Reference Number invalid"
+
 
 
 

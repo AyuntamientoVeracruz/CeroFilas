@@ -88,7 +88,7 @@
                 </form>
                 @endif
             @else
-                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{$statuscita}}</h2>
+                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{ __('lblCancel') }}</h2>
             @endif
         </div>
     @endif
@@ -134,7 +134,7 @@
             
             <div style="width: 100%; display: block; float:left">
                                
-                <h1 style="font-size:18px; margin-top: 20px">>{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
+                <h1 style="font-size:18px; margin-top: 20px">{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
                 <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblSaveDateMail7') }} @else {{ __('lblSaveDateMail8') }} @endif <b>{{ __('lblSaveDateMail9') }}<a href="{{route('/', app()->getLocale())}}">{{ __('lblSaveDateMail12') }}</a> {{ __('lblSaveDateMail10') }}</b></p>
                 <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">{{ __('lblSaveDateMail11') }}
                     <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px">{{$folio}}</b>

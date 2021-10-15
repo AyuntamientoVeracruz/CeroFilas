@@ -64,7 +64,7 @@
                 <div class="main-left col-sm-7 col-md-7 col-xs-12 br-5 p15 mb-30">
                     <h3 class="header3">{{ __('lblIndex14') }}</h3>
                     
-                    <quote>{{ __('lblIndex3') }} <a href="https://www.gob.mx/curp/" target="_blank" rel="noopener noreferrer"></a></quote>
+                    <quote>{{ __('lblIndex3') }} <a href="#" target="_blank" rel="noopener noreferrer"></a></quote>
 
                     <label class="titlesection" style="margin-bottom: 0px"><b><i class="far fa-id-card"></i></b><span>{{ __('lblIndex5') }}</span></label>
                                         

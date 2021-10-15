@@ -221,7 +221,7 @@ $(document).ready(function() {
 				$(".hours").slideDown().addClass("active").fadeOut(350).fadeIn(350).fadeOut(350).fadeIn(350);	//mostramos hours area
 				goto(".ct-week.available.selected");							//desplazamos hacia abajo un poco
 				
-				$(".hours small").html('Actualizado a '+result.horaejecucion+'</small>');
+				$(".hours small").html(lblCreateAppointment52+" "+result.horaejecucion+'</small>');
 
 				$(".loading-main").fadeOut();
 	        },
@@ -244,7 +244,7 @@ $(document).ready(function() {
 			//$this.addClass("selected");
 			$fecha = $(".ct-week.selected").data("date");
 			$fechadate = $fecha;
-			moment.locale('es');
+			//moment.locale('es');
 			$fecha = moment($fecha,'YYYY-MM-DD').format('ddd, D MMMM, YYYY');		
 			$hora = $this.data("time");			
 			$(".ct-selected-date-view").find("fecha").html($fecha);

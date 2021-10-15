@@ -37,9 +37,9 @@
     "lblSaveDateMail6":"registration",
     "lblSaveDateMail7":"We remind you that tomorrow you have an appointment for a procedure.",
     "lblSaveDateMail8":"We have successfully received your appointment request.",
-    "lblSaveDateMail9":"Don't forget to be there 10 minutes before the booked date/time. When you arrive at your appointment, don't forget to confirm your attendance at the reception desk by checking in, taking the file or QR with you, as well as the requirements of the procedure. In case you need to do so, you can cancel your appointment ",
+    "lblSaveDateMail9":"Don't forget to be there 10 minutes before the booked date/time ​and take along your supporting documents based on the requirements for the service. When you arrive at your appointment, don't forget to confirm your attendance at the reception desk by checking in ​and presenting your Appointment Reference Number. In case you need to do so, you can cancel your appointment ​​by clicking ",
     "lblSaveDateMail10":"​Appointment Reference number.",
-    "lblSaveDateMail11":"Appointment Refference number:",
+    "lblSaveDateMail11":"Appointment Reference number:",
     "lblSaveDateMail12":"Here",
     "lblSaveDateMail13":"QR code:",
     "lblSaveDateMail14":"We share with you the data we keep from the appointment:",
@@ -72,7 +72,7 @@
     "lblCost":"Cost $",
     "lblProcudereRquirements":"Procedure Requirements:", 
     "lblEmail":"Email",
-    "lblCancel":"Cancel",
+    "lblCancel":"Cancelled",
     "lblError404":"Page not found - 404",
     "lblError404Description":"Sorry, the page you are looking for does not exist.",
     "lblCeroFilas":"Cero Filas // CRM system",
@@ -96,7 +96,7 @@
 
     "lblIndex1":"Schedule your appointment, save time and enjoy your day",
     "lblIndex2":"Welcome to Cero Filas",
-    "lblIndex3":"Before you start, have your TRN ready, as it is required for registration, you have 5 minutes to complete it.",
+    "lblIndex3":"​Before you start, please have your TRN ready as it is required for registration. The process will take approximately 5 minutes to be completed",
     "lblIndex4":"find it here.",
     "lblIndex5":"Do you already have your TRN to hand?",
     "lblIndex6":"Book appointment",
@@ -105,7 +105,7 @@
     "lblIndex9":"to book your appointment.",
     "lblIndex10":"View or cancel your appointment",
     "lblIndex11":"Search by file",
-    "lblIndex12":"Write down the file for your appointment to be able to search it.",
+    "lblIndex12":"​Enter your appointment Application Reference Number",
     "lblIndex13":" Mandatory field for consultation.",
     "btnCancel":"View/cancel your appointment",
     "lblIndex14":"Create your appointment",
@@ -127,7 +127,7 @@
 
     "lblCreateAppointment5":"find it here",
     "lblCreateAppointment6":"What procedure interests you?",
-    "lblCreateAppointment7":"Select the procedure you need. It is important to read the REQUIREMENTS section.",
+    "lblCreateAppointment7":"​Select the Procedure you need. It is important to read the REQUIREMENTS section that will pop up on the screen",
     "lblCreateAppointment8":"Select a value",
     "lblCreateAppointment9":"Where do you want your appointment?",
     "lblCreateAppointment10":"Select the place to carry out the procedure.",
@@ -176,7 +176,7 @@
     "lblCreateAppointment49":"An error occurred saving the appointment, please try later",
     "lblCreateAppointment50":"An unexpected error occurred while reserving the appointment, please try again later",
     "lblCreateAppointment51":"An unexpected error occurred releasing the appointment, please try later",
-    "lblCreateAppointment52":"Actualizado a",
+    "lblCreateAppointment52":"Updated to",
 
     "lblCreateAppointment53":"Time remaining to complete appointment booking. After this time has elapsed, you will have to restart the process.",
 
@@ -388,7 +388,7 @@
     "lblAdminOffice15":"Consultant",
     "lblAdminOffice16":"Citizen",
     "lblAdminOffice17":"Select a consultant",
-    "lblAdminOffice18":"Appointment Refference number.",
+    "lblAdminOffice18":"Appointment Reference number.",
     "lblAdminOffice19":"Shift File",
     "lblAdminOffice20":"TRN",
     "lblAdminOffice21":"Start Time",
@@ -429,7 +429,7 @@
     "lblIndexBlade25":"Citizen history",
     "lblIndexBlade26":"All offices",
     "lblIndexBlade27":"Close",
-    "lblIndexBlade28":"Appointment Refference number.",
+    "lblIndexBlade28":"Appointment Reference number.",
 
 
     "lblKiosk1":"Office",
@@ -523,7 +523,7 @@
     "lblAppController3":". Try another date / time",
     "lblAppController4":" An error occurred in the database, please try again later.",
     "lblAppController5":"Successfully released date",
-    "lblAppController6":"Appointment Refference number. is missing or Appointment Refference number. is in the wrong format",
+    "lblAppController6":"Appointment Reference number. is missing or Appointment Reference number. is in the wrong format",
     "lblAppController7":"Name must contain only letters",
     "lblAppController8":" Paternal surname must contain only letters",
     "lblAppController9":" Maternal surname must contain only letters",
@@ -546,6 +546,8 @@
     "lblAppController25":"Attention finished.",
     "lblAppController26":"Attention completed, evaluation email was sent.",
     "lblAppController27":"Attention finished, evaluation email was not sent",
+    "lblAppController28":"​Invalid Application Reference Number ",
+
 
 
 
@@ -648,7 +650,7 @@
 
     "lbldigits":"9 digits",
 
-    "lblMrs":"Mr/Mrs:"
+    "lblMrs":"​Dear "
 
 
 

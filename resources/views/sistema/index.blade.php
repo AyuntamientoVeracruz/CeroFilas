@@ -91,7 +91,7 @@
                 </div>
                 <input type="text" class="form-control br text-uppercase" placeholder="{{ __('lblIndexBlade15') }}" name="curp" id="curp" >  
               </div>
-              <quote>{{ __('lblIndexBlade16') }} <a href="https://www.gob.mx/curp/" target="_blank" rel="noopener noreferrer">{{ __('lblIndexBlade17') }}.</a></quote>
+              <quote>{{ __('lblIndexBlade16') }} <a href="#" target="_blank" rel="noopener noreferrer">{{ __('lblIndexBlade17') }}.</a></quote>
             </div>
 
             <div class="col-lg-6 col-md-12 mt20">              

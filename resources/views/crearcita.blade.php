@@ -48,7 +48,7 @@ top: -10px; height: 20px; line-height: 20px; text-transform: uppercase;}
         <div class="loader"> {{ __('lblLoading') }}</div>
     </div>
 
-    <div class="responsemessage"></div>
+    <div class="responsemessage2"></div>
 
     <div class="requisitoscontainer-holder">
         <div class="requisitoscontainer">

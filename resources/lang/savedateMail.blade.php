@@ -88,7 +88,7 @@
                 </form>
                 @endif
             @else
-                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{$statuscita}}</h2>
+                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{ __('lblCancel') }}</h2>
             @endif
         </div>
     @endif

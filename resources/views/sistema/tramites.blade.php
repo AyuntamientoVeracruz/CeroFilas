@@ -467,7 +467,7 @@
           modal.find('#id_tramitesxoficinas').val("");
           //setting date to 3 months after
           var dt = new Date();          
-          dt=new Date(dt.setMonth(dt.getMonth() + 3)); 
+          //dt=new Date(dt.setMonth(dt.getMonth() + 3)); 
           function appendLeadingZeroes(n){
             if(n <= 9){
               return "0" + n;
@@ -475,6 +475,7 @@
             return n;
           }  
           modal.find('#ffecha').val(dt.getFullYear() + "-" + appendLeadingZeroes(dt.getMonth()+1) + "-" + appendLeadingZeroes(dt.getDate()) );   
+          
           modal.find('form').attr('action','{{route("tramites/oficinastore", app()->getLocale())}}');          
         }
         else if ($(this).data('action') == "update"){  

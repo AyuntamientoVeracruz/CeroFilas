@@ -343,6 +343,7 @@ class AppController extends Controller
     	$diaultimomesseleccionado = DateTime::createFromFormat('d-m-Y', $dias.'-'.$mes.'-'.$anio); 
     	//obtener el mes de la fecha seleccionada en español
     	setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+		
     	$mesnombre=strftime("%B",$dia1messeleccionado->getTimestamp());
 
     	//para obtener mes/anio anterior
@@ -461,7 +462,8 @@ class AppController extends Controller
     	//dia ultimo de mes/anio seleccionado
     	$diaultimomesseleccionado = DateTime::createFromFormat('d-m-Y', $dias.'-'.$mes.'-'.$anio); 
     	//obtener el mes de la fecha seleccionada en español
-    	setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+    	//setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+		setlocale(LC_ALL, "");
     	$mesnombre=strftime("%B",$dia1messeleccionado->getTimestamp());
 
     	//para obtener mes/anio anterior
@@ -1467,7 +1469,7 @@ class AppController extends Controller
     		$response=self::getcitabyfolio($folio,'search');
 			
 			if($response=="Folio no existe"){
-				return Redirect::back()->withErrors(['Folio ingresado inválido, verifica.']); 
+				return Redirect::back()->withErrors([__('lblAppController28')]); 
 			}
 			else{
 				return $response;
@@ -1543,7 +1545,8 @@ class AppController extends Controller
 			$oficina["direccion"]=$cita->direccion;
 			$oficina["coords"]=$cita->coords;
 			$fechahoradate =  DateTime::createFromFormat('Y-m-d H:i:s',$cita->fechahora);
-			setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+			//setlocale(LC_ALL, "es_ES", 'Spanish_Spain', 'Spanish');
+			setlocale(LC_ALL, "");
 			$fechahora["text"]= strftime("%d %b, %Y @ %H:%M ",$fechahoradate->getTimestamp());;
 			$email["value"]=$cita->email;
 			$curp["value"]=$cita->curp;
@@ -1746,9 +1749,9 @@ class AppController extends Controller
 
 			    $curp=request()->curp;		        
 			        $curp["value"]=strtoupper($curp["value"]);
-			        // if (self::valid_curp($curp["value"])==0)
-					// {	$msg = __('lblAppController18')."m";
-					// 	$error++;$errortext=$errortext."<br>&bull; ".$msg;}
+			        if (self::valid_curp($curp["value"])==0)
+					 {	$msg = __('lblAppController18');
+					 	$error++;$errortext=$errortext."<br>&bull; ".$msg;}
 
 			    if($error==0){    
 					
@@ -1817,7 +1820,7 @@ class AppController extends Controller
 							$msg2 = __('lblAppController20');
 							$msg3 = __('lblAppController21');
 							$msg4 = __('lblAppController22');
-							$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a></k>"; 
+							$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a>  <a href='".route('/', app()->getLocale())."'>". $lblIndexBlade27  ."</a> </k>"; 
 							DB::commit();
 				        }else{ 		     
 				        	DB::rollback();      
@@ -1925,10 +1928,18 @@ class AppController extends Controller
 	    return preg_match('/^(?<lat>(-?(90|(\d|[1-8]\d)(\.\d{1,20}){0,1})))\,{1}\s?(?<long>(-?(180|(\d|\d\d|1[0-7]\d)(\.\d{1,20}){0,1})))$/', $str);
 	}
 	public function valid_curp(String $str){
-	    //return preg_match('/^[A-ZÑ&]{3,4}\d{6}(?:[A-Z\d]{8})?$/', $str);
+	
+	    return preg_match('/^[[:digit:]]+$/', $str);
 		//return preg_match('/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', $str);
 		
-		return $str;
+		//return $str;
+
+		if(is_numeric($str) && strlen($str)==9){
+    		return TRUE;
+    	}
+    	else{
+    		return FALSE;
+    	}	    
 	}
 	private function valid_date(String $str){
 	    $format = 'Y-m-d H:i';
