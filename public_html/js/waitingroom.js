@@ -21,7 +21,7 @@ $(document).ready(function() {
 	$(".loading-main").fadeOut();
 	//set placeholder 
 	$("#tramite").select2( {
-		placeholder: "Seleccione trámite"
+		placeholder: lblKiosk16
 	});
 
 	/*****ALERT GENERAL***/		
@@ -155,6 +155,7 @@ $(document).ready(function() {
 
 	//click on buscar cita por texto button
 	$("#search-form").on('submit', function(){
+		console.log(searchcitabytexturl+"/"+$("#search").val());
 		$.ajax({
         	headers: {
 			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -217,7 +218,7 @@ $(document).ready(function() {
 			              .find('option')
 			              .remove()
 			              .end()
-			              .append('<option value="">Seleccione un trámite</option>'); 
+			              .append('<option value="">'+lblKiosk16+'</option>'); 
 				if(result.length>0){					
 			        for(var i=0; i<result.length; i++){
 			        	$("#tramite").append('<option value="'+result[i].id_tramite+'">'+result[i].nombre_tramite+'</option>');

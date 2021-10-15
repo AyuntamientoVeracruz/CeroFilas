@@ -1,5 +1,5 @@
 //variables de inicio de contador y otras
-var durationminutes=5;
+var durationminutes=lbltimer;// 5;
 var duration = moment.duration({'minutes': durationminutes,'seconds': 00});
 var timestamp = new Date(0, 0, 0, 2, 10, 30);
 var startTime;
@@ -11,9 +11,14 @@ var json = {};
 var ip;
 var mesanio="";
 var holdingfolio="";
+var etiquetaIdioma="";
 
 //WEB READY
 $(document).ready(function() {
+
+	function lengauje($msg){
+		etiquetaIdioma=$msg;
+	}
 
 	//refresh token
 	setInterval(keepTokenAlive, 1000 * 60 * 710); // every 710 mins
@@ -90,18 +95,19 @@ $(document).ready(function() {
 	        beforeSend: function(){ $(".loading-main").fadeIn(); },
 	        success : function(result) {            	     				
 				
+				
 				var oficinas = $("#lugarcita");
 				oficinas.find('option').remove();
-				oficinas.append('<option value="">Seleccione un valor</option>');
+				oficinas.append('<option value="">'+lblSelectOption+'</option>');
 				for (var i=0; i<result.oficinas.length; i++) {			  
 			      oficinas.append('<option value="'+result.oficinas[i].id_oficina+'" data-position="'+result.oficinas[i].coords+'" data-direccion="'+result.oficinas[i].direccion+'">'+result.oficinas[i].nombre_oficina+'</option>');
 			    }	
 			    $("#lugarcita").select2({
-					placeholder: "Seleccione un valor",
+					placeholder: lblSelectOption,
 					templateResult: formatOficinaAddress,
 					matcher: matchCustom
 				});
-				printsummaryvariable("oficina","<noselected>Lugar</noselected>");
+				printsummaryvariable("oficina","<noselected>"+lblCreateAppointment38+"</noselected>");
 				hideMap();
 				printsummaryvariable("tramite", $this.text(), $this.val());  
 				goto("[data-section='2']");	  	
@@ -109,11 +115,11 @@ $(document).ready(function() {
 				limpiarfecha();
 				$(".calendar-wrapper").addClass("hiddened");
 				$("#datesarea").html("");
-				$(".calendar-header .calendar-title").html("Mes no seleccionado");
-				$(".calendar-header .calendar-year").html("Año no seleccionado");
+				$(".calendar-header .calendar-title").html(lblCreateAppointment46);
+				$(".calendar-header .calendar-year").html(lblCreateAppointment47);
 				$(".loading-main").fadeOut();
 
-				$(".summary[data-summary='tramite']").find("p").append("<a href='#' class='btn btn-sm btn-primary btnrequisitos'><i class='fa fa-plus'></i> click para ver requisitos</a>");	
+				$(".summary[data-summary='tramite']").find("p").append("<a href='#' class='btn btn-sm btn-primary btnrequisitos'><i class='fa fa-plus'></i> "+lblCreateAppointment45+"</a>");	
 
 				$(".requisito").hide();
 				$(".requisitoscontainer-holder").show();
@@ -124,7 +130,7 @@ $(document).ready(function() {
 	        error: function(xhr, resp, text) {
 	        	$(".loading-main").fadeOut();
 	        	$(".responsemessage").addClass("errorresponse");
-				$(".responsemessage").addClass("showed").html("Ocurrió un error cargando oficinas, intenta más tarde").slideDown();
+				$(".responsemessage").addClass("showed").html(lblErrorLoading).slideDown();
 	        }
 	    });	
     });
@@ -148,8 +154,8 @@ $(document).ready(function() {
 	    limpiarfecha();	
 	    $(".calendar-wrapper").addClass("hiddened");
 		$("#datesarea").html("");
-		$(".calendar-header .calendar-title").html("Mes no seleccionado");
-		$(".calendar-header .calendar-year").html("Año no seleccionado");	
+		$(".calendar-header .calendar-title").html(lblCreateAppointment46);
+		$(".calendar-header .calendar-year").html(lblCreateAppointment47);	
 	    //llamando el llenado de fechas de calendario, se manda null para obtener el mes actual	
     	getfechas();	
     	$(".calendar-wrapper").removeClass("hiddened");
@@ -186,6 +192,8 @@ $(document).ready(function() {
 		var tramite=json.tramite.value;
 		var fecha=$this.attr("data-date").split("-");		
 		var armedurl = getavailablehoursurl+"/"+oficina+"/"+tramite+"/"+fecha[2]+"/"+fecha[1]+"/"+fecha[0];
+
+		console.log(armedurl);
 		
 		//getting listado de horas disponibles de la fecha seleccionada
 		$.ajax({
@@ -194,7 +202,7 @@ $(document).ready(function() {
 	        dataType : 'json', 
 	        beforeSend: function(){ $(".loading-main").fadeIn(); },
 	        success : function(result) {       
-	        					
+	        		
 				var hoursarea = $(".hours div");								//dates area div
 				hoursarea.html("");												//limpiamos datesarea				
 				/*var horarios = Object.keys(result.horas.horarios).map(function(key) {return [key, result.horas.horarios[key]];});*/
@@ -205,7 +213,7 @@ $(document).ready(function() {
 					horas++;
 				}	
 				if(horas==0){
-					hoursarea.append('<span class="nohoras">Ya no hay horas disponibles, seleccione otra fecha</span>');
+					hoursarea.append('<span class="nohoras">'+lblCreateAppointment48+'</span>');
 				}				
 				$(".ct-week").removeClass("selected");							//quitamos la seleccion al dia que tenga seleccion
 				$this.addClass("selected");										//ponemos seleccion al dia seleccionado
@@ -220,7 +228,7 @@ $(document).ready(function() {
 	        error: function(xhr, resp, text) {
 	        	$(".loading-main").fadeOut();
 	        	$(".responsemessage").addClass("errorresponse");
-				$(".responsemessage").addClass("showed").html("Ocurrió un error cargando horarios, intenta más tarde").slideDown();
+				$(".responsemessage").addClass("showed").html(lblErrorLoading).slideDown();
 	        }
 	    });
 
@@ -301,7 +309,7 @@ $(document).ready(function() {
             error: function(xhr, resp, text) {
             	$(".loading-main").fadeOut();
             	$(".responsemessage").addClass("errorresponse");
-				$(".responsemessage").addClass("showed").html("Ocurrió un error guardando la cita, intenta más tarde").slideDown();
+				$(".responsemessage").addClass("showed").html(lblCreateAppointment49).slideDown();
                 //console.log(xhr, resp, text);
             }
         });
@@ -406,7 +414,7 @@ function clearcountdown(boolean,fechahora,fechahoraformatted,button){
 								$(".hours a").removeClass("selected");
 								json.fechahora="";
 								json.holdingfolio="";
-								printsummaryvariable("fechahora", "<noselected>Fecha y hora</noselected>");
+								printsummaryvariable("fechahora", "<noselected>"+lblCreateAppointment39+"</noselected>");
 							}		
 							else{
 								holdingfolio=result.holdingcita.folio;							
@@ -427,7 +435,7 @@ function clearcountdown(boolean,fechahora,fechahoraformatted,button){
 			            error: function(xhr, resp, text) {
 			            	$(".loading-main").fadeOut();
 			            	$(".responsemessage").addClass("errorresponse");
-							$(".responsemessage").addClass("showed").html("Ocurrió un error inesperado reservando la cita, intenta más tarde").slideDown();
+							$(".responsemessage").addClass("showed").html(lblCreateAppointment50).slideDown();
 			            }
 			        });
 					
@@ -449,7 +457,7 @@ function clearcountdown(boolean,fechahora,fechahoraformatted,button){
         error: function(xhr, resp, text) {
         	$(".loading-main").fadeOut();
         	$(".responsemessage").addClass("errorresponse");
-			$(".responsemessage").addClass("showed").html("Ocurrió un error inesperado liberando la cita, intenta más tarde").slideDown();
+			$(".responsemessage").addClass("showed").html(lblCreateAppointment51).slideDown();
             //console.log(xhr, resp, text);
         }
     });
@@ -473,8 +481,9 @@ function writename(){
 	var nombre = $("#username").val();
 	var apellidopaterno = $("#apellidopaterno").val();
 	var apellidomaterno = $("#apellidomaterno").val();
-	if(nombre==""&&apellidopaterno==""&&apellidomaterno==""){
-		printsummaryvariable("nombre", "<noselected>Nombre completo</noselected>");  
+	//if(nombre==""&&apellidopaterno==""&&apellidomaterno==""){
+	if(nombre==""&&apellidopaterno==""){	
+		printsummaryvariable("nombre", "<noselected>"+lblCreateAppointment40+"</noselected>");  
 	}
 	else{
 		printsummaryvariable("nombre", nombre+" "+apellidopaterno+" "+apellidomaterno, nombre+"#"+apellidopaterno+"#"+apellidomaterno);
@@ -487,21 +496,21 @@ function writevalue(){
 	var telefono = $("#telefono").val();		
 	if(email==""){
 		//console.log("here");
-		printsummaryvariable("email", "<noselected>Email</noselected>");  
+		printsummaryvariable("email", "<noselected>"+lblCreateAppointment41+"</noselected>");  
 	}
 	else{
 		//console.log("nothere");
 		printsummaryvariable("email", email, email);
 	}
 	if(curp==""){
-		printsummaryvariable("curp", "<noselected>CURP</noselected>");  
+		printsummaryvariable("curp", "<noselected>"+lblCreateAppointment42+"</noselected>");  
 	}
 	else{
 		printsummaryvariable("curp", curp, curp);
 	}
 	if(telefono==""){
 		//console.log("here");
-		printsummaryvariable("telefono", "<noselected>Teléfono</noselected>");  
+		printsummaryvariable("telefono", "<noselected>"+lblCreateAppointment43+"</noselected>");  
 	}
 	else{
 		//console.log("nothere");
@@ -528,7 +537,8 @@ function printsummaryvariable(variable, text, value, coords){
 //function showbutton to send
 function showbuttontosend(){
 	//if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#apellidomaterno").val()!="")&&($("#fechahora").val()!="")&&($("#email").val()!="")&&($("#curp").val()!="")){
-	if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#apellidomaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")){
+	//if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#apellidomaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")){
+	if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")){	
 		//if($('.submit').length === 0) {
 			//$(".main-left").append("<input type='submit' class='btn btn-primary submit' value='Confirmar'/>");				
 		//}
@@ -541,8 +551,9 @@ function showbuttontosend(){
 }
 //limpiar fecha
 function limpiarfecha(){	
+
 	$("#fechahora").val("");
-	printsummaryvariable("fechahora", "<noselected>Fecha y hora</noselected>");
+	printsummaryvariable("fechahora", "<noselected>"+lblCreateAppointment39+"</noselected>");
     clearcountdown(true);
     unselectday();
     showbuttontosend();
@@ -552,19 +563,19 @@ function limpiarfecha(){
 function resetform(){	
 	gettramites();		
 	$("#lugarcita").val('').select2({
-		placeholder: "Seleccione un valor",
+		placeholder: lblSelectOption,
 		templateResult: formatOficinaAddress,
 		matcher: matchCustom
 	});
-	printsummaryvariable("tramite","<noselected>Trámite</noselected>");
-	printsummaryvariable("oficina","<noselected>Lugar</noselected>");
+	printsummaryvariable("tramite","<noselected>"+lblCreateAppointment37+"</noselected>");
+	printsummaryvariable("oficina","<noselected>"+lblCreateAppointment38+"</noselected>");
 	hideMap();	
 	$("#lugarcita").prop('disabled', 'disabled');		
 	limpiarfecha();
 	$(".calendar-wrapper").addClass("hiddened");
 	$("#datesarea").html("");
-	$(".calendar-header .calendar-title").html("Mes no seleccionado");
-	$(".calendar-header .calendar-year").html("Año no seleccionado");	
+	$(".calendar-header .calendar-title").html(lblCreateAppointment46);
+	$(".calendar-header .calendar-year").html(lblCreateAppointment47);	
 	$("#username").val('');
 	$("#apellidopaterno").val('');
 	$("#apellidomaterno").val('');
@@ -595,7 +606,7 @@ function gettramites(){
 			var requisitoscontainer = $(".requisitoscontainer");
 			tramites.find('optgroup').remove();
 			tramites.find('option').remove();
-			tramites.append('<option value="">Seleccione un valor</option>');			
+			tramites.append('<option value="">'+lblSelectOption+'</option>');			
 			var nombre_dependencia="";
 			var optgroup = "";
 			for (var i=0; i<result.tramites.length; i++) {	
@@ -611,25 +622,28 @@ function gettramites(){
 		      else{
 		      	var warningmessage="";
 		      }
-		      var costo="<stronger><i>Costo:</i> "+result.tramites[i].costo+"</stronger>";
-		      requisitoscontainer.append("<div class='requisito' id='requisito"+result.tramites[i].id_tramite+"'><h1>Requisitos del trámite</h1><span>"+warningmessage+result.tramites[i].requisitos.replace(/\n/g, "<br />")+costo+"</span><center><p class='buttonaccept'>Acepto haber leído los requisitos</p></center></div>");
+			  
+			  var costo="<stronger><i>"+msglblCost+":</i> "+result.tramites[i].costo+"</stronger>";
+		      requisitoscontainer.append("<div class='requisito' id='requisito"+result.tramites[i].id_tramite+"'><h1>"+lblProcedureRequirement+"</h1><span>"+warningmessage+result.tramites[i].requisitos.replace(/\n/g, "<br />")+costo+"</span><center><p class='buttonaccept'>"+lblIAgree+"</p></center></div>");
 		      
 		    }	
 		    $("#tramite").select2({
-				placeholder: "Seleccione un valor"
+				placeholder: lblSelectOption
 			});			
 			$(".loading-main").fadeOut();
         },
         error: function(xhr, resp, text) {
         	$(".loading-main").fadeOut();
         	$(".responsemessage").addClass("errorresponse");
-			$(".responsemessage").addClass("showed").html("Ocurrió un error cargando trámites, intenta más tarde").slideDown();
+			$(".responsemessage").addClass("showed").html(lblErrorLoading).slideDown();
         }
     });	
 }
 
 /****FECHAS***/
 function getfechas(mes, anio){
+	console.log("mes:"+mes);
+	console.log("año:"+anio);
 	var oficina=json.oficina.value;
 	var tramite=json.tramite.value;
 	if(mes&&anio){
@@ -638,6 +652,8 @@ function getfechas(mes, anio){
 	else{
 		var armedurl = getavailabledaysurl+"/"+oficina+"/"+tramite;
 	}
+	console.log(armedurl);
+	
 	//getting listado de fechas disponibles del mes actual
 	$.ajax({
         url: armedurl, 
@@ -665,7 +681,7 @@ function getfechas(mes, anio){
 				}
 				//si el dia esta disponible (con o sin fechas disponibles)	lo agregamos
 				if(diadisponible){
-					datesarea.append('<div title="'+fechasdisponibles+' disponibles<br><small class=ultimact>Actualizado a '+result.horaejecucion+'</small>" class="ct-week '+stringavailable+'" data-date="'+fecha+'"><a href="#"><span>'+dia+'</span></a></div>');
+					datesarea.append('<div title="'+fechasdisponibles+' '+lblAvailable+'<br><small class=ultimact>'+lblCreateAppointment52+' '+result.horaejecucion+'</small>" class="ct-week '+stringavailable+'" data-date="'+fecha+'"><a href="#"><span>'+dia+'</span></a></div>');
 				}
 				else{	//si no es un dia disponible
 					datesarea.append('<div class="ct-week hide_previous_dates"><a href="#"><span>'+dia+'</span></a></div>');
@@ -701,7 +717,7 @@ function getfechas(mes, anio){
         error: function(xhr, resp, text) {
         	$(".loading-main").fadeOut();
         	$(".responsemessage").addClass("errorresponse");
-			$(".responsemessage").addClass("showed").html("Ocurrió un error cargando fechas, intenta más tarde").slideDown();
+			$(".responsemessage").addClass("showed").html(lblErrorLoading).slideDown();
         }
     });
 }
