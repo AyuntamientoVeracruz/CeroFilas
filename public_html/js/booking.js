@@ -284,6 +284,8 @@ $(document).ready(function() {
 		$this.slideUp().removeClass("showed");
 	});
 
+
+
 	/*****CITA***/		
 	//guardando cita
 	$("#cita-form").on('submit', function(){
@@ -300,11 +302,13 @@ $(document).ready(function() {
 				$(".loading-main").fadeOut();
 				if(result.error=="true"){
 					$(".responsemessage").addClass("errorresponse");
+					$(".responsemessage").addClass("showed").html(result.description).slideDown();
 				}else{
 					resetform();   
 					$(".responsemessage").removeClass("errorresponse");
+					$(".responsemessage2").addClass("showed").html(result.description).slideDown();	
 				}
-				$(".responsemessage").addClass("showed").html(result.description).slideDown();				
+							
             },
             error: function(xhr, resp, text) {
             	$(".loading-main").fadeOut();

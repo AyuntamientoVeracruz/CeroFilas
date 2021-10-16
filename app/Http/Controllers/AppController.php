@@ -1820,7 +1820,7 @@ class AppController extends Controller
 							$msg2 = __('lblAppController20');
 							$msg3 = __('lblAppController21');
 							$msg4 = __('lblAppController22');
-							$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a>  <a href='".route('/', app()->getLocale())."'>". $lblIndexBlade27  ."</a> </k>"; 
+							$description="<k>" .$msg. "<b>".$folio."</b>.<br>".$msg2. "<br>".$msg3."<br><a href='".route('getconfirmacionregistro', app()->getLocale())."/".$folio."'>".$msg4. "</a>  <a href='".route('/', app()->getLocale())."'>Close</a> </k>"; 
 							DB::commit();
 				        }else{ 		     
 				        	DB::rollback();      
