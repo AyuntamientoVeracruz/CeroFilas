@@ -143,8 +143,8 @@ top: -10px; height: 20px; line-height: 20px; text-transform: uppercase;}
                     </div>
                     <div class="col-sm-12 col-xs-12 pl0">
                         <div class="inputfield">
-                            <input type="email" class="texto" id="email" autocomplete="off" name="email" placeholder="mail@dominio.com">
-                            <label>{{ __('lblCreateAppointment31') }} </label>
+                            <input type="email" class="texto" id="email" autocomplete="off" required="" name="email" placeholder="mail@dominio.com">
+                            <label>{{ __('lblCreateAppointment31') }}<mark></mark> </label>
                         </div>
                     </div>
                     <div class="col-sm-7 col-xs-12 pl0">

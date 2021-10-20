@@ -110,7 +110,7 @@
                         <td valign="middle" style="border:none; margin:0px; padding:0px; text-align:center" width="75%">
                             <span style="color:#212F4D; font-weight: 500; text-transform: uppercase;  font-size: 20px; letter-spacing: 1px">
                                 <span style="width: 100%; display: block; text-align: center;">{{ __('lblSaveDateMail21') }}</span>
-                                <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)) {{ __('lblResetMail4') }} @else {{ __('lblSaveDateMail22') }} @endif {{ __('lblSaveDateMail23') }}</span>
+                                
                             </span>
                         </td>                        
                     </tr>
@@ -126,7 +126,7 @@
                     <div style="width: 75%; float: left; height: 70px">
                         <span style="color:#212F4D; font-weight: 500; text-transform: uppercase;  font-size: 20px; letter-spacing: 1px; margin-top: 10px; width: 100%; display: block">
                             <span style="width: 100%; display: block; text-align: center;">{{ __("lblSaveDateMail21")}}</span>
-                            <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblResetMail4') }} @else {{ __('lblSaveDateMail22') }} @endif {{ __('lblSaveDateMail23') }}</span>
+                            
                         </span>
                     </div>
                 </div>
