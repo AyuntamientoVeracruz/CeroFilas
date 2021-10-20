@@ -542,7 +542,7 @@ function printsummaryvariable(variable, text, value, coords){
 function showbuttontosend(){
 	//if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#apellidomaterno").val()!="")&&($("#fechahora").val()!="")&&($("#email").val()!="")&&($("#curp").val()!="")){
 	//if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#apellidomaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")){
-	if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")){	
+	if(($("#lugarcita").val()!="")&&($("#username").val()!="")&&($("#apellidopaterno").val()!="")&&($("#fechahora").val()!="")&&($("#curp").val()!="")&&($("#email").val()!="")){	
 		//if($('.submit').length === 0) {
 			//$(".main-left").append("<input type='submit' class='btn btn-primary submit' value='Confirmar'/>");				
 		//}
