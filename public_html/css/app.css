@@ -52,16 +52,16 @@ text-align: center; margin-top: 20px}
 			.timerareacontainer{ position: fixed; left:0px; top: 0px; box-shadow: 0px 0px 5px rgba(0,0,0,0.5)}
 			.timerarea {margin: 0px; margin-top: 20px; margin-left: 20px;  width: calc(100% - 40px); margin-bottom: 20px; font-size:27px;}
 	}
-	.timerarea:before{content:"Tiempo restante"; color: #999;
+	/* .timerarea:before{content:"Tiempo restante"; color: #999;
 position: absolute; width: 120px; text-align: center; font-size: 9px;
 font-weight: normal; left: calc(50% - 60px); background: #fff;
-top: -10px; height: 20px; line-height: 20px; text-transform: uppercase;}
+top: -10px; height: 20px; line-height: 20px; text-transform: uppercase;} */
 
-.select2-container--default .select2-results__option[aria-disabled=true]{ display: none }
+/* .select2-container--default .select2-results__option[aria-disabled=true]{ display: none }
 .timerarea:after{content:"Al finalizar el tiempo, la fecha y hora se liberan y tendrás que seleccionar nuevamente otras."; color: #999;
 position: absolute; width: calc(100% - 20px); text-align: center; font-size: 8px;
 font-weight: normal; left: 10px; background: #fff;
-bottom: -10px; height: 20px; line-height: 12px; padding-left: 5px; padding-right: 5px}
+bottom: -10px; height: 20px; line-height: 12px; padding-left: 5px; padding-right: 5px} */
 
 .loading-main{display: block;
     position: fixed;
@@ -567,6 +567,20 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 		.responsemessage.showed::after{ display: block }
 	.errorresponse{ background: #ff0000!important }
 
+
+	.responsemessage2{ width: 300px; min-height: 100px; border-radius:5px; box-shadow:0px 0px 15px rgba(0,0,0,0.2); padding:10px;
+		position: fixed; left: calc(50% - 150px); top: -150px; background:#212F4D; color: #fff; text-align:center;
+		 cursor: pointer; font-size: 14px;display: flex;align-items: center;justify-content: center; transition:0.2s; z-index: 99991}
+			.responsemessage2.showed{top: calc(50% - 50px)}
+			/* .responsemessage2::before{content: "x"; font-size: 12px; position: absolute; right: 10px; top: 10px; z-index: 9999;
+		width: 20px; height: 20px; background: #fff; color:#ff0000; border-radius:3px; line-height: 20px; font-weight: bold} */
+			.responsemessage2::after{content: ""; font-size: 8px; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%;
+		background: rgba(0,0,0,0.1); z-index:-1; display: none}
+				.responsemessage2.showed::after{ display: block }
+			.errorresponse2{ background: #ff0000!important }
+
+
+
 	.fullscreen{ background: #212F4D; height: 100vh; min-height:572px; position: relative;}
 		.fullscreencontainer,.miniscreencontainer{width:100%; height: 100%; position: relative; flex-direction: column;justify-content: center}
 			.fullscreencontainer{ display: flex }
@@ -721,6 +735,7 @@ background: rgba(0,0,0,0.1); z-index:-1; display: none}
 
 		.summary-scroll data-summary["email"].text noselected:before{ display: none }
 		.responsemessage k a{float:left;width: 100%; background:#E0B54B; margin-top: 10px; border-radius:4px; height: 30px; line-height: 30px; color: #000}
+		.responsemessage2 k a{float:left;width: 100%; background:#E0B54B; margin-top: 10px; border-radius:4px; height: 30px; line-height: 30px; color: #000}
 		.requisito span strong{color:#cc0000; position: relative; width: 100%; text-align: center; float: left; padding-left: 10px; padding-right: 10px; margin-bottom: 10px;
 			text-decoration:underline}
 
