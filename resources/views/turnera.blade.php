@@ -87,8 +87,8 @@
                 <span>{{$oOficina->nombre_oficina}}</span>
             </div>
             <div class="toprightcontent">
-                <span class="spanleft">Turno actual</span>
-                <span class="spanright">Ventanilla</span>
+                <span class="spanleft">{{ __('lblShift1') }} </span>
+                <span class="spanright">{{ __('lblShift2') }}</span>
                 <div class="turnoactualcontainer"></div>
             </div>            
         </div>
@@ -104,8 +104,8 @@
 
             </div>
             <div class="bottomrightcontent">
-                <span class="spanleft">Turnos anteriores</span>
-                <span class="spanright">Ventanilla</span>
+                <span class="spanleft">{{ __('lblShift3') }}</span>
+                <span class="spanright">{{ __('lblShift2') }}</span>
                 <div class="turnoanteriorcontainer"></div> 
                 <div class="turnoanteriorcontainer-copy"></div>                  
             </div>
@@ -218,7 +218,7 @@
             function getAssignment() {  
 
                 $.ajax({
-                    url: "{{route('getassignmentsfromoffice')}}",
+                    url: "{{route('getassignmentsfromoffice', app()->getLocale())}}",
                     type: 'get',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

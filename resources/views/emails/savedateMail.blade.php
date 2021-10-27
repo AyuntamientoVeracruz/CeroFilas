@@ -55,10 +55,10 @@
     
     @if(isset($tipo))
         @section('initlink')
-        <a href="{{route('/')}}" class="small">Regresar a inicio</a>
+        <a href="{{route('/', app()->getLocale())}}" class="small">{{ __('lblSaveDateMail1') }}</a>
         @endsection
         @section('titlebig')
-        <h1>Impresión</h1>
+        <h1>{{ __('lblSaveDateMail2') }}</h1>
         @endsection
     @endif
     
@@ -74,21 +74,21 @@
             @if($statuscita!="cancelada")
                 <a href="javascript:void(0)" onclick="return xepOnline.Formatter.Format('printable',{render:'download',filename: 'confirmacion-{{$folio}}',embedLocalImages: 'true'});" 
                 style="background:#E0B54B; border-radius:4px; height: 30px; line-height: 30px; padding:10px; color:#000; text-decoration: none; 
-                font-family: Arial; font-size:12px">Descargar</a>
+                font-family: Arial; font-size:12px">{{ __('lblSaveDateMail3') }}</a>
                 <a href="javascript:void(0)" onclick="window.print();" 
                 style="background:#222; border-radius:4px; height: 30px; line-height: 30px; padding:10px; color:#fff; text-decoration: none; 
-                font-family: Arial; font-size:12px; margin-left: 20px">Imprimir</a>
+                font-family: Arial; font-size:12px; margin-left: 20px">{{ __('lblSaveDateMail2') }}</a>
                 @if($tipo=="search")            
                 <a href="javascript:void(0)" onclick='document.getElementById("form-folio").submit();' 
                 style="background:#cc0000; border-radius:4px; height: 30px; line-height: 30px; padding:10px; color:#fff; text-decoration: none; 
-                font-family: Arial; font-size:12px; margin-left: 20px">Cancelar</a>
-                <form id="form-folio" method="post" action="{{route('cancelarcita')}}">
+                font-family: Arial; font-size:12px; margin-left: 20px">{{ __('lblCancel') }}</a>
+                <form id="form-folio" method="post" action="{{route('cancelarcita', app()->getLocale())}}">
                     @csrf
                     <input type="hidden" value="{{$folio}}" id="folio" name="folio">
                 </form>
                 @endif
             @else
-                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{$statuscita}}</h2>
+                <h2 style="color:#cc0000; text-transform: capitalize; margin-top:0px; margin-bottom: 0px">{{ __('lblCancel') }}</h2>
             @endif
         </div>
     @endif
@@ -109,8 +109,8 @@
                         </td>
                         <td valign="middle" style="border:none; margin:0px; padding:0px; text-align:center" width="75%">
                             <span style="color:#212F4D; font-weight: 500; text-transform: uppercase;  font-size: 20px; letter-spacing: 1px">
-                                <span style="width: 100%; display: block; text-align: center;">Citas para trámites</span>
-                                <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)) Recordatorio @else Alta @endif de cita</span>
+                                <span style="width: 100%; display: block; text-align: center;">{{ __('lblSaveDateMail21') }}</span>
+                                
                             </span>
                         </td>                        
                     </tr>
@@ -125,8 +125,8 @@
                     <div style="width: 25%; float: left; text-align: center;height: 70px"><img src="{{url('/images/logo-white.png')}}" style="max-width:100%; max-height: 100%" /></div>
                     <div style="width: 75%; float: left; height: 70px">
                         <span style="color:#212F4D; font-weight: 500; text-transform: uppercase;  font-size: 20px; letter-spacing: 1px; margin-top: 10px; width: 100%; display: block">
-                            <span style="width: 100%; display: block; text-align: center;">Citas para trámites</span>
-                            <span style="font-size: 12px; letter-spacing: 3px; width: 100%; text-align: center; display: block">@if(isset($recordatorio)&&$recordatorio==true) Recordatorio @else Alta @endif de cita</span>
+                            <span style="width: 100%; display: block; text-align: center;">{{ __("lblSaveDateMail21")}}</span>
+                            
                         </span>
                     </div>
                 </div>
@@ -134,29 +134,29 @@
             
             <div style="width: 100%; display: block; float:left">
                                
-                <h1 style="font-size:18px; margin-top: 20px">Hola {{$nombre["text"]}}!</h1> 
-                <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) Te recordamos que mañana tienes una cita para trámite. @else Hemos recibido con éxito tu solicitud de cita. @endif <b>No olvides asistir 10 minutos antes de la fecha/hora reservada. Al llegar a tu cita no olvides confirmar tu asistencia en recepción haciendo Check-in, llevando contigo el folio o QR, así como los requisitos del trámite. En caso que necesites hacerlo, puedes cancelar tu cita <a href="{{route('/')}}">aquí</a> indicando tu folio.</b></p>
-                <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">Folio:
+                <h1 style="font-size:18px; margin-top: 20px">{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
+                <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblSaveDateMail7') }} @else {{ __('lblSaveDateMail8') }} @endif <b>{{ __('lblSaveDateMail9') }}<a href="{{route('/', app()->getLocale())}}">{{ __('lblSaveDateMail12') }}</a></b></p>
+                <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">{{ __('lblSaveDateMail11') }}
                     <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px">{{$folio}}</b>
                 </div>
                 
                 <div style="width:100%; margin-bottom: 0px; margin-top: 20px; display: block">                
                     
                     <div style="float: left; width: @if(isset($print)) 50% @else 100% @endif" class="qrcontainer"> 
-                        <span style="width: 100%; display: block; text-align: center;">Código QR:</span>                    
+                        <span style="width: 100%; display: block; text-align: center;">{{ __('lblSaveDateMail13') }}</span>                    
                         <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=foliodecitagenerado:{{$folio}}&choe=UTF-8&chld=|1"/>                   
                     </div>
                                             
                     <div style="margin-bottom:10px; line-height: 20px; float:left; @if(isset($print)) width: 320px; @else width:100%; @endif" class="infocontainer"> 
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block">Te compartimos los datos que guardamos de la cita:</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Trámite:</b> {{$tramite["text"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Oficina:</b> {{$oficina["text"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Dirección oficina:</b> {{$oficina["direccion"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Fecha/Hora:</b> {{$fechahora["text"]}}</div>
-                        @if($email["value"]!="") <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Email:</b> {{$email["value"]}}</div> @endif
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>CURP:</b> {{$curp["value"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Costo(s):</b> {{$tramite["costo"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>Requisitos del Trámite:</b></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block">{{ __('lblSaveDateMail14') }}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcedure') }}</b> {{$tramite["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOffice') }}</b> {{$oficina["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOfficeAddress') }}</b> {{$oficina["direccion"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblDateTime') }}</b> {{$fechahora["text"]}}</div>
+                        @if($email["value"]!="") <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblEmail') }}</b> {{$email["value"]}}</div> @endif
+                    
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblCost') }}</b> {{$tramite["costo"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcudereRquirements') }}</b></div>
                         <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 15px">{!! nl2br($tramite["requisitos"]) !!}</div>
                         <br><br>
                     </div> 
@@ -167,7 +167,7 @@
         </div>
 
         <div style="width: 100%; text-align: center; margin-top: 0px; margin-bottom: 0px; display: block; float: left">
-            <div style="width:100%; margin-bottom: 5px; margin-top: 0px; display: block">Mapa de ubicación:</div>                 
+            <div style="width:100%; margin-bottom: 5px; margin-top: 0px; display: block">{{ __('lblLocatioMap') }}</div>                 
             <img src='https://maps.googleapis.com/maps/api/staticmap?center={{trim($oficina["coords"])}}&zoom=17&size=640x230&scale=1&maptype=roadmap&markers={{trim($oficina["coords"])}}&key={{trim($googlemapskey->service_key)}}' width="100%" alt="mapa" style="max-width: 640px" />                    
         </div>
 
@@ -183,7 +183,7 @@
                 <tr valign="middle" style="border:none; margin:0px; padding:0px">
                     <td width="6.25%" valign="middle" style="border:none; margin:0px; padding:0px; width:6.25%">
                     </td>
-                    <td class="x_font" valign="middle" align="initial" style="border:none; margin:0px; padding:0px; font-weight:400; text-decoration:none; letter-spacing:0.15px; color:rgb(136,137,140); font-size:11px; line-height:1.65em; text-align:initial">Recuerda asistir 10 minutos antes de la fecha/hora reservada. Lleva contigo el folio o QR, así como los requisitos del trámite. No respondas este correo.</td>
+                    <td class="x_font" valign="middle" align="initial" style="border:none; margin:0px; padding:0px; font-weight:400; text-decoration:none; letter-spacing:0.15px; color:rgb(136,137,140); font-size:11px; line-height:1.65em; text-align:initial">{{ __('lblSaveDateMail15') }}</td>
                     <td width="6.25%" valign="middle" style="border:none; margin:0px; padding:0px; width:6.25%">
                     </td>
                 </tr>
@@ -210,7 +210,7 @@
                     <td width="6.25%" valign="middle" style="border:none; margin:0px; padding:0px; width:6.25%">
                     </td>
                     <td class="x_font x_font-small" valign="middle" align="initial" style="border:none; margin:0px; padding:0px; font-weight:400; text-decoration:none; letter-spacing:0.15px; color:rgb(136,137,140); line-height:1.65em; text-align:initial; font-size:11px">
-                    &copy; 2019 Ayuntamiento de Veracruz</td>
+                    {{ __('lblSaveDateMail16') }}</td>
                     <td width="6.25%" valign="middle" style="border:none; margin:0px; padding:0px; width:6.25%">
                     </td>
                 </tr>

@@ -3889,7 +3889,7 @@ S2.define('select2/dropdown/search',[
       '<span class="select2-search select2-search--dropdown">' +
         '<input class="select2-search__field" type="search" tabindex="-1"' +
         ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
-        ' spellcheck="false" role="textbox" placeholder="Puedes escribir lo que buscas"/>' +
+        ' spellcheck="false" role="textbox" placeholder="'+lblPlacheHolderSearch+'" />' +
       '</span>'
     );
 

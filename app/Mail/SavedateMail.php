@@ -29,8 +29,8 @@ class SavedateMail extends Mailable
     {
         $this->folio = $folio;
         $this->nombre = $nombre;
-		$this->tramite = $tramite;
-		$this->oficina = $oficina;
+        $this->tramite = $tramite;
+        $this->oficina = $oficina;
         $this->fechahora = $fechahora;
         $this->email = $email;
         $this->curp = $curp;
@@ -50,10 +50,10 @@ class SavedateMail extends Mailable
     {      
 
           if($this->recordatorio==true){
-            $subject = 'Recordatorio de cita de trámite';
+            $subject = __('lblSaveDateMail17');
 		  }
           else{
-            $subject = 'Cita de trámite registrada con éxito';
+            $subject = __('lblSaveDateMail18');
           }
           return $this->view('emails.savedateMail')
 						->subject($subject);

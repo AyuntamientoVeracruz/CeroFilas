@@ -16,6 +16,16 @@
 //////////////////////////////////////////////////////////////////////
 //* APP Routes (HOMEPAGE para generar citas) (CEROFILAS)
 //////////////////////////////////////////////////////////////////////
+Route::redirect('/', '/es');
+
+Route::group(['prefix' => '{language}'], function () {
+
+Route::get('/test', function (){
+  App::setLocale('es');
+  if(App::isLocale('es')){
+    dd(App::getLocale() );
+  }
+});
 
 //go to main page
 Route::get('/', [
@@ -26,7 +36,7 @@ Route::get('/', [
 //crear citas
 Route::get('/crearcita', [
   'as' => 'crearcita',
-  'uses' => 'AppController@crearcitacopy' //'AppController@crearcita'
+  'uses' => 'AppController@crearcita' //'AppController@crearcita'
 ]);
 
 //crear citas
@@ -42,7 +52,7 @@ Route::get('/faq', [
 ]);
 
 //cancelar cita por folio
-Route::post('/cancelarcita', [
+Route::post('/cancelarcita/{lang?}', [
   'as' => 'cancelarcita',
   'uses' => 'AppController@cancelarcita'
 ]);
@@ -72,13 +82,13 @@ Route::get('getoficinas/{tramite?}', [
 ]);
 
 //obtener listado de dias disponibles por tramite/oficina/mes/anio
-Route::get('getavailabledays/{oficina?}/{tramite?}/{mes?}/{anio?}', [
+Route::get('/getavailabledays/{lang?}/{oficina?}/{tramite?}/{mes?}/{anio?}', [
   'as' => 'getavailabledays',
   'uses' => 'AppController@getavailabledays'
 ]);
 
 //obtener listado de horas disponibles por tramite/oficina/dia/mes/anio
-Route::get('getavailablehours/{oficina?}/{tramite?}/{dia?}/{mes?}/{anio?}', [
+Route::get('getavailablehours/{lang?}/{oficina?}/{tramite?}/{dia?}/{mes?}/{anio?}', [
   'as' => 'getavailablehours',
   'uses' => 'AppController@getavailablehours'
 ]);
@@ -123,7 +133,7 @@ Route::post('removeholdingcita', [
 ]);
 
 //obtener confirmacion de registro de cita por folio
-Route::get('getconfirmacionregistro/{folio?}', [
+Route::get('getconfirmacionregistro/{lang?}/{folio?}', [
   'as' => 'getconfirmacionregistro',
   'uses' => 'AppController@getconfirmacionregistro'
 ]);
@@ -135,7 +145,7 @@ Route::post('getcita', [
 ]);
 
 //obtener confirmacion de registro de cita por folio
-Route::get('getcita', [
+Route::get('getcita/', [
   'as' => 'getcita',
   'uses' => 'AppController@getcita'
 ]);
@@ -179,13 +189,13 @@ Route::post('/kiosk/confirmationqr/{oficina?}/{folio?}', [
 ]);
 
 //buscar cita por nombre,curp o folio y generar turno
-Route::post('/kiosk/searchcitabytext/{oficina?}/{text?}', [
+Route::post('/kiosk/searchcitabytext/{lang?}/{oficina?}/{text?}', [
   'as' => 'kiosksearchcitabytext',
   'uses' => 'KioskController@searchcitabytext'
 ]);
 
 //generar turno manual
-Route::post('/kiosk/manualturn', [
+Route::post('/kiosk/manualturn/{lang?}', [
   'as' => 'kioskmanualturn',
   'uses' => 'KioskController@manualturn'
 ]);
@@ -258,7 +268,7 @@ Route::get('sistema/perfil', [
   'uses' => 'CrmController@perfil'
 ]);
 
-Route::get('sistema/perfil/{tramitador?}', [
+Route::get('sistema/perfil/{tramitador?}/{tramitador2?}', [
   'as' => 'perfiltramitador',
   'uses' => 'CrmController@perfiltramitador'
 ]);
@@ -311,7 +321,7 @@ Route::post('sistema/attendingturn', [
 ]);
 
 //obteniendo historial a partir del curp
-Route::get('sistema/gethistorial/{curp?}/{oficina?}', [
+Route::get('sistema/gethistorial/{lang?}/{curp?}/{oficina?}', [
   'as' => 'gethistorial',
   'uses' => 'CrmController@gethistorial'
 ]);
@@ -373,7 +383,7 @@ Route::post('sistema/usuarios/updatetramitexuser', [
 ]);
 
 //listar ausencias
-Route::get('sistema/ausencias/{usuario?}', [
+Route::get('sistema/ausencias/{lang?}/{usuario?}', [
   'as' => 'ausenciasusuarios',
   'uses' => 'CrmController@ausenciasusuariosListar'
 ]);
@@ -469,17 +479,18 @@ Route::post('sistema/oficinas/destroy', [
 
 //VISOR DE TURNOS Y CITAS
 //obtener listado de turnos
-Route::get('getturnos/{rol?}/{oficina?}/{fecha?}/{estatus?}', [
+Route::get('getturnos/{lang?}/{rol?}/{oficina?}/{fecha?}/{estatus?}', [
   'as' => 'getturnos',
   'uses' => 'CrmController@getturnos'
 ]);
 //actualizar turno asignandole tramitador
-Route::get('updateturnos/{turno?}/{tramitador?}', [
+Route::get('updateturnos/{lang?}/{turno?}/{tramitador?}', [
   'as' => 'updateturnos',
   'uses' => 'CrmController@updateturnos'
 ]);
 //obtener listado de citas
-Route::get('getcitas/{rol?}/{oficina?}/{fecha?}/{estatus?}', [
+Route::get('getcitas/{lang?}/{rol?}/{oficina?}/{fecha?}/{fecha2?}/{estatus?}', [
   'as' => 'getcitas',
   'uses' => 'CrmController@getcitas'
 ]);
+});

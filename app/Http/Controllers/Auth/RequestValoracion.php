@@ -30,9 +30,12 @@ class RequestValoracion extends Mailable
      */
      public function build()
     {
-          $address = 'citas@veracruzmunicipio.gob.mx';
-          $name = 'Ayuntamiento de Veracruz';
-          $subject = 'Evaluación de atención de trámite';
+        $msg = 
+
+
+          $address =__('lblEmailInstitutional');
+          $name = __('lblName');
+          $subject = __('lblMsg1');
 		  return $this->view('emails.requestvaloracionMail')
 						->from($address, $name)
 						->subject($subject);

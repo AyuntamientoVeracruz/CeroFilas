@@ -36,7 +36,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item active">Usuarios</li>
+      <li class="breadcrumb-item active">{{ __('lblUser1') }}</li>
     </ol>
 
     <div class="container-fluid">
@@ -69,13 +69,13 @@
                           <a class="btn btn-warning btn-search open-modal" href="#" data-toggle="modal" data-target="#myModal"
                           data-action ="store"
                           data-id     = ""
-                          data-title ="Nuevo usuario">Crear nuevo usuario <i class="icon-arrow-right"></i></a>
+                          data-title ="{{ __('lblUser69') }}">{{ __('lblUser2') }} <i class="icon-arrow-right"></i></a>
                       </div>
                       <div @if($data['rol'] == 'superadmin') class="col-lg-2 col-md-6" @else class="col-lg-1" @endif>
                         @if($data['rol'] == 'superadmin')
                         <div style="margin-top: 2px">
                           <select  name="oficina" id="oficina">
-                              <option value="">Todas las oficinas</option>
+                              <option value="">{{ __('lblUser3') }}</option>
                               @if(count($dependenciascombo)> 0 )
                                 @foreach($dependenciascombo as $dependencia)                                          
                                   @foreach($dependencia->oficinas as $oficina)
@@ -91,20 +91,20 @@
                         
                         <div style="margin-top: 2px">
                           <select  name="tipousuario" id="tipousuario">
-                              <option value="">Todos los tipos de usuario</option>  
-                              <option value="admin_oficina" @if($filterstipousuario=='admin_oficina') selected="" @endif>Administrador Oficina</option>
-                              <option value="kiosko" @if($filterstipousuario=='kiosko') selected="" @endif>Kiosko</option>
-                              <option value="tramitador" @if($filterstipousuario=='tramitador') selected="" @endif>Asesor</option>
-                              @if($data['rol'] == 'superadmin')<option value="superadmin" @if($filterstipousuario=='superadmin') selected="" @endif>Webmaster</option>@endif  
+                              <option value="">{{ __('lblUser4') }}</option>  
+                              <option value="admin_oficina" @if($filterstipousuario=='admin_oficina') selected="" @endif>{{ __('lblUser5') }}</option>
+                              <option value="kiosko" @if($filterstipousuario=='kiosko') selected="" @endif>{{ __('lblUser6') }}</option>
+                              <option value="tramitador" @if($filterstipousuario=='tramitador') selected="" @endif>{{ __('lblUser7') }}</option>
+                              @if($data['rol'] == 'superadmin')<option value="superadmin" @if($filterstipousuario=='superadmin') selected="" @endif>{{ __('lblUser8') }}</option>@endif  
                           </select>
                         </div>
 
                       </div>
                       <div class="col-lg-5">
                         <div class="input-group">
-                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "Buscar por nombre ó email" value = "{{$filterstexto}}">
+                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "{{ __('lblUser9') }}" value = "{{$filterstexto}}">
                           <span class="input-group-prepend">
-                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>Buscar</span></button>
+                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>{{ __('lblUser10') }}</span></button>
                           </span>
                         </div>
                       </div>
@@ -113,7 +113,7 @@
             </div>
           </div>
             
-          <!--<form action="{{route('usuarios/csv')}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
+          <!--<form action="{{route('usuarios/csv', app()->getLocale())}}" method="get" class="form-horizontal tabsearch" style="width:100%; float:left">
               <div class="form-group row" style="float:right; margin-top:10px; margin-bottom:10px">
                   <div class="col-md-6">
                         <button type="submit" class="btn btn-warning btn-search" style="border-radius:4px">Descarga CSV usuarios <i class="fa fa-download"></i></button>
@@ -129,7 +129,7 @@
                   <div class="card">
                        
                       <div class="card-header">
-                        <h5 style="margin-bottom:0px">Oficina {{$oficina->nombre_oficina}}</h5>
+                        <h5 style="margin-bottom:0px">{{ __('lblUser11') }} {{$oficina->nombre_oficina}}</h5>
                       </div>
 
                       <div class="card-body">
@@ -140,13 +140,13 @@
                                   <thead>
                                     @if(count($oficina->usuarios)> 0 )
                                     <tr>                                            
-                                      <th>Trámites</th>
-                                      <th>Acciones</th>                                        
-                                      <th>Estatus</th>
-                                      <th>Tipo de usuario</th>
-                                      <th>Nombre</th>
-                                      <th>Disponible</th> 
-                                      <th>Email</th>                                       
+                                      <th>{{ __('lblUser12') }}</th>
+                                      <th>{{ __('lblUser13') }}</th>                                        
+                                      <th>{{ __('lblUser14') }}</th>
+                                      <th>{{ __('lblUser15') }}</th>
+                                      <th>{{ __('lblUser16') }}</th>
+                                      <th>{{ __('lblUser17') }}</th> 
+                                      <th>{{ __('lblUser18') }}</th>                                       
                                     </tr>
                                     @endif
                                   </thead>
@@ -157,7 +157,7 @@
                                             @if($usuario->tipo_user=="tramitador")
                                               <td class="text-center tramites" style="width: 130px">
                                                  <a href="#" class="btn btn-sm btn-secondary">
-                                                  <i class="fa fa-chevron-down"></i> <k>Trámites <sup>{{$usuario['TOTALTRAMITES']}}</sup></k></a>
+                                                  <i class="fa fa-chevron-down"></i> <k>{{ __('lblUser11') }} <sup>{{$usuario['TOTALTRAMITES']}}</sup></k></a>
                                               </td> 
                                             @else
                                               <td style="width: 130px"></td>
@@ -169,7 +169,7 @@
                                                   data-target    = "#myModal"
                                                   data-action    = "update"
                                                   data-id        = "{{$usuario['id_user']}}"
-                                                  data-title     = "Editando: {{$usuario['nombre']}}"                                                     
+                                                  data-title     = "{{ __('lblUser19') }} : {{$usuario['nombre']}}"                                                     
                                                   data-tipouser  = "{{$usuario['tipo_user']}}" 
                                                   data-estatus   = "{{$usuario['estatus']}}"             
                                                   data-email     = "{{$usuario['email']}}"
@@ -181,29 +181,29 @@
                                                   @else
                                                   data-actualuser= "0"
                                                   @endif
-                                                 >Editar</a>
+                                                 >{{ __('lblUser19') }} </a>
 
-                                                <a href="{{route('ausenciasusuarios')}}/{{$usuario['id_user']}}" class="btn btn-secondary btn-sm float-left" style="margin-left: 10px">Ausencias</a>  
+                                                <a href="{{route('ausenciasusuarios', app()->getLocale())}}/{{$usuario['id_user']}}" class="btn btn-secondary btn-sm float-left" style="margin-left: 10px">{{ __('lblUser20') }}</a>  
 
                                                 @if($usuario['id_user']!=$data["user"]->id_user)                                                    
-                                                <form id="fr_user{{$usuario['id_user']}}" action="{{route('usuarios/destroy')}}" name="_method" method="post" style="float:left">
+                                                <form id="fr_user{{$usuario['id_user']}}" action="{{route('usuarios/destroy', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                                   <a href="#" 
                                                   class="btn btn-danger btn-sm"
                                                   style="margin-left:10px; margin-top:0px; float:left" 
                                                   data-toggle           = "confirmation"
                                                   data-id               = "{{$usuario['id_user']}}"                                                  
-                                                  data-btn-ok-label     = "Aceptar" 
+                                                  data-btn-ok-label     = "{{ __('lblUser71') }} "
                                                   data-btn-ok-icon      = "fa fa-remove"
                                                   data-btn-ok-class     = "btn btn-danger btn-sm"
-                                                  data-btn-cancel-label = "Cancelar"
+                                                  data-btn-cancel-label = "{{ __('lblUser72') }}"
                                                   data-btn-cancel-icon  = "fa fa-chevron-circle-left"
                                                   data-btn-cancel-class = "btn btn-sm btn-warning"
-                                                  data-title            = "Desea @if($usuario['estatus']=='activo') desactivar @else activar @endif el usuario?"
+                                                  data-title            = "{{ __('lblUser36') }} @if($usuario['estatus']=='activo') {{ __('lblUser37') }} @else {{ __('lblUser39') }} @endif {{ __('lblUser38') }}"
                                                   data-target           = "#removeUser"
                                                   data-placement        = "top" 
                                                   data-singleton        = "true"
                                                   data-type             = "user" 
-                                                  >@if($usuario['estatus']=="activo") Desactivar @else Activar @endif</a>
+                                                  >@if($usuario['estatus']=="activo") {{ __('lblUser37') }} @else {{ __('lblUser39') }} @endif</a>
                                                   @csrf
                                                   <input type="hidden" name="id_user" value="{{$usuario['id_user']}}"/>
                                                   <input type="hidden" name="estatus" value="{{$usuario['estatus']}}"/>
@@ -212,10 +212,12 @@
                                               </div>
                                             </td>
                                                                                            
-                                            <td style="text-transform: capitalize">{{$usuario['estatus']}}</td>
+                                            <td style="text-transform: capitalize">@if($usuario['estatus']=="activo")  {{ __('lblStatusActive') }} @else  {{ __('lblStatusDesactive') }} @endif </td>
                                             <td style="text-transform: capitalize">@if($usuario['tipo_user'] == 'tramitador') Asesor @endif @if($usuario['tipo_user']=='admin_oficina') Administrador Oficina @endif @if($usuario['tipo_user']=='kiosko') Kiosko @endif @if($usuario['tipo_user']=='superadmin') Webmaster @endif</td>
-                                            <td style="text-transform: capitalize"><div style="float:left; width:140px"><a href="{{route('perfiltramitador')}}/{{$usuario['id_user']}}">{{$usuario['nombre']}}</a></div></td>
-                                            <td style="text-transform: capitalize">{{$usuario['disponibleturno']}}</td>
+                                            <td style="text-transform: capitalize"><div style="float:left; width:140px"><a href=" {{route('perfiltramitador', app()->getLocale())}}/{{$usuario['id_user']}}">{{$usuario['nombre']}}</a></div></td>
+                                           
+                                            <!-- <a href="{{route('perfiltramitador', app()->getLocale())}}/{{$usuario['id_user']}}">{{$usuario['nombre']}}</a></div></td> -->
+                                            <td style="text-transform: capitalize"> @if($usuario['disponibleturno']=="si")  {{ __('lblUser73') }} @else  {{ __('lblUser74') }} @endif</td>
                                             <td><a href="mailto:{{$usuario['EMAIL']}}" target="_blank"><div style="float:left; width:220px">{{$usuario['email']}}</div></a></td>
                                                                                             
                                         </tr>
@@ -223,7 +225,7 @@
                                         <tr class="hide">
                                           <td class="text-center">
                                             <a class="btn btn-sm btn-warning  open-modaltramite" href="#" data-toggle="modal" data-target="#myModalTramite"
-                                            data-action ="store" data-idusuario="{{$usuario['id_user']}}" data-oficina="{{$usuario['oficina_id']}}" data-action ="store" data-title="Nuevo trámite de: {{$usuario['nombre']}}">Nuevo trámite</a>
+                                            data-action ="store" data-idusuario="{{$usuario['id_user']}}" data-oficina="{{$usuario['oficina_id']}}" data-action ="store" data-title="{{ __('lblUser21') }} de: {{$usuario['nombre']}}">{{ __('lblUser21') }}</a>
                                           </td>
                                           <td colspan="6">
                                             @if(count($usuario['TRAMITES'])>0)                                                                                                                          
@@ -231,31 +233,31 @@
                                                   <thead>
                                                       <tr style="background:#fff!important" class="trfirst">
                                                           <th></th>
-                                                          <th>Trámite</th>
-                                                          <th colspan="2" class="text-center">Lunes</th>
-                                                          <th colspan="2" class="text-center light">Martes</th>
-                                                          <th colspan="2" class="text-center">Miércoles</th>
-                                                          <th colspan="2" class="text-center light">Jueves</th>
-                                                          <th colspan="2" class="text-center">Viernes</th>
-                                                          <th colspan="2" class="text-center light">Sábado</th>
+                                                          <th>{{ __('lblUser33') }}</th>
+                                                          <th colspan="2" class="text-center">{{ __('lblUser22') }}</th>
+                                                          <th colspan="2" class="text-center light">{{ __('lblUser23') }}</th>
+                                                          <th colspan="2" class="text-center">{{ __('lblUser24') }}</th>
+                                                          <th colspan="2" class="text-center light">{{ __('lblUser25') }}</th>
+                                                          <th colspan="2" class="text-center">{{ __('lblUser26') }}</th>
+                                                          <th colspan="2" class="text-center light">{{ __('lblUser27') }}</th>
                                                           <th></th>                                                              
                                                       </tr>
                                                       <tr style="background:#fff!important">
-                                                          <th class="text-center">Acciones</th>
-                                                          <th class="searchtramitecontainer"><input type="text" class="form-control searchtramite" placeholder="Buscar trámite"><close><i class="fa fa-times"></i></close></th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Hora Inicio</th>
-                                                          <th>Hora Fin</th>
-                                                          <th>Actualizado</th>                                                              
+                                                          <th class="text-center">{{ __('lblUser28') }}</th>
+                                                          <th class="searchtramitecontainer"><input type="text" class="form-control searchtramite" placeholder="{{ __('lblUser29') }}"><close><i class="fa fa-times"></i></close></th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser30') }}</th>
+                                                          <th>{{ __('lblUser31') }}</th>
+                                                          <th>{{ __('lblUser32') }}</th>                                                              
                                                       </tr>
                                                   </thead>
                                                   <tbody>
@@ -269,7 +271,7 @@
                                                         data-action           = "update"
                                                         data-id               = "{{$tramite->id_tramitesxusers}}"
                                                         data-idusuario        = "{{$usuario['id_user']}}"
-                                                        data-title            = "Editar trámite de: {{$usuario['nombre']}}"                                                     
+                                                        data-title            = "{{ __('lblUser70') }} {{$usuario['nombre']}}"                                                     
                                                         data-tramite          = "{{$tramite->tramite_id}}"
                                                         data-lunesinicio      = "{{$tramite->lunes_inicio}}"
                                                         data-lunesfin         = "{{$tramite->lunes_fin}}"
@@ -284,9 +286,9 @@
                                                         data-sabadoinicio     = "{{$tramite->sabado_inicio}}"
                                                         data-sabadofin        = "{{$tramite->sabado_fin}}"
                                                         data-oficina          = "{{$usuario['oficina_id']}}"
-                                                      >Editar</a>
+                                                      >{{ __('lblUser19') }}</a>
                                                                                                           
-                                                      <form id="fr_tramitexuser{{$tramite->id_tramitesxusers}}" action="{{route('usuarios/destroytramitexuser')}}" name="_method" method="post" style="float:left">
+                                                      <form id="fr_tramitexuser{{$tramite->id_tramitesxusers}}" action="{{route('usuarios/destroytramitexuser', app()->getLocale())}}" name="_method" method="post" style="float:left">
                                                         <a href="#" 
                                                         class="btn btn-danger btn-sm"
                                                         style="margin-left:10px; margin-top:0px; float:left" 
@@ -303,7 +305,7 @@
                                                         data-placement        = "top" 
                                                         data-singleton        = "true" 
                                                         data-type             = "tramitexuser" 
-                                                        >Eliminar</a>
+                                                        >{{ __('lblUser34') }}</a>
                                                         @csrf
                                                         <input type="hidden" name="id_tramitexuser" value="{{$tramite->id_tramitesxusers}}"/>
                                                       </form>
@@ -332,7 +334,7 @@
                                         </tr>                                                                                                                                    
                                       @endforeach                                                                                  
                                   @else
-                                    <span>No tienes ningún usuario aún.</span>
+                                    <span>{{ __('lblUser35') }}</span>
                                   @endif
                                   </tbody>
                             </table>
@@ -375,42 +377,42 @@
 
             <div class="row">
               <div class="form-group col-sm-12 plr0">
-                <label for="company">Tipo de usuario:</label>
+                <label for="company">{{ __('lblUser40') }}</label>
                 <select id="ftipousuario" name="tipousuario" required>
-                  <option value="">Seleccione un tipo de usuario</option>  
-                  <option value="admin_oficina">Administrador Oficina</option>
-                  <option value="kiosko">Kiosko</option>
-                  <option value="tramitador">Asesor</option>
-                  @if($data['rol'] == 'superadmin')<option value="superadmin">Webmaster</option>@endif    
+                  <option value="">{{ __('lblUser41') }}</option>  
+                  <option value="admin_oficina">{{ __('lblUser42') }}</option>
+                  <option value="kiosko">{{ __('lblUser43') }}</option>
+                  <option value="tramitador">{{ __('lblUser44') }}</option>
+                  @if($data['rol'] == 'superadmin')<option value="superadmin">{{ __('lblUser45') }}</option>@endif    
                 </select>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="company">Nombre completo:</label>
-              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="Ingresa nombre completo" required maxlength="100"/>
+              <label for="company">{{ __('lblUser46') }}</label>
+              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="{{ __('lblUser46') }}" required maxlength="100"/>
             </div>
             
             <div class="form-group">
-              <label for="street">Email:</label>
+              <label for="street">{{ __('lblUser48') }}</label>
               <input type="email" class="form-control" id="femail" name="email" placeholder="Ingresa email" />
             </div>
             
             <div class="form-group" id="passgroup">
-              <label for="street">Password:</label>
-              <input type="password" class="form-control" id="fpassword" name="password" placeholder="Ingresa password" maxlength="100" minlength=6/>
+              <label for="street">{{ __('lblUser49') }}</label>
+              <input type="password" class="form-control" id="fpassword" name="password" placeholder="{{ __('lblUser50') }}" maxlength="100" minlength=6/>
             </div>
             
             <div class="form-group" id="newpassgroup">
-              <label for="street">Nuevo Password:</label>
-              <input type="password" class="form-control" id="fnewpassword" name="newpassword" placeholder="Ingresa nuevo password" maxlength="100" minlength=6/>
+              <label for="street">{{ __('lblUser48') }}</label>
+              <input type="password" class="form-control" id="fnewpassword" name="newpassword" placeholder="{{ __('lblUser52') }}" maxlength="100" minlength=6/>
             </div>
 
             <div class="row">
               <div class="form-group col-sm-12 plr0">
-                <label for="company">Oficina:</label>
+                <label for="company">{{ __('lblUser11') }}</label>
                 <select id="foficina" name="oficina" required>
-                  <option value="">Seleccione una oficina</option>  
+                  <option value="">{{ __('lblUser53') }}</option>  
                   @if(count($dependencias)> 0 )
                     @foreach($dependencias as $dependencia)                                          
                       @foreach($dependencia->oficinas as $oficina) 
@@ -425,8 +427,8 @@
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblUser54') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('lblUser55') }}</button>
         </div>
         </form>
       </div>
@@ -456,9 +458,9 @@
 
             <div class="row">
               <div class="form-group col-sm-12 plr0">
-                <label for="company">Trámite:</label>
+                <label for="company">{{ __('lblUser33') }}</label>
                 <select id="ftramite" name="tramite" required>
-                  <option value="">Seleccione un trámite</option> 
+                  <option value="">{{ __('lblUser56') }}</option> 
 
                   @if(count($dependencias)> 0 )
                     @foreach($dependencias as $dependencia)                                          
@@ -475,51 +477,51 @@
             </div>
 
             <div class="form-group col-sm-6">
-              <label for="company">Lunes Inicio:</label>
+              <label for="company">{{ __('lblUser57') }}</label>
               <input type="time" class="form-control" id="flunesinicio" name="lunes_inicio"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Lunes Fin:</label>
+              <label for="company">{{ __('lblUser58') }}</label>
               <input type="time" class="form-control" id="flunesfin" name="lunes_fin" />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Martes Inicio:</label>
+              <label for="company">{{ __('lblUser59') }}</label>
               <input type="time" class="form-control" id="fmartesinicio" name="martes_inicio"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Martes Fin:</label>
+              <label for="company">{{ __('lblUser60') }}</label>
               <input type="time" class="form-control" id="fmartesfin" name="martes_fin"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Miércoles Inicio:</label>
+              <label for="company">{{ __('lblUser61') }}</label>
               <input type="time" class="form-control" id="fmiercolesinicio" name="miercoles_inicio"   />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Miércoles Fin:</label>
+              <label for="company">{{ __('lblUser62') }}</label>
               <input type="time" class="form-control" id="fmiercolesfin" name="miercoles_fin"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Jueves Inicio:</label>
+              <label for="company">{{ __('lblUser63') }}</label>
               <input type="time" class="form-control" id="fjuevesinicio" name="jueves_inicio"   />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Jueves Fin:</label>
+              <label for="company">{{ __('lblUser64') }}</label>
               <input type="time" class="form-control" id="fjuevesfin" name="jueves_fin"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Viernes Inicio:</label>
+              <label for="company">{{ __('lblUser65') }}</label>
               <input type="time" class="form-control" id="fviernesinicio" name="viernes_inicio"   />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Viernes Fin:</label>
+              <label for="company">{{ __('lblUser66') }}</label>
               <input type="time" class="form-control" id="fviernesfin" name="viernes_fin"  />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Sábado Inicio:</label>
+              <label for="company">{{ __('lblUser67') }}</label>
               <input type="time" class="form-control" id="fsabadoinicio" name="sabado_inicio"   />
             </div>
             <div class="form-group col-sm-6">
-              <label for="company">Sábado Fin:</label>
+              <label for="company">{{ __('lblUser68') }}</label>
               <input type="time" class="form-control" id="fsabadofin" name="sabado_fin"  />
             </div>
             
@@ -527,8 +529,8 @@
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('lblUser54') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('lblUser55') }}</button>
         </div>
         </form>
       </div>
@@ -589,7 +591,7 @@
           @endif          
           modal.find('#ftipousuario').select2("readonly", false);
           modal.find('#femail').attr("readonly",false);
-          modal.find('form').attr('action','{{route("usuarios/store")}}');
+          modal.find('form').attr('action','{{route("usuarios/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){
           modal.find('#fnombre').val($(this).data('nombre'));
@@ -610,7 +612,7 @@
           @if($data['rol'] == 'admin_oficina')
           $("#foficina").select2("readonly", true);
           @endif   
-          modal.find('form').attr('action','{{route("usuarios/update")}}');
+          modal.find('form').attr('action','{{route("usuarios/update", app()->getLocale())}}');
         }
       });
 
@@ -650,7 +652,7 @@
           modal.find('#fviernesfin').val(""); 
           modal.find('#fsabadoinicio').val(""); 
           modal.find('#fsabadofin').val(""); 
-          modal.find('form').attr('action','{{route("usuarios/storetramitexuser")}}');
+          modal.find('form').attr('action','{{route("usuarios/storetramitexuser", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){
           modal.find('#id_user').val($(this).data('idusuario'));
@@ -669,7 +671,7 @@
           modal.find('#fsabadoinicio').val($(this).data('sabadoinicio')); 
           modal.find('#fsabadofin').val($(this).data('sabadofin'));  
 
-          modal.find('form').attr('action','{{route("usuarios/updatetramitexuser")}}');
+          modal.find('form').attr('action','{{route("usuarios/updatetramitexuser", app()->getLocale())}}');
         }
       });
 

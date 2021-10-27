@@ -29,9 +29,10 @@ class VerifyMail extends Mailable
      */
      public function build()
     {
-          $address = 'citas@veracruzmunicipio.gob.mx';
-          $name = 'Ayuntamiento de Veracruz';
-          $subject = 'Activación de la cuenta';
+        $address = __('lblEmailInstitutional');
+        $name = __('lblName');
+        $subject =  __('lblMsg3');
+        
         return $this->view('emails.verifyUser')
                     ->from($address, $name)
                     ->subject($subject);

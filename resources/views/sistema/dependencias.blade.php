@@ -35,7 +35,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item active">Dependencias</li>
+      <li class="breadcrumb-item active">   {{ __('lblUnits1') }}</li>
     </ol>
 
     <div class="container-fluid">
@@ -67,13 +67,13 @@
                       <div class="col-lg-4">
                           <a class="btn btn-warning btn-search open-modal" href="#" data-toggle="modal" data-target="#myModal"
                           data-action = "store"                          
-                          data-title  = "Nueva dependencia">Crear nueva dependencia <i class="icon-arrow-right"></i></a>
+                          data-title  = "{{ __('lblUnits19') }}">   {{ __('lblUnits2') }} <i class="icon-arrow-right"></i></a>
                       </div>
                       <div class="col-lg-3 col-md-12">
                         
                         <div style="margin-top: 2px">
                           <select  name="dependencia" id="dependencia">
-                              <option value="">Todas las dependencias</option>
+                              <option value="">{{ __('lblUnits3') }}</option>
                               @if(count($dependenciascombo)> 0 )
                                 @foreach($dependenciascombo as $dependencia)                                                                            
                                   <option value="{{$dependencia->id_dependencia}}" @if($filtersdependencia==$dependencia->id_dependencia) selected="" @endif>{{$dependencia->nombre_dependencia}}</option>                                  
@@ -86,9 +86,9 @@
                       
                       <div class="col-lg-5">
                         <div class="input-group">
-                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "Buscar por nombre o dirección" value = "{{$filterstexto}}">
+                          <input type="text" id="searchPars" name="searchPars" class="form-control" placeholder= "{{ __('lblUnits4') }} " value = "{{$filterstexto}}">
                           <span class="input-group-prepend">
-                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>Buscar</span></button>
+                            <button type="submit" class="btn btn-secondary btn-search"><i class="fa fa-search"></i><span>{{ __('btnUnits') }}</span></button>
                           </span>
                         </div>
                       </div>
@@ -111,28 +111,28 @@
                             data-target       = "#myModal"
                             data-action       = "update"
                             data-id           = "{{$dependencia->id_dependencia}}"
-                            data-title        = "Editando: {{$dependencia->nombre_dependencia}}"
+                            data-title        = "{{ __('lblUnits10') }}: {{$dependencia->nombre_dependencia}}"
                             data-nombre       = "{{$dependencia->nombre_dependencia}}" 
-                          >Editar</a>
-                          <form id="fr_dependencia{{$dependencia->id_dependencia}}" action="{{route('dependencias/destroy')}}" name="_method" 
+                          >{{ __('btnUnits4') }}</a>
+                          <form id="fr_dependencia{{$dependencia->id_dependencia}}" action="{{route('dependencias/destroy', app()->getLocale())}}" name="_method" 
                             method="post" style="float:left">
                             <a href="#" 
                             class="btn btn-danger btn-sm float-left br"
                             style="margin-right:10px; margin-top:1px; float:left" 
                             data-toggle           = "confirmation"
                             data-id               = "{{$dependencia->id_dependencia}}"                                                  
-                            data-btn-ok-label     = "Aceptar" 
+                            data-btn-ok-label     = "{{ __('lblUnits11') }}"
                             data-btn-ok-icon      = "fa fa-remove"
                             data-btn-ok-class     = "btn btn-danger btn-sm"
-                            data-btn-cancel-label = "Cancelar"
+                            data-btn-cancel-label = "{{ __('lblUnits23') }}"
                             data-btn-cancel-icon  = "fa fa-chevron-circle-left"
                             data-btn-cancel-class = "btn btn-sm btn-warning"
-                            data-title            = "Desea eliminar la dependencia?"
+                            data-title            = "{{ __('lblUnits22') }}"
                             data-target           = "#removeDependencia"
                             data-placement        = "left" 
                             data-singleton        = "true"
                             data-type             = "dependencia" 
-                            >Eliminar</a>
+                            >{{ __('btnUnits5') }}</a>
                             @csrf
                             <input type="hidden" name="id_dependencia" value="{{$dependencia->id_dependencia}}"/>
                           </form>
@@ -144,7 +144,7 @@
                           <a class="btn btn-warning btn-search open-modalOficina br float-right" href="#" data-toggle="modal" data-target="#myModalOficina"
                           data-action = "store" style="margin-right: 15px; margin-bottom:15px"    
                           data-dependencia = "{{$dependencia->id_dependencia}}"                     
-                          data-title  = "Nueva oficina">Crear nueva oficina <i class="icon-arrow-right"></i></a>
+                          data-title  = "{{ __('lblUnits18') }}">{{ __('lblUnits5') }} <i class="icon-arrow-right"></i></a>
 
                           <div class="col-sm-12 table-responsive">
 
@@ -152,10 +152,10 @@
                                   <thead>
                                     @if(count($dependencia->oficinas)> 0 )
                                     <tr>                                                                                  
-                                      <th>Acciones</th> 
-                                      <th>Oficina</th>
-                                      <th>Coordenadas</th> 
-                                      <th>Dirección</th>                                          
+                                      <th>{{ __('lblUnits6') }}</th> 
+                                      <th>{{ __('lblUnits7') }}</th>
+                                      <th>{{ __('lblUnits8') }}</th> 
+                                      <th>{{ __('lblUnits9') }}</th>                                          
                                     </tr>
                                     @endif
                                   </thead>
@@ -173,32 +173,31 @@
                                                   data-target           = "#myModalOficina"
                                                   data-action           = "update"
                                                   data-id               = "{{$oficina->id_oficina}}"  
-                                                  data-title            = "Editando oficina: {{$oficina->nombre_oficina}}"
+                                                  data-title            = "{{ __('lblUnits21') }}: {{$oficina->nombre_oficina}}"
                                                   data-nombre           = "{{$oficina->nombre_oficina}}"                                                  
                                                   data-coords           = "{{$oficina->coords}}" 
                                                   data-direccion        = "{{$oficina->direccion}}" 
                                                   data-dependencia      = "{{$oficina->dependencia_id}}" 
-                                                  >Editar</a>
+                                                  >{{ __('btnUnits4') }}</a>
                                                   
-                                                  <form id="fr_oficina{{$oficina->id_oficina}}" action="{{route('oficinas/destroy')}}" name="_method" 
+                                                  <form id="fr_oficina{{$oficina->id_oficina}}" action="{{route('oficinas/destroy', app()->getLocale())}}" name="_method" 
                                                     method="post" style="float:left">
                                                     <a href="#" 
                                                     class="btn btn-danger btn-sm"
                                                     style="margin-left:10px; margin-top:0px; float:left" 
                                                     data-toggle           = "confirmation"
                                                     data-id               = "{{$oficina->id_oficina}}"                                                  
-                                                    data-btn-ok-label     = "Aceptar" 
+                                                    data-btn-ok-label     = "{{ __('lblUnits11') }}"
                                                     data-btn-ok-icon      = "fa fa-remove"
                                                     data-btn-ok-class     = "btn btn-danger btn-sm"
-                                                    data-btn-cancel-label = "Cancelar"
+                                                    data-btn-cancel-label = "{{ __('lblUnits23') }}"
                                                     data-btn-cancel-icon  = "fa fa-chevron-circle-left"
                                                     data-btn-cancel-class = "btn btn-sm btn-warning"
-                                                    data-title            = "Desea eliminar la oficina?"
+                                                    data-title            = "{{ __('lblUnits22') }}"
                                                     data-target           = "#removeOficina"
                                                     data-placement        = "left" 
                                                     data-singleton        = "true"
-                                                    data-type             = "oficina" 
-                                                    >Eliminar</a>
+                                                    data-type             = "oficina">{{ __('btnUnits5') }}</a>
                                                     @csrf
                                                     <input type="hidden" name="id_oficina" value="{{$oficina->id_oficina}}"/>
                                                   </form>      
@@ -214,7 +213,7 @@
                                                                                                                                                                                                                     
                                       @endforeach                                                                                  
                                   @else
-                                    <span>No tienes ninguna oficina aún.</span>
+                                    <span>{{ __('lblUnits17') }}</span>
                                   @endif
                                   </tbody>
                             </table>
@@ -256,15 +255,15 @@
             <input type="hidden" id="id_dependencia" name="id_dependencia"  />            
 
             <div class="form-group">
-              <label for="company">Nombre dependencia:</label>
-              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="Ingresa nombre de la dependencia" required maxlength="100"/>
+              <label for="company">   {{ __('lblUnits12') }}</label>
+              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="" required maxlength="100"/>
             </div>                        
             
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('btnUnits2') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('btnUnits3') }}</button>
         </div>
         </form>
       </div>
@@ -293,25 +292,25 @@
             <input type="hidden" id="id_oficina" name="id_oficina">
             
             <div class="form-group">
-              <label for="company">Nombre oficina:</label>
-              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="Ingresa nombre de la oficina" required maxlength="100"/>
+              <label for="company">{{ __('lblUnits14') }}</label>
+              <input type="text" class="form-control" id="fnombre" name="nombre" placeholder="{{ __('lblUnits15') }}" required maxlength="100"/>
             </div>   
 
             <div class="form-group">
-              <label for="company">Coordenadas:</label>
+              <label for="company">{{ __('lblUnits8') }}:</label>
               <input type="text" class="form-control" id="fcoords" name="coords" placeholder="0,0" required maxlength="100"/>
             </div> 
 
             <div class="form-group">
-              <label for="company">Dirección:</label>
-              <textarea class="form-control" id="fdireccion" name="direccion" placeholder="Ingresa dirección de la oficina" required maxlength="100" rows="2" ></textarea>
+              <label for="company">{{ __('lblUnits9') }}:</label>
+              <textarea class="form-control" id="fdireccion" name="direccion" placeholder="{{ __('lblUnits16') }}" required maxlength="100" rows="2" ></textarea>
             </div>                          
             
         </div>
         <div class="modal-footer">
           @csrf
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('btnUnits2') }}</button>
+          <button type="submit" class="btn btn-warning">{{ __('btnUnits3') }}</button>
         </div>
         </form>
       </div>
@@ -350,12 +349,12 @@
         if ($(this).data('action') == "store"){
           modal.find('#id_dependencia').val("");
           modal.find('#fnombre').val("");          
-          modal.find('form').attr('action','{{route("dependencias/store")}}');
+          modal.find('form').attr('action','{{route("dependencias/store", app()->getLocale())}}');
         }
         else if ($(this).data('action') == "update"){                   
           modal.find('#id_dependencia').val($(this).data('id'));
           modal.find('#fnombre').val($(this).data('nombre'));                  
-          modal.find('form').attr('action','{{route("dependencias/update")}}');
+          modal.find('form').attr('action','{{route("dependencias/update", app()->getLocale())}}');
         }
       });
       //new/edit tramite x oficina
@@ -371,7 +370,7 @@
           modal.find('#fnombre').val("");
           modal.find('#fcoords').val("");
           modal.find('#fdireccion').val("");             
-          modal.find('form').attr('action','{{route("oficinas/store")}}');          
+          modal.find('form').attr('action','{{route("oficinas/store", app()->getLocale())}}');          
         }
         else if ($(this).data('action') == "update"){  
           modal.find('#id_dependencia').val($(this).data('dependencia'));   
@@ -379,7 +378,7 @@
           modal.find('#fnombre').val($(this).data('nombre'));
           modal.find('#fcoords').val($(this).data('coords'));
           modal.find('#fdireccion').val($(this).data('direccion'));    
-          modal.find('form').attr('action','{{route("oficinas/update")}}');
+          modal.find('form').attr('action','{{route("oficinas/update", app()->getLocale())}}');
         }
       });         
 

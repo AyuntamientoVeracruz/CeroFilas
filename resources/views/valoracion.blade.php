@@ -56,17 +56,17 @@
 @endsection
 
 @section('initlink')
-<a href="{{route('/')}}" class="small">Regresar a inicio</a>
+<a href="{{route('/', app()->getLocale())}}" class="small">Regresar a inicio</a>
 @endsection
 
 @section('titlebig')
 <h5>Cerofilas</h5>
-<h1>Evaluación</h1>
+<h1>{{ __('lblEveluation1') }}</h1>
 @endsection
 
 @section('content')
     <div class="loading-main">
-        <div class="loader">Cargando...</div>
+        <div class="loader">{{ __('lblEveluation2') }}</div>
     </div>
 
     <div class="responsemessage"></div>
@@ -81,42 +81,42 @@
         <div class="container">
 
             @if($tipo=='show')
-            <form class="mt-45" action="{{route('valoracionsave')}}" method="post">
+            <form class="mt-45" action="{{route('valoracionsave', app()->getLocale())}}" method="post">
                 @csrf
                 <div class="main-primary col-sm-8 col-md-8 col-xs-12 br-5 p15 mb-30 col-sm-offset-2">
                     <h3 class="header3">Hola {{$turno->nombre_ciudadano}}!</h3>                    
                     @if(isset($error))
                     <span class="errored">{{$error}}</span>
                     @endif
-                    <p class="descriptionsection">Para seguir mejorando nuestro servicio, te pedimos evalues la atención brindada por el asesor <b>{{$turno->nombre}}</b> para el trámite <b>{{$turno->nombre_tramite}}</b> en la fecha y hora <b>{{$turno->fechahora_inicio}}</b>.</p>
-                    <label class="titlesection" data-section="1"><b>1</b><span><mark></mark> ¿Cómo calificarías la atención?</span></label>
-                    <span class="descriptionsection2">Una estrella representa la califación más baja y cinco estrellas la más alta.</span>  
+                    <p class="descriptionsection">{{ __('lblEveluation3') }}<b>{{$turno->nombre}}</b> {{ __('lblEveluation4') }} <b>{{$turno->nombre_tramite}}</b> {{ __('lblEveluation5') }} <b>{{$turno->fechahora_inicio}}</b>.</p>
+                    <label class="titlesection" data-section="1"><b>1</b><span><mark></mark> {{ __('lblEveluation4') }}</span></label>
+                    <span class="descriptionsection2">{{ __('lblEveluation7') }}</span>  
                     <div class="stars">
                         <div class='starrr' id='star1'><input type="text" required id="star2_input" name="estrellas"></div>
                         <div>
                           <span class='your-choice-was'>
-                            Tu calificación es de <span class='choice'></span>.
+                          {{ __('lblEveluation8') }} <span class='choice'></span>.
                           </span>
                         </div>
                     </div>
-                    <label class="titlesection" data-section="2"><b>2</b><span><mark></mark> ¿El asesor te atendió de manera cordial?</span></label>
+                    <label class="titlesection" data-section="2"><b>2</b><span><mark></mark> {{ __('lblEveluation9') }}</span></label>
                     <div class="radio text-center">
-                      <label style="margin-right: 30px"><input type="radio" name="pregunta1" required value="si">Sí</label>
-                      <label><input type="radio" name="pregunta1" required value="no">No</label>
+                      <label style="margin-right: 30px"><input type="radio" name="pregunta1" required value="si">{{ __('lblEveluation10') }}</label>
+                      <label><input type="radio" name="pregunta1" required value="no">{{ __('lblEveluation11') }}</label>
                     </div>
-                    <label class="titlesection" data-section="3"><b>3</b><span><mark></mark> ¿El asesor pudo ayudarte con tu trámite?</span></label>
+                    <label class="titlesection" data-section="3"><b>3</b><span><mark></mark> {{ __('lblEveluation12') }}</span></label>
                     <div class="radio text-center">
-                      <label style="margin-right: 30px"><input type="radio" name="pregunta2" required value="si">Sí</label>
-                      <label><input type="radio" name="pregunta2" required value="no">No</label>
+                      <label style="margin-right: 30px"><input type="radio" name="pregunta2" required value="si">{{ __('lblEveluation10') }}</label>
+                      <label><input type="radio" name="pregunta2" required value="no">{{ __('lblEveluation11') }}</label>
                     </div>
-                    <label class="titlesection" data-section="4"><b>4</b><span>¿Deseas agregar comentarios adicionales?</span></label> 
-                    <span class="descriptionsection2">Esta información es opcional.</span>      
+                    <label class="titlesection" data-section="4"><b>4</b><span>{{ __('lblEveluation13') }}</span></label> 
+                    <span class="descriptionsection2">{{ __('lblEveluation14') }}</span>      
                     <div class="inputfield">
-                        <textarea class="texto capitalize" name="observaciones" rows="4" placeholder="Escribe aquí tus comentarios adicionales"></textarea>
+                        <textarea class="texto capitalize" name="observaciones" rows="4" placeholder="{{ __('lblEveluation15') }}"></textarea>
                         <!--<label>Comentarios adicionales</label>-->
                     </div>                
-                    <span class="etiqueta"><b class="notavailable"></b> Los campos marcados son obligatorios. Si no completas la información, no puedes guardar la evaluación.</span>
-                    <input type="submit" class="btn btn-primary submit" value="Confirmar">
+                    <span class="etiqueta"><b class="notavailable"></b> {{ __('lblEveluation16') }}</span>
+                    <input type="submit" class="btn btn-primary submit" value="{{ __('lblEveluation17') }}">
                 </div>
             </form> 
             @endif
@@ -125,31 +125,31 @@
                 
                 <div class="main-primary col-sm-8 col-md-8 col-xs-12 br-5 p15 mb-30 col-sm-offset-2">
                     <h3 class="header3">Hola {{$turno->nombre_ciudadano}}!</h3>                                        
-                    <p class="descriptionsection megaquote">Gracias por tu evaluación al asesor <b>{{$turno->nombre}}</b> para el trámite <b>{{$turno->nombre_tramite}}</b> en la fecha y hora <b>{{$turno->fechahora_inicio}}</b>.<br>Te mostramos los datos de la evaluación.</p>
-                    <label class="titlesection" data-section="1"><b>1</b><span> ¿Cómo calificarías la atención?</span></label>
-                    <span class="descriptionsection2">Una estrella representa la califación más baja y cinco estrellas la más alta.</span>    
+                    <p class="descriptionsection megaquote">{{ __('lblEveluation18') }} <b>{{$turno->nombre}}</b> {{ __('lblEveluation18') }} <b>{{$turno->nombre_tramite}}</b>  {{ __('lblEveluation19') }} <b>{{$turno->fechahora_inicio}}</b>.<br>{{ __('lblEveluation21') }}</p>
+                    <label class="titlesection" data-section="1"><b>1</b><span> {{ __('lblEveluation6') }}</span></label>
+                    <span class="descriptionsection2">{{ __('lblEveluation7') }}</span>    
                     <div class="stars withopaque">
                         <div class='starrr' id='star1'><input type="text" required id="star2_input" name="estrellas" value="{{$valoracion->estrellas}}"></div>
                         <div>
                           <span class='your-choice-was' style="display: block">
-                            Tu calificación es de <span class='choice'>{{$valoracion->estrellas}}</span>.
+                          {{ __('lblEveluation8') }} <span class='choice'>{{$valoracion->estrellas}}</span>.
                           </span>
                         </div>
                     </div>
-                    <label class="titlesection" data-section="2"><b>2</b><span> ¿El asesor te atendió de manera cordial?</span></label>
+                    <label class="titlesection" data-section="2"><b>2</b><span> {{ __('lblEveluation9') }}</span></label>
                     <div class="radio text-center">
                       <label style="margin-right: 30px"><input type="radio" name="pregunta1" value="si" disabled="" @if($valoracion->respuesta1=='si') checked @endif>Si</label>
                       <label><input type="radio" name="pregunta1" value="no" disabled="" @if($valoracion->respuesta1=='no') checked @endif>No</label>
                     </div>
-                    <label class="titlesection" data-section="3"><b>3</b><span> ¿El asesor pudo ayudarte con tu trámite?</span></label>
+                    <label class="titlesection" data-section="3"><b>3</b><span> {{ __('lblEveluation12') }}</span></label>
                     <div class="radio text-center">
                       <label style="margin-right: 30px"><input type="radio" name="pregunta2" value="si" disabled="" @if($valoracion->respuesta2=='si') checked @endif>Si</label>
                       <label><input type="radio" name="pregunta2" value="no" disabled="" @if($valoracion->respuesta2=='no') checked @endif>No</label>
                     </div>
-                    <label class="titlesection" data-section="4"><b>4</b><span>¿Deseas agregar comentarios adicionales?</span></label> 
-                    <span class="descriptionsection2">Esta información es opcional.</span>       
+                    <label class="titlesection" data-section="4"><b>4</b><span>{{ __('lblEveluation13') }}</span></label> 
+                    <span class="descriptionsection2">{{ __('lblEveluation14') }}</span>       
                     <div class="inputfield">
-                        <textarea class="texto capitalize" name="observaciones" rows="4" placeholder="Escribe aquí tus comentarios adicionales" disabled="">{!! $valoracion->observaciones !!}</textarea>
+                        <textarea class="texto capitalize" name="observaciones" rows="4" placeholder="{{ __('lblEveluation15') }}" disabled="">{!! $valoracion->observaciones !!}</textarea>
                     </div>                
                     
                     

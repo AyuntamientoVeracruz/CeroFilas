@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="Cero Filas // Sistema CRM">
-        <meta name="author" content="Angel Cobos www.arkanmedia.com">
+        
         <link rel="shortcut icon" href="{{url('/sis/img/favicon.ico')}}">
         <title>Cero Filas // Sistema CRM</title>
         <script type="text/javascript" src="{{url('/js/jquery-2.1.4.min.js')}}"></script>
@@ -127,7 +127,7 @@
     <body>
 
 		<div class="container">
-        <form id="entry" method="POST" action="{{ route('login') }}" autocomplete="off">
+        <form id="entry" method="POST" action="{{ route('login', app()->getLocale()) }}" autocomplete="off">
 		@csrf
             <a href="<?PHP echo url("/") ?>"><img src="{{url('/images/logo-transparent.png')}}" class="logo"/></a>
             @if(session()->has('message'))
@@ -155,10 +155,10 @@
                 <span class="eye material-icons">remove_red_eye</span>
             </div>
             <div class="submit">
-                <button type="submit">Ingresar</button>
+                <button type="submit">{{ __('btnEner') }}</button>
             </div>
                        
-            <a href="<?PHP echo url("forgot") ?>" class="forgot">¿Olvidaste tu password?</a>
+            <a href="<?PHP echo url(app()->getLocale()."/forgot") ?>" class="forgot">{{ __('btnForgotten') }}</a>
         </form>
         </div>
 		</div>

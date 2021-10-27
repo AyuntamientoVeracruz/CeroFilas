@@ -58,7 +58,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Home</li>
       <!--<li class="breadcrumb-item"><a href="#">Admin</a></li>-->
-      <li class="breadcrumb-item active">@if($tipo=='admin') Dashboard @else Visor de turnos/citas @endif</li>
+      <li class="breadcrumb-item active">@if($tipo=='admin') {{ __('lblAdminOffice2') }} @else {{ __('lblAdminOffice1') }} @endif</li>
     </ol>
 
     <div class="container-fluid">
@@ -69,21 +69,21 @@
             <div class="card table-container">                 
                 <div class="card-header">
                   <h7>
-                    <form id="searchturnoscitas" action="{{route('sistema')}}">
+                    <form id="searchturnoscitas" action="{{route('sistema', app()->getLocale())}}">
                       <k class="lh30">
                         <a href="#" class="btn btn-sm btn-primary br redobutton"><i class="fa fa-redo"></i></a>
                         <div class="filtersizquierdo">
-                          <span class="float-left labeled" >Viendo:</span>
+                          <span class="float-left labeled" >{{ __('lblAdminOffice3') }}</span>
                           <div class="notlabeled">
                             <select class="float-left wauto br" name="tipo" id="tipo" >
-                                <option value="turnos" selected="">Turnos</option>
-                                <option value="citas">Citas</option>                              
+                                <option value="turnos" selected="">{{ __('lblAdminOffice4') }}</option>
+                                <option value="citas">{{ __('lblAdminOffice5') }}</option>                              
                             </select>
 
-                            <div class="calendar">  
+                            <div class="calendar calendarto">  
                               <div class="input-prepend input-group">
                                 <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                  <span class="input-group-text">{{ __('lblAdminOffice7') }}</span>
                                 </div>
                                 <input id="datetimepickers" class="form-control" size="11" type="text" placeholder="YYYY-MM-DD" name="datetimepickers" autocomplete="off"
                                 value="{{date('Y-m-d')}}" readonly="">
@@ -93,7 +93,7 @@
                             <div class="calendar calendarto">  
                               <div class="input-prepend input-group">
                                 <div class="input-group-prepend">
-                                  <span class="input-group-text">Hasta</span>
+                                  <span class="input-group-text">{{ __('lblAdminOffice6') }}</span>
                                 </div>
                                 <input id="datetimepickers2" class="form-control" size="11" type="text" placeholder="YYYY-MM-DD" name="datetimepickers2" autocomplete="off"
                                 value="{{date('Y-m-d')}}" readonly="">
@@ -105,14 +105,14 @@
                         </div>
 
                         <div class="filtersderecho">
-                          <span class="float-left labeled" >Estatus:</span>
+                          <span class="float-left labeled" >{{ __('lblAdminOffice8') }}</span>
                           <div class="notlabeled">
                             <select class="float-left  br" name="estatus" id="estatus" >
-                                <option value="">Todos los turnos</option>
-                                <option value="creado" selected>Check-In</option>
-                                <option value="enproceso">En proceso</option> 
-                                <option value="finalizado">Finalizados</option> 
-                                <option value="cancelado">Cancelados</option>                             
+                                <option value="">{{ __('lblAdminOffice9') }}</option>
+                                <option value="creado" selected>{{ __('lblAdminOffice10') }}</option>
+                                <option value="enproceso">{{ __('lblAdminOffice11') }}</option> 
+                                <option value="finalizado">{{ __('lblAdminOffice12') }}</option> 
+                                <option value="cancelado">{{ __('lblAdminOffice13') }}</option>                             
                             </select>  
                           </div>                      
                         </div>
@@ -126,11 +126,11 @@
                       <thead>                        
                         <tr> 
                           <th></th>                                                      
-                          <th>Estatus</th>
-                          <th><b class="hour">Check-In</b></th>
-                          <th>Trámite</th>
-                          <th>Asesor</th> 
-                          <th>Ciudadano</th>                                    
+                          <th>{{ __('lblAdminOffice8') }}</th>
+                          <th><b class="hour">{{ __('lblAdminOffice10') }}</b></th>
+                          <th>{{ __('lblAdminOffice14') }}</th>
+                          <th>{{ __('lblAdminOffice15') }}</th> 
+                          <th>{{ __('lblAdminOffice16') }}</th>                                    
                         </tr>                        
                       </thead>
                       <tbody>
@@ -154,7 +154,7 @@
                                   @if($turno->user_id=="")
                                     @if($tipo=='admin')
                                       <select class="usuario float-right w100 br" data-turno="{{$turno->id_turno}}">
-                                        <option value="">Seleccione un asesor</option>
+                                        <option value="">{{ __('lblAdminOffice17') }}</option>
                                       @foreach($usuarios as $usuario)
                                         <option value="{{$usuario->id_user}}">{{$usuario->nombre}}</option>
                                       @endforeach
@@ -177,13 +177,13 @@
                                   <table class="table" style="background:#fff!important">
                                       <thead>
                                         <tr style="background:#fff!important">
-                                          <th>Folio Cita</th>
-                                          <th>Folio Turno</th>
-                                          <th>CURP</th>
+                                          <th>{{ __('lblAdminOffice18') }}</th>
+                                          <th>{{ __('lblAdminOffice19') }}</th>
+                                          <th>{{ __('lblAdminOffice20') }}</th>
                                           
-                                          <th>Hora Inicio</th>
-                                          <th>Hora Fin</th>
-                                          <th>Observaciones</th>
+                                          <th>{{ __('lblAdminOffice21') }}</th>
+                                          <th>{{ __('lblAdminOffice22') }}/th>
+                                          <th>{{ __('lblAdminOffice23') }}</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -194,7 +194,7 @@
 
                                           <td>@if($turno->inicio!=""){{$turno->inicio}}@else---@endif</td>
                                           <td>@if($turno->fin!=""){{$turno->fin}}@else---@endif</td>
-                                          <td><div style="float:left; width:200px">@if($tipo=='admin') @if($turno->observaciones!=""){!!nl2br($turno->observaciones)!!}@else --- @endif @else <i class="badge badge-sm badge-warning">Disponible sólo para administrador</i> @endif</div></td>
+                                          <td><div style="float:left; width:200px">@if($tipo=='admin') @if($turno->observaciones!=""){!!nl2br($turno->observaciones)!!}@else --- @endif @else <i class="badge badge-sm badge-warning">{{ __('lblAdminOffice24') }}</i> @endif</div></td>
                                         </tr>
                                       </tbody>
                                   </table>
@@ -203,12 +203,12 @@
                             </tr>
                           @endforeach
                         @else
-                          <tr><td colspan="6" style="text-align: center">No tienes turnos.</td></tr>
+                          <tr><td colspan="6" style="text-align: center">{{ __('lblAdminOffice25') }}</td></tr>
                         @endif 
                       </tbody>
                     </table>
                   </div>
-                  <span class="ultima">Última fecha de actualización: <b>{{$ultimaactualizacion}}</b></span>
+                  <span class="ultima">{{ __('lblAdminOffice26') }}: <b>{{$ultimaactualizacion}}</b></span>
                 </div>                                
             </div> 
           </div>
@@ -302,7 +302,7 @@
         $turno=$(this).attr("data-turno");
         $option=$(this).find("option:selected");
         $.ajax({
-          url: "{{route('updateturnos')}}/"+$turno+"/"+$option.val(), 
+          url: "{{route('updateturnos', app()->getLocale())}}/"+$turno+"/"+$option.val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },
@@ -321,7 +321,7 @@
           error: function(xhr, resp, text) {
             $(".loading-main").fadeOut();
             $(".responsemessage").addClass("errorresponse");
-            $(".responsemessage").addClass("showed").html("Ocurrió un error asignando al asesor, intenta más tarde").slideDown();
+            $(".responsemessage").addClass("showed").html("{{ __('lblAdminOffice27') }}").slideDown();
           }
         });
       });
@@ -335,16 +335,19 @@
               .find('option')
               .remove()
               .end()              
-              .append('<option value="">Todos los turnos</option>')
-              .append('<option value="creado">Check-In</option>')
-              .append('<option value="enproceso">En proceso</option>')
-              .append('<option value="finalizado">Finalizados</option>')
-              .append('<option value="cancelado">Cancelados</option>');
+              .append('<option value="">{{ __('lblAdminOffice9') }}</option>')
+              .append('<option value="creado">{{ __('lblAdminOffice10') }}</option>')
+              .append('<option value="enproceso">{{ __('lblAdminOffice11') }}</option>')
+              .append('<option value="finalizado">{{ __('lblAdminOffice12') }}</option>')
+              .append('<option value="cancelado">{{ __('lblAdminOffice13') }}</option>');
               //.val($estatus);
       $("#estatus").select2('val',$estatus);
 
+      let fecha=$("#datetimepickers").val()+"@"+$("#datetimepickers2").val();
+    
+
       $.ajax({
-          url: "{{route('getturnos')}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
+          url: "{{route('getturnos', app()->getLocale())}}/{{$data['rol']}}/{{$data['oficina']}}/"+fecha+"/"+$("#estatus").val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },
@@ -377,7 +380,7 @@
                         @if($tipo=='admin')
                         printrow = printrow + `
                         <select class="usuario float-right w100 br" data-turno="`+result[i].id_turno+`">
-                          <option value="">Seleccione un asesor</option>`;
+                          <option value="">{{ __('lblAdminOffice17') }}</option>`;
                         @foreach($usuarios as $usuario)
                           printrow = printrow + `
                           <option value="{{$usuario->id_user}}">{{$usuario->nombre}}</option>`;
@@ -400,12 +403,12 @@
                       <table class="table" style="background:#fff!important">
                           <thead>
                             <tr style="background:#fff!important">
-                              <th>Folio Cita</th>
-                              <th>Folio Turno</th>
-                              <th>CURP</th>
-                              <th>Hora Inicio</th>
-                              <th>Hora Fin</th>
-                              <th>Observaciones</th>
+                              <th>{{ __('lblAdminOffice18') }}</th>
+                              <th>{{ __('lblAdminOffice19') }}</th>
+                              <th>{{ __('lblAdminOffice20') }}</th>
+                              <th>{{ __('lblAdminOffice21') }}</th>
+                              <th>{{ __('lblAdminOffice22') }}</th>
+                              <th>{{ __('lblAdminOffice23') }}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -415,7 +418,7 @@
                               <td>`;if(result[i].curp==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].curp;} printrow = printrow + `</td>
                               <td>`;if(result[i].inicio==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].inicio;} printrow = printrow + `</td>
                               <td>`;if(result[i].fin==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].fin;} printrow = printrow + `</td>
-                              <td><div style="float:left; width:200px">`;@if($tipo=='admin') if(result[i].observaciones==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].observaciones.replace(/\n/g, "<br />");} @else printrow = printrow + `<i class="badge badge-sm badge-warning">Disponible solo para administrador</i>`; @endif printrow = printrow + `</div></td>
+                              <td><div style="float:left; width:200px">`;@if($tipo=='admin') if(result[i].observaciones==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].observaciones.replace(/\n/g, "<br />");} @else printrow = printrow + `<i class="badge badge-sm badge-warning">{{ __('lblAdminOffice24') }}</i>`; @endif printrow = printrow + `</div></td>
                             </tr>
                           </tbody>
                       </table>
@@ -440,7 +443,7 @@
           error: function(xhr, resp, text) {
             $(".loading-main").fadeOut();
             $(".responsemessage").addClass("errorresponse");
-            $(".responsemessage").addClass("showed").html("Ocurrió un error cargando turnos, intenta más tarde").slideDown();
+            $(".responsemessage").addClass("showed").html("{{ __('lblAdminOffice27') }}").slideDown();
           }
       });
     }
@@ -455,17 +458,17 @@
               .find('option')
               .remove()
               .end()
-              .append('<option value="">Todas las citas</option>')
-              .append('<option value="creado">Pendientes</option>')
-              .append('<option value="check-in">Check-In</option>')
-              .append('<option value="enproceso">En proceso</option>')
-              .append('<option value="finalizado">Finalizadas</option>');
+              .append('<option value="">{{ __('lblAdminOffice9') }}</option>')
+              .append('<option value="creado">{{ __('lblAdminOffice28') }}</option>')
+              .append('<option value="check-in">{{ __('lblAdminOffice10') }}</option>')
+              .append('<option value="enproceso">{{ __('lblAdminOffice11') }}</option>')
+              .append('<option value="finalizado">{{ __('lblAdminOffice12') }}</option>');
               //.append('<option value="cancelado">Cancelado</option>');
               //.val($estatus);
       $("#estatus").select2('val',$estatus);
 
       $.ajax({
-          url: "{{route('getcitas')}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"@"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
+          url: "{{route('getcitas', app()->getLocale())}}/{{$data['rol']}}/{{$data['oficina']}}/"+$("#datetimepickers").val()+"/"+$("#datetimepickers2").val()+"/"+$("#estatus").val(), 
           type: "GET",
           dataType : 'json', 
           beforeSend: function(){ $(".loading-main").fadeIn(); },
@@ -491,8 +494,8 @@
                     if(result[i].estatus=='cancelado'){ printrow = printrow + `badge-danger`; }
                     if(result[i].estatus=='check-in'){ printrow = printrow + `badge-primary`; }
                 printrow = printrow + `
-                    ">`;if(result[i].estatus=='creado'){printrow = printrow + `Pendiente`;}else{
-                          if(result[i].estatus=='finalizado'){printrow = printrow + `Finalizada`;}
+                    ">`;if(result[i].estatus=='creado'){printrow = printrow + `{{ __('lblAdminOffice28') }}`;}else{
+                          if(result[i].estatus=='finalizado'){printrow = printrow + `{{ __('lblAdminOffice12') }}`;}
                           else{printrow = printrow + result[i].estatus;}
                         }
                 printrow = printrow + `</span></td> 
@@ -507,13 +510,13 @@
                       <table class="table" style="background:#fff!important">
                           <thead>
                             <tr style="background:#fff!important">
-                              <th>Folio Cita</th>
-                              <th>Folio Turno</th>
-                              <th>CURP</th>
-                              <th>Teléfono</th>
-                              <th>Hora Inicio</th>
-                              <th>Hora Fin</th>
-                              <th>Observaciones</th>
+                              <th>{{ __('lblAdminOffice18') }}</th>
+                              <th>{{ __('lblAdminOffice19') }}</th>
+                              <th>{{ __('lblAdminOffice20') }}</th>
+                              <th>{{ __('lblAdminOffice29') }}</th>
+                              <th>{{ __('lblAdminOffice21') }}</th>
+                              <th>{{ __('lblAdminOffice22') }}</th>
+                              <th>{{ __('lblAdminOffice23') }}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -524,7 +527,7 @@
                               <td>`;if(result[i].telefono==null){printrow = printrow + `---`;}else{printrow = printrow + result[i].telefono;} printrow = printrow + `</td>
                               <td>`;if(result[i].turno.length==0){printrow = printrow + `---`;}else{printrow = printrow + result[i].turno[0].fechahora_inicio;} printrow = printrow + `</td>
                               <td>`;if(result[i].turno.length==0){printrow = printrow + `---`;}else{printrow = printrow + result[i].turno[0].fechahora_fin;} printrow = printrow + `</td>
-                              <td><div style="float:left; width:200px">`;@if($tipo=='admin')if(result[i].turno.length==0){printrow = printrow + `---`;}else{printrow = printrow + result[i].turno[0].observaciones.replace(/\n/g, "<br />");} @else printrow = printrow + `<i class="badge badge-sm badge-warning">Disponible solo para administrador</i>`; @endif printrow = printrow + `</div></td>
+                              <td><div style="float:left; width:200px">`;@if($tipo=='admin')if(result[i].turno.length==0){printrow = printrow + `---`;}else{printrow = printrow + result[i].turno[0].observaciones.replace(/\n/g, "<br />");} @else printrow = printrow + `<i class="badge badge-sm badge-warning">{{ __('lblIndex24') }}</i>`; @endif printrow = printrow + `</div></td>
                             </tr>
                           </tbody>
                       </table>
@@ -538,7 +541,7 @@
               $(".select2-container").css({"width":"100%","max-width":"100%","float":"right"});
             }
             else{
-              $(".turnos-table tbody").html("<tr><td colspan='6' style='text-align: center'>No tienes citas.</td></tr>");
+              $(".turnos-table tbody").html("<tr><td colspan='6' style='text-align: center'>{{ __('lblAdminOffice30') }}</td></tr>");
             }
             
             $(".hour").html("Hora Cita");            
@@ -548,7 +551,7 @@
           error: function(xhr, resp, text) {
             $(".loading-main").fadeOut();
             $(".responsemessage").addClass("errorresponse");
-            $(".responsemessage").addClass("showed").html("Ocurrió un error cargando citas, intenta más tarde").slideDown();
+            $(".responsemessage").addClass("showed").html("{{ __('lblAdminOffice27') }}").slideDown();
           }
       });
     }
