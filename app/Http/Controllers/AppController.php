@@ -1657,7 +1657,7 @@ class AppController extends Controller
 				    	//validate numero de tramite from db, si no, entonces mostrar error and get text from db for tramite 
 				    	$tramiteobjeto = Tramite::find($tramite["value"]);
 						//dd($tramiteobjeto);
-				    	if(count($tramiteobjeto)>0){
+				    	if(count(array($tramiteobjeto))>0){
 				   			$tramite["text"]= $tramiteobjeto->nombre_tramite;
 				   			$tramite["requisitos"]= $tramiteobjeto->requisitos;
 				   			$tramite["costo"]= $tramiteobjeto->costo;
@@ -1675,7 +1675,7 @@ class AppController extends Controller
 					else{
 				    	//validate numero de oficina from db, si no, entonces mostrar error and get text from db for oficina 
 				    	$oficinaobjeto = Oficina::find($oficina["value"]);
-				    	if(count($oficinaobjeto)>0){
+				    	if(count(array($oficinaobjeto))>0){
 				   			$oficina["text"]= $oficinaobjeto->nombre_oficina;
 				   			$oficina["coords"]=$oficinaobjeto->coords;	
 				   			$oficina["direccion"]=$oficinaobjeto->direccion;	

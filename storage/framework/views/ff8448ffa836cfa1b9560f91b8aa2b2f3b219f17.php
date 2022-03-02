@@ -138,6 +138,24 @@
 
                     <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px"><?php echo e($folio); ?></b>
                 </div>
+
+                <div style="margin-bottom:10px; line-height: 20px; float:left; <?php if(isset($print)): ?> width: 320px; <?php else: ?> width:100%; <?php endif; ?>" class="infocontainer"> 
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><?php echo e(__('lblSaveDateMail14')); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblDateTime')); ?></b> <?php echo e($fechahora["text"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblProcedures9')); ?></b> <?php echo e($nombre["text"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblCurp')); ?></b> <?php echo e($curp["value"]); ?></div>
+                        
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblProcedure')); ?></b> <?php echo e($tramite["text"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblOffice')); ?></b> <?php echo e($oficina["text"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblOfficeAddress')); ?></b> <?php echo e($oficina["direccion"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblSaveDateMail11')); ?></b> <?php echo e($folio); ?></div>
+                        <?php if($email["value"]!=""): ?> <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblEmail')); ?></b> <?php echo e($email["value"]); ?></div> <?php endif; ?>
+                    
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblCost')); ?></b> <?php echo e($tramite["costo"]); ?></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblProcudereRquirements')); ?></b></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 15px"><?php echo nl2br($tramite["requisitos"]); ?></div>
+                        <br><br>
+                </div> 
                 
                 <div style="width:100%; margin-bottom: 0px; margin-top: 20px; display: block">                
                     
@@ -146,19 +164,7 @@
                         <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=foliodecitagenerado:<?php echo e($folio); ?>&choe=UTF-8&chld=|1"/>                   
                     </div>
                                             
-                    <div style="margin-bottom:10px; line-height: 20px; float:left; <?php if(isset($print)): ?> width: 320px; <?php else: ?> width:100%; <?php endif; ?>" class="infocontainer"> 
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><?php echo e(__('lblSaveDateMail14')); ?></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblProcedure')); ?></b> <?php echo e($tramite["text"]); ?></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblOffice')); ?></b> <?php echo e($oficina["text"]); ?></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblOfficeAddress')); ?></b> <?php echo e($oficina["direccion"]); ?></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblDateTime')); ?></b> <?php echo e($fechahora["text"]); ?></div>
-                        <?php if($email["value"]!=""): ?> <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblEmail')); ?></b> <?php echo e($email["value"]); ?></div> <?php endif; ?>
-                    
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblCost')); ?></b> <?php echo e($tramite["costo"]); ?></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b><?php echo e(__('lblProcudereRquirements')); ?></b></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 15px"><?php echo nl2br($tramite["requisitos"]); ?></div>
-                        <br><br>
-                    </div> 
+                   
                 </div>
 
             </div>

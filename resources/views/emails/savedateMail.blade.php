@@ -134,11 +134,31 @@
             
             <div style="width: 100%; display: block; float:left">
                                
+             
+
+
                 <h1 style="font-size:18px; margin-top: 20px">{{ __("lblMrs")}} {{$nombre["text"]}}!</h1> 
                 <p style="font-size:13px; margin-bottom:0px">@if(isset($recordatorio)&&$recordatorio==true) {{ __('lblSaveDateMail7') }} @else {{ __('lblSaveDateMail8') }} @endif <b>{{ __('lblSaveDateMail9') }}<a href="{{route('/', app()->getLocale())}}">{{ __('lblSaveDateMail12') }}</a></b></p>
-                <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">{{ __('lblSaveDateMail11') }}
-                    <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px">{{$folio}}</b>
+                <div style="float: left; width:100%; text-align: center; margin-bottom: 20px; margin-top: 20px">
+                    <b style="font-size: 35px; width: 100%; text-align: center;display: block; line-height: 35px"></b>
                 </div>
+
+                <div style="margin-bottom:10px; line-height: 20px; float:left; @if(isset($print)) width: 320px; @else width:100%; @endif" class="infocontainer"> 
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block">{{ __('lblSaveDateMail14') }}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblDateTime') }}</b> {{$fechahora["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcedures9') }}</b> {{$nombre["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblCurp') }}</b> {{$curp["value"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcedure') }}</b> {{$tramite["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOffice') }}</b> {{$oficina["text"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOfficeAddress') }}</b> {{$oficina["direccion"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblSaveDateMail11') }}</b> {{$folio}}</div>
+                        @if($email["value"]!="") <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblEmail') }}</b> {{$email["value"]}}</div> @endif
+                    
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblCost') }}</b> {{$tramite["costo"]}}</div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcudereRquirements') }}</b></div>
+                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 15px">{!! nl2br($tramite["requisitos"]) !!}</div>
+                        <br><br>
+                </div> 
                 
                 <div style="width:100%; margin-bottom: 0px; margin-top: 20px; display: block">                
                     
@@ -147,19 +167,7 @@
                         <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=foliodecitagenerado:{{$folio}}&choe=UTF-8&chld=|1"/>                   
                     </div>
                                             
-                    <div style="margin-bottom:10px; line-height: 20px; float:left; @if(isset($print)) width: 320px; @else width:100%; @endif" class="infocontainer"> 
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block">{{ __('lblSaveDateMail14') }}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcedure') }}</b> {{$tramite["text"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOffice') }}</b> {{$oficina["text"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblOfficeAddress') }}</b> {{$oficina["direccion"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblDateTime') }}</b> {{$fechahora["text"]}}</div>
-                        @if($email["value"]!="") <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblEmail') }}</b> {{$email["value"]}}</div> @endif
                     
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblCost') }}</b> {{$tramite["costo"]}}</div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block"><b>{{ __('lblProcudereRquirements') }}</b></div>
-                        <div style="width:100%; margin-bottom: 0px; margin-top: 0px; display: block; line-height: 15px">{!! nl2br($tramite["requisitos"]) !!}</div>
-                        <br><br>
-                    </div> 
                 </div>
 
             </div>
